@@ -1,6 +1,7 @@
 // storage-adapter-import-placeholder
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
+import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
@@ -11,6 +12,10 @@ import { s3Storage } from '@payloadcms/storage-s3'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Component } from './globals/Component'
+import { Pages } from './collections/Pages'
+import { Solutions } from './collections/solutions/Solutions'
+import { Subservices } from './collections/solutions/Subservices'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -22,7 +27,8 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
+  globals: [Component],
+  collections: [Users, Media, Pages, Solutions, Subservices],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -48,5 +54,6 @@ export default buildConfig({
         },
       },
     }),
+    formBuilderPlugin({}),
   ],
 })
