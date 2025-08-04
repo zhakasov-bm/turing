@@ -1,11 +1,5 @@
 import PhoneInput from 'react-phone-input-2'
-import { useId, useState } from 'react'
-
-type FormState = {
-  loading: boolean
-  error: string | null
-  success: boolean
-}
+import { useId } from 'react'
 
 export default function FormBuilder({
   form,

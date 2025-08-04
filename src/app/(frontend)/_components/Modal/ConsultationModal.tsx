@@ -1,12 +1,10 @@
 'use client'
 
-import { ReactNode, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Component } from '@/payload-types'
 import { X } from 'lucide-react'
-import PhoneInput from 'react-phone-input-2'
 import { handleFormSubmit } from '@/app/utils/formHandlers.ts'
 import FormBuilder from '../ApplicationForm/FormBuilder'
-import SuccessModal from './SuccessModal'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 
 type LeadCaptureProps = Extract<Component['globals'][0], { blockType: 'form' }>
@@ -24,8 +22,6 @@ type FormState = {
 }
 
 export default function ConsultationModal({ isOpen, onClose, block }: Props) {
-  if (!isOpen) return null
-
   const [formState, setFormState] = useState<FormState>({
     loading: false,
     error: null,
@@ -47,6 +43,8 @@ export default function ConsultationModal({ isOpen, onClose, block }: Props) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) =>
     handleFormSubmit({ e, form: block.form, phone, setFormState, setPhone })
+
+  if (!isOpen) return null
 
   return (
     <div className="fixed inset-0 bg-black/50 bg-opacity-50 flex items-center justify-center z-50">
