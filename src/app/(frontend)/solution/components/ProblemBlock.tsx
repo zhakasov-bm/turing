@@ -27,7 +27,7 @@ const ProblemCard = ({
       {number}
     </div>
     <div className="flex flex-col gap-2 z-10">
-      <span className="text-lg text-black">{title}</span>
+      <span className="text-base text-black">{title}</span>
       <p className="font-inter font-normal text-base text-black/60">{subtitle}</p>
     </div>
   </div>
@@ -70,7 +70,7 @@ const MobileSubserviceProblems = ({
     <div className="flex flex-col gap-2">
       {problems.map((item, i) => (
         <div key={i} className="flex flex-col gap-2 bg-blueBG rounded-custom p-6">
-          <span className="text-lg text-black">{item.title}</span>
+          <span className="text-base text-black">{item.title}</span>
           <p className="font-inter font-normal text-base text-black/60">{item.subtitle}</p>
         </div>
       ))}

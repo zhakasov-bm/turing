@@ -1,31 +1,35 @@
 import { getPayload } from 'payload'
 import config from '@/payload.config'
-// import { extractFormBlocks } from '@/app/utils/formBlockUtils'
 import { Component, Solution, Subservice } from '@/payload-types'
-import { getHomePageData } from './homeService'
+// import { getHomePageData } from './homeService'
 
 type FormBlockType = Extract<Component['globals'][0], { blockType: 'form' }>
 
-export interface SolutionData {
+export interface SubserviceData {
   component: Component
-  solution: Solution
-  subservices: Subservice[]
+  service: Solution
+  subservice: Subservice
   // cases: Case[]
   formBlock: FormBlockType | null
   // requestFormBlock: RequestFormBlockType | null
+  // seoBlocks: NonNullable<Subservice['additionalBlocks']>
   // navigation: Navigation
 }
 
-export async function getSolutionData(slug: string): Promise<SolutionData> {
+export async function getSubserviceData(
+  serviceSlug: string,
+  subSlug: string,
+): Promise<SubserviceData> {
   const payload = await getPayload({ config })
 
   // const { navigation } = await getHomePageData()
 
-  const [component, solutionRes] = await Promise.all([
+  const [component, serviceRes] = await Promise.all([
     payload.findGlobal({ slug: 'component' }),
     payload.find({
       collection: 'solutions',
-      where: { slug: { equals: slug } },
+      sort: 'createdAt',
+      where: { slug: { equals: serviceSlug } },
     }),
     // payload.find({
     //   collection: 'cases',
@@ -34,43 +38,32 @@ export async function getSolutionData(slug: string): Promise<SolutionData> {
     // }),
   ])
 
-  const solution = solutionRes.docs?.[0]
-  if (!solution) {
-    throw new Error('Solution not found')
+  const service = serviceRes.docs[0]
+  if (!service) {
+    throw new Error('Service not found')
   }
 
-  // Get subservices related to this service
-  const subservicesRes = await payload.find({
+  const subRes = await payload.find({
     collection: 'subservices',
-    where: {
-      service: {
-        equals: solution.id,
-      },
-    },
+    where: { slug: { equals: subSlug }, service: { equals: service.id } },
   })
 
-  const subservices = subservicesRes.docs.map((sub) => ({
-    ...sub,
-    icon:
-      typeof sub.icon === 'object' && sub.icon
-        ? {
-            ...sub.icon,
-            url: sub.icon.url || '',
-            alt: sub.icon.alt || '',
-          }
-        : sub.icon,
-  }))
+  const subservice = subRes.docs[0]
+  if (!subservice) {
+    throw new Error('Subservice not found')
+  }
 
   // Extract form blocks using shared utility
   const formBlocks = component.globals.filter((block) => block.blockType === 'form')
 
   return {
     component,
-    solution,
-    subservices,
+    service,
+    subservice,
     // cases: casesResult.docs,
     formBlock: formBlocks[0] || null,
     // requestFormBlock,
+    // seoBlocks,
     // navigation,
   }
 }

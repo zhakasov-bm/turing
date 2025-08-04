@@ -14,6 +14,7 @@ import ReviewBlock from './_components/ReviewBlock'
 import ApplicationFormBlock from './_components/ApplicationForm/ApplicationFormBlock'
 import OurStackBlock from './_components/OurStackBlock'
 import ServicesBlock from './_components/ServicesBlock'
+import LeadCaptureBlock from './_components/LeadCaptureBlock'
 
 export default async function HomePage() {
   const headers = await getHeaders()
@@ -28,22 +29,25 @@ export default async function HomePage() {
   const serviceBlock = component.globals.find((block) => block.blockType === 'services')
   const heading = serviceBlock?.heading || ''
 
-  const solutionsRes = await payload.find({ collection: 'solutions' })
+  const solutionsRes = await payload.find({ collection: 'solutions', sort: 'createdAt' })
   const solutions = solutionsRes.docs
-  const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
+  const formBlocks = component.globals.filter((block) => block.blockType === 'form')
 
   return (
     <div>
       <BGraphic />
       <HeroBlock component={component} />
       <AboutUsBlock component={component} />
-      <ServicesBlock heading={heading} solutions={solutions} />
+      <ServicesBlock heading={heading} solutions={solutions} block={formBlocks[0]} />
+      <LeadCaptureBlock block={formBlocks[0]} />
+
       <OurStackBlock component={component} />
       <div className="hidden md:block">
         <BrandsBlock component={component} isLabel={true} />
       </div>
-      <TeamBlock component={component} />
+      <LeadCaptureBlock block={formBlocks[1]} />
 
+      <TeamBlock component={component} />
       <ReviewBlock component={component} />
       <ApplicationFormBlock component={component} />
     </div>

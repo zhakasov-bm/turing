@@ -10,6 +10,8 @@ import QABlock from './QABlock'
 // import AvailableServices from './AvailableServices/AvailableServices'
 // import CasesBlock from '../../../../_components/CasesBlock'
 import WhyServiceNeeded from './WhyServiceNeeded'
+import AvailableServices from './AvailableServices/AvailableServices'
+import LeadBlock from '../../components/LeadBlock'
 // import LeadBlock from '../../components/LeadBlock'
 // import FloatingNav from '@/app/(frontend)/_components/FloatingNav'
 
@@ -18,7 +20,7 @@ interface SolutionPageLayoutProps {
   solution: any
   subservices: any[]
   //   cases: any[]
-  //   formBlock: any
+  formBlock: any
   //   navigation: any
 }
 
@@ -27,7 +29,7 @@ export function SolutionPageLayout({
   solution,
   subservices,
   //   cases,
-  //   formBlock,
+  formBlock,
   //   navigation,
 }: SolutionPageLayoutProps) {
   return (
@@ -46,7 +48,7 @@ export function SolutionPageLayout({
       {!solution.hasSubservices && <InfoBlock solution={solution} />}
 
       <ProblemBlock solution={solution} />
-      {/* <AvailableServices subservices={subservices} solution={solution} /> */}
+      <AvailableServices subservices={subservices} solution={solution} block={formBlock} />
       {/* <CasesBlock heading="Наши кейсы" cases={cases} type="simple" /> */}
 
       {/* {formBlock && <LeadCaptureBlock block={formBlock} formId="form-1" />} */}
@@ -54,7 +56,7 @@ export function SolutionPageLayout({
       <ReviewBlock component={component} />
 
       <QABlock solution={solution} />
-      {/* <LeadBlock solution={solution} /> */}
+      <LeadBlock solution={solution} block={formBlock} />
     </div>
   )
 }

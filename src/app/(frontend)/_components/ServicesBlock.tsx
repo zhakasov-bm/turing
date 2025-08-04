@@ -5,19 +5,25 @@ import Image from 'next/image'
 import Link from 'next/link'
 // import { useCurrentCity } from '@/app/utils/useCurrentCity'
 
-import { Solution } from '@/payload-types'
-// import UniversalButton from './UniversalButton'
-// import { ConsultationForm } from './Modal/ConsultationModal'
+import { Component, Solution } from '@/payload-types'
+import UniversalButton from './UniversalButton'
+import ConsultationModal from './Modal/ConsultationModal'
+
+type LeadCaptureProps = Extract<Component['globals'][0], { blockType: 'form' }>
 
 type Props = {
   heading: string
   solutions: Solution[]
+  block: LeadCaptureProps
 }
 
-export default function ServicesBlock({ heading, solutions }: Props) {
-  const [selectedCategory, setSelectedCategory] = useState('all')
+export default function ServicesBlock({ heading, solutions, block }: Props) {
   //   const [currentCity] = useCurrentCity()
   const [modalOpen, setModalOpen] = useState(false)
+
+  const handleModalSubmit = (data: { name: string; email: string; phone: string }) => {
+    setModalOpen(false)
+  }
 
   return (
     <section className="container-class" id="services">
@@ -60,6 +66,11 @@ export default function ServicesBlock({ heading, solutions }: Props) {
           </Link>
         ))}
       </div>
+
+      <div className="flex justify-center pt-10">
+        <UniversalButton label="Получить консультацию" onClick={() => setModalOpen(true)} />
+      </div>
+      <ConsultationModal isOpen={modalOpen} onClose={() => setModalOpen(false)} block={block} />
     </section>
   )
 }

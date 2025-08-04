@@ -23,7 +23,7 @@ export default function SuccessModal({ isOpen, onClose, children }: Props) {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h2 className="text-xl font-semibold mb-4">Успешная отправка!</h2>
+        <h2 className="text-xl font-medium mb-4">Успешная отправка!</h2>
         <div className="text-gray-700 font-inter">{children}</div>
       </div>
     </div>

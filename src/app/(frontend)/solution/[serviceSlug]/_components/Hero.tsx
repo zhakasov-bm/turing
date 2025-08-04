@@ -2,9 +2,9 @@
 
 import { Component, Solution, Subservice } from '@/payload-types'
 import Image from 'next/image'
-import { CITY_PREPOSITIONAL } from '@/app/utils/cities'
-import { useCurrentCity } from '@/app/utils/useCurrentCity'
-import Breadcrumbs from '../../../../_components/Breadcrumbs/Breadcrumbs'
+// import { CITY_PREPOSITIONAL } from '@/app/utils/cities'
+// import { useCurrentCity } from '@/app/utils/useCurrentCity'
+// import Breadcrumbs from '../../../../_components/Breadcrumbs/Breadcrumbs'
 import { useTheme } from 'next-themes'
 
 type Props =
@@ -12,8 +12,8 @@ type Props =
   | { component: Component; subservice: Subservice; solution?: never }
 
 export default function Hero(props: Props) {
-  const [currentCity] = useCurrentCity()
-  const cityText = CITY_PREPOSITIONAL[currentCity] || ''
+  // const [currentCity] = useCurrentCity()
+  // const cityText = CITY_PREPOSITIONAL[currentCity] || ''
 
   const { resolvedTheme } = useTheme()
 
@@ -56,16 +56,14 @@ export default function Hero(props: Props) {
         />
       </div>
 
-      {/* Breadcrumbs */}
+      {/* Breadcrumbs
       <div className="my-4 md:mb-8 px-6 md:px-0 flex justify-center">
         <Breadcrumbs customLabels={customLabels} />
-      </div>
+      </div> */}
 
       <div className="flex flex-col justify-center items-center text-center">
         <div className="flex flex-col gap-4 md:max-w-5xl px-6">
-          <h1 className="text-6xl md:leading-16">
-            {title} {cityText && <span>{cityText}</span>}
-          </h1>
+          <h1 className="text-6xl md:leading-16">{title}</h1>
           <p className="text-lg md:text-2xl font-light">{subtitle}</p>
         </div>
 

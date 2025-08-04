@@ -1178,6 +1178,13 @@ export interface Component {
       }
     | {
         heading: string;
+        form: string | Form;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'form';
+      }
+    | {
+        heading: string;
         title: string;
         contacts: {
           item?: string | null;
@@ -1369,6 +1376,14 @@ export interface ComponentSelect<T extends boolean = true> {
                         };
                     id?: T;
                   };
+              id?: T;
+              blockName?: T;
+            };
+        form?:
+          | T
+          | {
+              heading?: T;
+              form?: T;
               id?: T;
               blockName?: T;
             };

@@ -1,12 +1,20 @@
 'use client'
 
 import { RichText } from '@payloadcms/richtext-lexical/react'
-import UniversalButton from '../../../_components/UniversalButton'
-import { Solution } from '@/payload-types'
-import { ConsultationForm } from '@/app/(frontend)/_components/Modal/ConsultationModal'
+import UniversalButton from '../../_components/UniversalButton'
+import { Component, Solution } from '@/payload-types'
+// import { ConsultationForm } from '@/app/(frontend)/_components/Modal/ConsultationModal'
 import { useState } from 'react'
+import ConsultationModal from '../../_components/Modal/ConsultationModal'
 
-export default function LeadBlock({ solution }: { solution: Solution }) {
+type LeadCaptureProps = Extract<Component['globals'][0], { blockType: 'form' }>
+
+type Props = {
+  solution: Solution
+  block: LeadCaptureProps
+}
+
+export default function LeadBlock({ solution, block }: Props) {
   const [modalOpen, setModalOpen] = useState(false)
   const handleModalSubmit = (data: { name: string; email: string; phone: string }) => {
     // TODO: handle form submission (e.g., send to API)
@@ -14,7 +22,7 @@ export default function LeadBlock({ solution }: { solution: Solution }) {
     // Optionally show a success message
   }
   return (
-    <section id="contact" className="container mx-auto my-16 lg:my-20 px-6 lg:px-16">
+    <section id="contact" className="container mx-auto my-16 lg:my-20 px-6 lg:px-24">
       <div className="bg-greenBG text-black rounded-custom items-center text-center p-6 md:py-12 md:px-40 mt-20">
         <RichText data={solution.lead} />
       </div>
@@ -23,11 +31,7 @@ export default function LeadBlock({ solution }: { solution: Solution }) {
         className="my-6 w-full"
         onClick={() => setModalOpen(true)}
       />
-      <ConsultationForm
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-        onSubmit={handleModalSubmit}
-      />
+      <ConsultationModal isOpen={modalOpen} onClose={() => setModalOpen(false)} block={block} />
     </section>
   )
 }

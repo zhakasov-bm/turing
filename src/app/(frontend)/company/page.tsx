@@ -1,17 +1,17 @@
 import { headers as getHeaders } from 'next/headers.js'
-import Image from 'next/image'
 import { getPayload } from 'payload'
 import React from 'react'
 import { fileURLToPath } from 'url'
 
 import config from '@/payload.config'
-import './styles.css'
 import BGraphic from '../_components/BGraphic'
 import Hero from './components/Hero'
 import About from './components/About'
 import Mission from './components/Mission'
 import TeamBlock from '../_components/TeamBlock'
 import OurStackBlock from '../_components/OurStackBlock'
+import LeadCaptureBlock from '../_components/LeadCaptureBlock'
+import ApplicationFormBlock from '../_components/ApplicationForm/ApplicationFormBlock'
 
 export default async function CompanyPage() {
   const headers = await getHeaders()
@@ -34,7 +34,7 @@ export default async function CompanyPage() {
     return <div>Страница не найдена</div>
   }
 
-  const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
+  const formBlocks = component.globals.filter((block) => block.blockType === 'form')
 
   return (
     <div>
@@ -42,8 +42,10 @@ export default async function CompanyPage() {
       <Hero page={page} />
       <About page={page} />
       <Mission page={page} />
-      <TeamBlock component={component} />
+      <LeadCaptureBlock block={formBlocks[0]} />
       <OurStackBlock component={component} />
+      <TeamBlock component={component} />
+      <ApplicationFormBlock component={component} />
     </div>
   )
 }

@@ -3,9 +3,13 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Component } from '@/payload-types'
+import UniversalButton from './UniversalButton'
+import { useTheme } from 'next-themes'
 
 export default function HeroBlock({ component }: { component: Component }) {
-  //   const bgImage = resolvedTheme === 'dark' ? '/bg-hero-dark.svg' : '/bg-hero.svg'
+  const { resolvedTheme } = useTheme()
+
+  const bgImage = resolvedTheme === 'dark' ? '/bg-hero-dark.svg' : '/bg-hero.svg'
 
   return (
     <section id="hero" className="md:py-24">
@@ -38,17 +42,17 @@ export default function HeroBlock({ component }: { component: Component }) {
 
                 <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center justify-center whitespace-nowrap z-20">
                   <Image src="/btn.svg" alt="btn_graphic" width={60} height={60} />
-                  <button
-                    // label="Погрузиться в креатив"
+                  <UniversalButton
+                    label="Погрузиться в креатив"
                     className="w-auto"
-                    // to="#services"
-                  ></button>
+                    to="#services"
+                  />
                 </div>
               </div>
 
               {/* Left */}
               <div className="hidden md:flex flex-col gap-10 flex-8/12">
-                <h1 className="md:text-4xl lg:text-6xl font-medium leading-tight">
+                <h1 className="md:text-4xl lg:text-[52px] font-medium leading-tight">
                   {block.heading}
                   {/* {cityText && <span>{cityText}</span>} */}
                 </h1>
@@ -56,7 +60,7 @@ export default function HeroBlock({ component }: { component: Component }) {
                 <div
                   className="hidden h-full px-9 pb-15 md:flex flex-col gap-5 justify-end overflow-hidden lg:relative rounded-custom"
                   style={{
-                    // backgroundImage: `url("${bgImage}")`,
+                    backgroundImage: `url("${bgImage}")`,
                     width: '100%',
                     height: '100%',
                     backgroundRepeat: 'no-repeat',
@@ -65,7 +69,7 @@ export default function HeroBlock({ component }: { component: Component }) {
                 >
                   <div className="absolute flex top-2 left-0">
                     <Image src="/btn.svg" alt="btn_graphic" width={60} height={60} />
-                    {/* <UniversalButton label="Погрузиться в креатив" to="#services" /> */}
+                    <UniversalButton label="Погрузиться в креатив" to="#services" />
                   </div>
                   <Image
                     src="/graphic.png"

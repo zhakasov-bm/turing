@@ -21,13 +21,15 @@ export default async function page() {
   const serviceBlock = component.globals.find((block) => block.blockType === 'services')
   const heading = serviceBlock?.heading || ''
 
-  const solutionsRes = await payload.find({ collection: 'solutions' })
+  const formBlocks = component.globals.filter((block) => block.blockType === 'form')
+
+  const solutionsRes = await payload.find({ collection: 'solutions', sort: 'createdAt' })
   const solutions = solutionsRes.docs
 
   return (
     <div>
       <BGraphic />
-      <ServicesBlock heading={heading} solutions={solutions} />
+      <ServicesBlock heading={heading} solutions={solutions} block={formBlocks[0]} />
     </div>
   )
 }

@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import SuccessModal from '../Modal/SuccessModal'
-import { submitToTelegram } from '@/app/utils/submitToTelegram'
 import FormBuilder from './FormBuilder'
+import { handleFormSubmit } from '@/app/utils/formHandlers.ts'
 
 type FormState = {
   loading: boolean
@@ -37,54 +37,12 @@ export default function ApplicationFormBlock({ component }: { component: Compone
     }
   }, [formState.success])
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    const formBlock = component.globals.find((b) => b.blockType === 'application-form')
-
-    if (!formBlock?.form || typeof formBlock.form !== 'object') {
-      return setFormState({
-        loading: false,
-        error: 'Неверная конфигурация формы',
-        success: false,
-      })
-    }
-
-    setFormState({ loading: true, error: null, success: false })
-
-    try {
-      const formData = new FormData(e.target as HTMLFormElement)
-      formData.set('phone', phone)
-      const data = Object.fromEntries(formData.entries()) as Record<string, string>
-
-      // Phone validation
-      const phoneValue = data.phone || ''
-      const phoneRegex = /^\+?\d{10,15}$/
-      if (!phoneRegex.test(phoneValue)) {
-        setFormState({ loading: false, error: 'Некорректный номер телефона', success: false })
-        return
-      }
-
-      await submitToTelegram(data)
-
-      setFormState({ loading: false, error: null, success: true })
-      setPhone('+7 ') // reset phone input
-      ;(e.target as HTMLFormElement).reset()
-      setTimeout(() => {
-        setFormState({ loading: false, error: null, success: false })
-      }, 3000)
-    } catch (err) {
-      console.error(err)
-      setFormState({
-        loading: false,
-        error: err instanceof Error ? err.message : 'Ошибка отправки формы',
-        success: false,
-      })
-    }
-  }
+  const formBlock = component.globals.find((b) => b.blockType === 'application-form')
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) =>
+    handleFormSubmit({ e, form: formBlock?.form, phone, setFormState, setPhone })
 
   return (
-    <section id="contact" className="lg:block md:container md:mx-auto md:py-24 md:px-16">
+    <section id="contact" className="lg:block md:container md:mx-auto md:py-24 md:px-24">
       {component.globals.map((block, id) => {
         if (block.blockType === 'application-form') {
           return (
@@ -143,10 +101,9 @@ export default function ApplicationFormBlock({ component }: { component: Compone
                         onSubmit={handleSubmit}
                         error={formState.error ?? undefined}
                         submitButtonLabel={block?.form?.submitButtonLabel || 'Отправить'}
+                        allowedFields={['fullname', 'email', 'phone', 'comment']}
                         classNames={{
                           wrapper: 'flex flex-col gap-3 items-stretch font-inter',
-                          input:
-                            'peer w-full rounded-2xl px-4 pt-5 pb-2 text-black bg-white text-lg focus:outline-none focus:ring-2 focus:ring-gray-500',
                           button:
                             'w-full bg-black text-white px-5 h-[56px] rounded-2xl cursor-pointer font-unbounded hover:text-hover transition',
                         }}
@@ -177,10 +134,9 @@ export default function ApplicationFormBlock({ component }: { component: Compone
                       onSubmit={handleSubmit}
                       error={formState.error ?? undefined}
                       submitButtonLabel={block?.form?.submitButtonLabel || 'Отправить'}
+                      allowedFields={['fullname', 'email', 'phone', 'comment']}
                       classNames={{
                         wrapper: 'flex flex-col gap-3 items-stretch font-inter',
-                        input:
-                          'peer w-full rounded-2xl px-4 pt-5 pb-2 text-black bg-white text-lg focus:outline-none focus:ring-2 focus:ring-gray-500',
                         button:
                           'w-full bg-black text-white px-5 h-[56px] rounded-2xl cursor-pointer font-unbounded hover:text-hover transition',
                       }}
