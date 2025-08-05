@@ -14,6 +14,12 @@ export const HeroBlock: Block = {
       required: true,
     },
     {
+      name: 'button_title',
+      type: 'text',
+      defaultValue: 'Перейти к решениям',
+      required: true,
+    },
+    {
       name: 'image',
       type: 'upload',
       relationTo: 'media',

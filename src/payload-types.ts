@@ -1030,6 +1030,7 @@ export interface Component {
     | {
         heading: string;
         subheading: string;
+        button_title: string;
         image: string | Media;
         turing: string;
         cta_button: {
@@ -1294,6 +1295,7 @@ export interface ComponentSelect<T extends boolean = true> {
           | {
               heading?: T;
               subheading?: T;
+              button_title?: T;
               image?: T;
               turing?: T;
               cta_button?:
