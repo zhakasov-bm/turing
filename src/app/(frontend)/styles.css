@@ -139,8 +139,12 @@ body {
     @apply text-base font-normal text-black/80; /* Or use rem like 1rem */
   }
 
+  .approach-richtext h1 {
+    @apply text-2xl md:text-4xl my-2 md:mb-4 md:px-40 md:leading-13;
+  }
+
   .approach-richtext p {
-    @apply text-xl
+    @apply text-xl font-inter md:px-24
   }
 
   .mission-richtext p {

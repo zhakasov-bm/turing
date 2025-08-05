@@ -21,14 +21,12 @@ export default function ApproachesBlock({ solution, block }: Props) {
   if (!content) return null
 
   return (
-    <section id="faq" className="container mx-auto px-8 md:px-24 my-16">
-      <div className="approach-richtext">
-        {typeof solution.titleOutstaff === 'object' && solution.titleOutstaff?.root && (
-          <RichText data={solution.titleOutstaff} />
-        )}
-      </div>
+    <section id="approach" className="container mx-auto px-8 md:px-24 my-16">
+      {typeof solution.titleOutstaff === 'object' && solution.titleOutstaff?.root && (
+        <RichText data={solution.titleOutstaff} className="approach-richtext" />
+      )}
 
-      <div className="grid grid-cols-2 gap-3 pt-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-12">
         {solution.approaches?.map((approach, id) => (
           <div key={id} className="flex items-center gap-3 px-4 py-2 bg-background rounded-custom">
             {typeof approach.icon === 'object' && approach.icon?.url && (
