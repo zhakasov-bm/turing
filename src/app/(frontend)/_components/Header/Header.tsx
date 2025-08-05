@@ -35,7 +35,7 @@ type GetNavLinkPropsArgs = {
 export function getNavLinkProps(args: GetNavLinkPropsArgs) {
   const { link, idx, isCasePage, mainPageHref, setActiveIdx } = args
   let href = `/${link.url}`
-  let onClick = () => setActiveIdx && setActiveIdx(idx)
+  const onClick = () => setActiveIdx && setActiveIdx(idx)
 
   if (link.label === 'Главная') {
     href = isCasePage ? mainPageHref : `/${link.url}`
@@ -57,7 +57,7 @@ export default function Header({ nav, solutions, subservices }: NavProps) {
   const [activeIdx, setActiveIdx] = useState<number | null>(null)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   //
-  const [isCityModalOpen, setIsCityModalOpen] = useState(false)
+  // const [isCityModalOpen, setIsCityModalOpen] = useState(false)
 
   // const [currentCity, setCurrentCity] = useCurrentCity()
 
@@ -249,7 +249,7 @@ export default function Header({ nav, solutions, subservices }: NavProps) {
           solutions={solutions}
           subservices={subservices}
           toggleMobileMenu={toggleMobileMenu}
-          onOpenCityModal={() => setIsCityModalOpen(true)}
+          // onOpenCityModal={() => setIsCityModalOpen(true)}
           isMobileOpen={isMobileOpen}
         />
       </div>

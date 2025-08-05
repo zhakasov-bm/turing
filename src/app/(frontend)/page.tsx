@@ -15,27 +15,28 @@ import ApplicationFormBlock from './_components/ApplicationForm/ApplicationFormB
 import OurStackBlock from './_components/OurStackBlock'
 import ServicesBlock from './_components/ServicesBlock'
 import LeadCaptureBlock from './_components/ApplicationForm/LeadCaptureBlock'
+import FloatingNav from './_components/FloatingNav'
+import { getHomePageData } from '../utils/homeService'
 
 export default async function HomePage() {
-  const headers = await getHeaders()
-  const payloadConfig = await config
-  const payload = await getPayload({ config: payloadConfig })
-  const { user } = await payload.auth({ headers })
-  const component = await payload.findGlobal({
-    slug: 'component',
-    user,
-  })
+  // const headers = await getHeaders()
+  // const payloadConfig = await config
+  // const payload = await getPayload({ config: payloadConfig })
+
+  const { component, solutions, navigation } = await getHomePageData()
 
   const serviceBlock = component.globals.find((block) => block.blockType === 'services')
   const heading = serviceBlock?.heading || ''
 
-  const solutionsRes = await payload.find({ collection: 'solutions', sort: 'createdAt' })
-  const solutions = solutionsRes.docs
+  // const solutionsRes = await payload.find({ collection: 'solutions', sort: 'createdAt' })
+  // const solutions = solutionsRes.docs
   const formBlocks = component.globals.filter((block) => block.blockType === 'form')
 
   return (
     <div>
       <BGraphic />
+      <FloatingNav nav={navigation} />
+
       <HeroBlock component={component} />
       <AboutUsBlock component={component} />
       <ServicesBlock heading={heading} solutions={solutions} block={formBlocks[0]} />

@@ -124,7 +124,7 @@ body {
   }
 
   .payload-richtext h3 {
-    @apply text-xl md:text-2xl mb-4 font-normal;
+    @apply text-xl md:text-2xl mb-4;
   }
 
   .payload-richtext h5 {

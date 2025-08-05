@@ -34,7 +34,7 @@ function generateBreadcrumbsFromPath(
   customLabels: Record<string, string>,
   // currentCity: string,
 ): BreadcrumbItem[] {
-  let segments = pathname.split('/').filter(Boolean)
+  const segments = pathname.split('/').filter(Boolean)
   // Определяем город только из URL, не из currentCity
   // let city = ''
   // if (segments.length && ALLOWED_CITIES.includes(segments[0])) {

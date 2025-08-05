@@ -16,7 +16,7 @@ type Props = {
   solutions: Solution[]
   subservices: Subservice[]
   toggleMobileMenu: () => void
-  onOpenCityModal: () => void
+  // onOpenCityModal: () => void
   isMobileOpen: boolean
 }
 
@@ -25,7 +25,7 @@ export function MobileMenu({
   solutions,
   subservices,
   toggleMobileMenu,
-  onOpenCityModal,
+  // onOpenCityModal,
   isMobileOpen,
 }: Props) {
   const [servicesOpen, setServicesOpen] = useState(false)

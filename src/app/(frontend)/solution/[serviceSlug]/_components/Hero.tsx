@@ -61,7 +61,7 @@ export default function Hero(props: Props) {
         <Breadcrumbs customLabels={customLabels} />
       </div>
       <div className="flex flex-col justify-center items-center text-center">
-        <div className="flex flex-col gap-4 md:max-w-5xl px-6">
+        <div className="flex flex-col gap-4 md:max-w-5xl px-6 mt-4 md:mt-0">
           <h1 className="text-5xl md:leading-16">{title}</h1>
           <p className="text-lg md:text-2xl font-light font-inter">{subtitle}</p>
         </div>
@@ -70,7 +70,7 @@ export default function Hero(props: Props) {
           {component.statistics?.map((item, i) => (
             <div className="flex flex-col gap-2 md:items-start pt-12" key={i}>
               <span className="text-5xl md:text-6xl">{item.text}</span>
-              <p className="text-base font-light">{item.value}</p>
+              <p className="text-base font-light max-w-[240px] md:text-left">{item.value}</p>
             </div>
           ))}
         </div>
