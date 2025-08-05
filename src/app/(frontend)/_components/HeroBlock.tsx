@@ -65,7 +65,7 @@ export default function HeroBlock({ component }: { component: Component }) {
                 >
                   <div className="absolute flex top-2 left-0">
                     <Image src="/btn.svg" alt="btn_graphic" width={60} height={60} />
-                    <UniversalButton label="Погрузиться в креатив" to="#services" />
+                    <UniversalButton label={block.button_title} to="#services" />
                   </div>
                   <Image
                     src="/graphic.png"
