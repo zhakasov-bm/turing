@@ -1,6 +1,7 @@
 import { CollectionConfig } from 'payload'
 import { fieldsIfHasSubservices } from './fields/fieldsIfHasSubservices'
 import { commonFieldsIfNoSubservices } from './fields/commonFieldsIfNoSubservices'
+import { fieldsIfOutstaffing } from './fields/fieldsIfOutstaffing'
 
 export const Solutions: CollectionConfig = {
   slug: 'solutions',
@@ -50,7 +51,7 @@ export const Solutions: CollectionConfig = {
       name: 'servicesTitle',
       type: 'text',
       defaultValue: 'Какие услуги можно заказать у нас?',
-      required: true,
+      required: false,
     },
     {
       name: 'hasSubservices',
@@ -60,9 +61,15 @@ export const Solutions: CollectionConfig = {
     ...fieldsIfHasSubservices,
     ...commonFieldsIfNoSubservices,
     {
+      name: 'isOutstaffing',
+      type: 'checkbox',
+      label: 'Аутстаффинг',
+    },
+    ...fieldsIfOutstaffing,
+    {
       name: 'titleWhy',
       type: 'text',
-      required: true,
+      required: false,
     },
     {
       name: 'problem',
@@ -80,7 +87,7 @@ export const Solutions: CollectionConfig = {
           required: true,
         },
       ],
-      required: true,
+      required: false,
     },
     {
       name: 'titleQA',

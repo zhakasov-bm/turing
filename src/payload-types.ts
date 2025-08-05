@@ -272,7 +272,7 @@ export interface Solution {
         id?: string | null;
       }[]
     | null;
-  servicesTitle: string;
+  servicesTitle?: string | null;
   hasSubservices?: boolean | null;
   whyServiceTitle?: {
     root: {
@@ -301,16 +301,41 @@ export interface Solution {
   description?: string | null;
   availableServices?:
     | {
-        title: string;
+        title?: string | null;
         id?: string | null;
       }[]
     | null;
-  titleWhy: string;
-  problem: {
-    title: string;
-    subtitle: string;
-    id?: string | null;
-  }[];
+  isOutstaffing?: boolean | null;
+  titleOutstaff?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  approaches?:
+    | {
+        title: string;
+        icon: string | Media;
+        id?: string | null;
+      }[]
+    | null;
+  titleWhy?: string | null;
+  problem?:
+    | {
+        title: string;
+        subtitle: string;
+        id?: string | null;
+      }[]
+    | null;
   titleQA: string;
   questions: {
     question?: string | null;
@@ -751,6 +776,15 @@ export interface SolutionsSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
+        id?: T;
+      };
+  isOutstaffing?: T;
+  titleOutstaff?: T;
+  approaches?:
+    | T
+    | {
+        title?: T;
+        icon?: T;
         id?: T;
       };
   titleWhy?: T;

@@ -13,6 +13,8 @@ import AvailableServices from './AvailableServices/AvailableServices'
 import LeadCaptureBlock from '@/app/(frontend)/_components/ApplicationForm/LeadCaptureBlock'
 import LeadBlock from '../../components/LeadBlock'
 import FloatingNav from '@/app/(frontend)/_components/FloatingNav'
+import OurStackBlock from '@/app/(frontend)/_components/OurStackBlock'
+import ApproachesBlock from './ApproachesBlock'
 
 interface SolutionPageLayoutProps {
   component: any
@@ -42,14 +44,26 @@ export function SolutionPageLayout({
       <BrandsBlock component={component} />
 
       <div className="hidden md:block">
-        {formBlock && <LeadCaptureBlock block={formBlock} solutions={solutions} />}
+        {formBlock && !solution.isOutstaffing && (
+          <LeadCaptureBlock block={formBlock} solutions={solutions} />
+        )}
       </div>
 
-      {solution.hasSubservices && <WhyServiceNeeded solution={solution} />}
-      {!solution.hasSubservices && <InfoBlock solution={solution} />}
+      {!solution.isOutstaffing &&
+        (solution.hasSubservices ? (
+          <WhyServiceNeeded solution={solution} />
+        ) : (
+          <InfoBlock solution={solution} />
+        ))}
+      {solution.isOutstaffing && <ApproachesBlock solution={solution} block={formBlock} />}
 
       <ProblemBlock solution={solution} />
-      <AvailableServices subservices={subservices} solution={solution} block={formBlock} />
+
+      {solution.isOutstaffing && <OurStackBlock component={component} />}
+      {!solution.isOutstaffing && (
+        <AvailableServices subservices={subservices} solution={solution} block={formBlock} />
+      )}
+
       {/* <CasesBlock heading="Наши кейсы" cases={cases} type="simple" /> */}
 
       {formBlock && <LeadCaptureBlock block={formBlock} solutions={solutions} />}

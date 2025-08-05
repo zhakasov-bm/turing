@@ -1,13 +1,14 @@
 import { Field } from 'payload'
 
-export const fieldsIfHasSubservices: Field[] = [
+export const fieldsIfOutstaffing: Field[] = [
   {
-    name: 'whyServiceTitle',
+    name: 'titleOutstaff',
     type: 'richText',
-    label: 'Почему ваш сайт нуждается в',
+    label: 'Заголовок',
+    required: true,
   },
   {
-    name: 'whyList',
+    name: 'approaches',
     type: 'array',
     fields: [
       {
@@ -26,6 +27,6 @@ export const fieldsIfHasSubservices: Field[] = [
 ].map((field) => ({
   ...field,
   admin: {
-    condition: (_, siblingData) => siblingData.hasSubservices,
+    condition: (_, siblingData) => siblingData.isOutstaffing,
   },
 })) as Field[]

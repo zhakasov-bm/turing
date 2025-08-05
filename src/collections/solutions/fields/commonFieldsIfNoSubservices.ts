@@ -4,7 +4,7 @@ export const commonFieldsIfNoSubservices: Field[] = [
   {
     name: 'heading',
     type: 'text',
-    required: true,
+    required: false,
     label: 'Title of Block',
   },
   {
@@ -23,7 +23,7 @@ export const commonFieldsIfNoSubservices: Field[] = [
       {
         name: 'title',
         type: 'text',
-        required: true,
+        required: false,
       },
     ],
   },
