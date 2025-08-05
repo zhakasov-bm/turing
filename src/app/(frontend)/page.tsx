@@ -40,7 +40,9 @@ export default async function HomePage() {
       <HeroBlock component={component} />
       <AboutUsBlock component={component} />
       <ServicesBlock heading={heading} solutions={solutions} block={formBlocks[0]} />
-      <LeadCaptureBlock block={formBlocks[0]} solutions={solutions} />
+      <div className="hidden md:block">
+        <LeadCaptureBlock block={formBlocks[0]} solutions={solutions} />
+      </div>
 
       <OurStackBlock component={component} />
       <div className="hidden md:block">

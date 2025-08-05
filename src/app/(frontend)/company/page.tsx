@@ -15,6 +15,12 @@ import ApplicationFormBlock from '../_components/ApplicationForm/ApplicationForm
 import { getHomePageData } from '@/app/utils/homeService'
 import FloatingNav from '../_components/FloatingNav'
 
+export const metadata = {
+  title: { absolute: 'О компании Turing' },
+  description:
+    'О компании Turing: наша миссия, команда и инновационные подходы к разработке программного обеспечения и подбору удалённых разработчиков.',
+}
+
 export default async function CompanyPage() {
   const headers = await getHeaders()
   const payloadConfig = await config

@@ -7,10 +7,15 @@ import { getSolutionData } from '../utils/solutionsService'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { Solution, Subservice } from '@/payload-types'
+import { Metadata } from 'next'
 
-export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+export const metadata: Metadata = {
+  title: {
+    default: 'Turing — IT-решения, которые меняют бизнес',
+    template: '%s | Turing — IT-решения, которые меняют бизнес',
+  },
+  description:
+    'Turing — это команда творческих профессионалов, объединённых целью создавать инновационные IT-решения, которые трансформируют бизнес. Мы вдохновляемся идеями, подходим к каждому проекту индивидуально и помогаем компаниям становиться эффективнее, автоматизированнее и технологичнее.',
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {

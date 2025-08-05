@@ -28,7 +28,7 @@ export default function ApproachesBlock({ solution, block }: Props) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-12">
         {solution.approaches?.map((approach, id) => (
-          <div key={id} className="flex items-center gap-3 px-4 py-2 bg-background rounded-custom">
+          <div key={id} className="flex items-center gap-2 px-4 py-2 bg-background rounded-custom">
             {typeof approach.icon === 'object' && approach.icon?.url && (
               <Image
                 src={approach.icon.url}
