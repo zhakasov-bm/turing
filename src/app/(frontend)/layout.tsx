@@ -1,12 +1,14 @@
 import React from 'react'
 import './styles.css'
+import { unbounded, montserrat, inter } from '@/app/fonts'
+
 import { Providers } from './_components/providers/providers'
 import Header from './_components/Header/Header'
 import Footer from './_components/Footer/Footer'
 import { getSolutionData } from '../utils/solutionsService'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
-import { Solution, Subservice } from '@/payload-types'
+import { Navigation, Solution, Subservice } from '@/payload-types'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -23,7 +25,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
   const payload = await getPayload({ config })
 
-  const navigation = await payload.findGlobal({ slug: 'navigation' })
+  const navigation: Navigation = await payload.findGlobal({ slug: 'navigation' })
 
   // Услуги (solutions) и подуслуги (subservices) через shared service
   let solutions: Solution[] = []
@@ -45,7 +47,10 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   }
 
   return (
-    <html lang="en">
+    <html lang="ru" className={`${unbounded.variable} ${montserrat.variable} ${inter.variable}`}>
+      <head>
+        <link rel="icon" href="/favicon.ico" />
+      </head>
       <body>
         <Providers>
           <Header nav={navigation} solutions={solutions} subservices={subservices} />
