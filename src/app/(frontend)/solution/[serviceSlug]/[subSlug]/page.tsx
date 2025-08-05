@@ -18,7 +18,7 @@ export const generateMetadata = async ({ params }: PageProps): Promise<Metadata>
     title: `${subservice.name}`,
     description: subservice.subtitle.substring(0, 160),
     alternates: {
-      canonical: `https://alanturing.app/${subSlug}`,
+      canonical: `https://alanturing.app/solution/${serviceSlug}/${subSlug}`,
     },
   }
 }

@@ -3,6 +3,7 @@ import config from '@/payload.config'
 // import { extractFormBlocks } from '@/app/utils/formBlockUtils'
 import { Component, Navigation, Solution, Subservice } from '@/payload-types'
 import { getHomePageData } from './homeService'
+import { notFound } from 'next/navigation'
 
 type FormBlockType = Extract<Component['globals'][0], { blockType: 'form' }>
 
@@ -35,7 +36,7 @@ export async function getSolutionData(slug: string): Promise<SolutionData> {
 
   const solution = solutionRes.docs?.[0]
   if (!solution) {
-    throw new Error('Solution not found')
+    return notFound()
   }
 
   // Get subservices related to this service

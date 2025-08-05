@@ -1,5 +1,5 @@
-import { getPayload } from 'payload'
-import config from '@/payload.config'
+// import { getPayload } from 'payload'
+// import config from '@/payload.config'
 
 import { notFound } from 'next/navigation'
 // import { getSolutionData } from '@/app/utils/solutionsService'
@@ -23,7 +23,7 @@ export const generateMetadata = async ({ params }: PageProps): Promise<Metadata>
     title: `${solution.name}`,
     description: solution.subtitle.substring(0, 160),
     alternates: {
-      canonical: `https://alanturing.app/${slug}`,
+      canonical: `https://alanturing.app/solution/${slug}`,
     },
   }
 }

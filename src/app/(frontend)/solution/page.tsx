@@ -3,6 +3,7 @@ import config from '@/payload.config'
 
 import BGraphic from '../_components/BGraphic'
 import ServicesBlock from '../_components/ServicesBlock'
+import { notFound } from 'next/navigation'
 
 export const metadata = {
   title: { absolute: 'Услуги компании Simply Digital' },
@@ -25,6 +26,8 @@ export default async function page() {
 
   const solutionsRes = await payload.find({ collection: 'solutions', sort: 'createdAt' })
   const solutions = solutionsRes.docs
+
+  if (!solutions) return notFound()
 
   return (
     <div>

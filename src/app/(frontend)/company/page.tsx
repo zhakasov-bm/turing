@@ -14,6 +14,7 @@ import LeadCaptureBlock from '../_components/ApplicationForm/LeadCaptureBlock'
 import ApplicationFormBlock from '../_components/ApplicationForm/ApplicationFormBlock'
 import { getHomePageData } from '@/app/utils/homeService'
 import FloatingNav from '../_components/FloatingNav'
+import { notFound } from 'next/navigation'
 
 export const metadata = {
   title: { absolute: 'О компании Turing' },
@@ -39,7 +40,7 @@ export default async function CompanyPage() {
   const page = res.docs[0]
 
   if (!page) {
-    return <div>Страница не найдена</div>
+    return notFound()
   }
 
   const formBlocks = component.globals.filter((block) => block.blockType === 'form')
