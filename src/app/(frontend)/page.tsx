@@ -40,7 +40,15 @@ export default async function HomePage() {
       <HeroBlock component={component} />
       <AboutUsBlock component={component} />
       <ServicesBlock heading={heading} solutions={solutions} block={formBlocks[0]} />
-      <div className="hidden md:block">
+      <div
+        className="hidden md:block"
+        style={{
+          backgroundImage: 'url("graphic.svg")',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'bottom center',
+          backgroundSize: 'contain',
+        }}
+      >
         <LeadCaptureBlock block={formBlocks[0]} solutions={solutions} />
       </div>
 

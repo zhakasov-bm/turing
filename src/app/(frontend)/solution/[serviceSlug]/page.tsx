@@ -22,6 +22,9 @@ export const generateMetadata = async ({ params }: PageProps): Promise<Metadata>
   return {
     title: `${solution.name}`,
     description: solution.subtitle.substring(0, 160),
+    alternates: {
+      canonical: `https://alanturing.app/${slug}`,
+    },
   }
 }
 

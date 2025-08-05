@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://alanturing.app
+
+# Sitemaps
+Sitemap: https://alanturing.app/sitemap.xml
