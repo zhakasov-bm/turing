@@ -14,7 +14,7 @@ import ReviewBlock from './_components/ReviewBlock'
 import ApplicationFormBlock from './_components/ApplicationForm/ApplicationFormBlock'
 import OurStackBlock from './_components/OurStackBlock'
 import ServicesBlock from './_components/ServicesBlock'
-import LeadCaptureBlock from './_components/LeadCaptureBlock'
+import LeadCaptureBlock from './_components/ApplicationForm/LeadCaptureBlock'
 
 export default async function HomePage() {
   const headers = await getHeaders()
@@ -39,13 +39,13 @@ export default async function HomePage() {
       <HeroBlock component={component} />
       <AboutUsBlock component={component} />
       <ServicesBlock heading={heading} solutions={solutions} block={formBlocks[0]} />
-      <LeadCaptureBlock block={formBlocks[0]} />
+      <LeadCaptureBlock block={formBlocks[0]} solutions={solutions} />
 
       <OurStackBlock component={component} />
       <div className="hidden md:block">
         <BrandsBlock component={component} isLabel={true} />
       </div>
-      <LeadCaptureBlock block={formBlocks[1]} />
+      <LeadCaptureBlock block={formBlocks[1]} solutions={solutions} />
 
       <TeamBlock component={component} />
       <ReviewBlock component={component} />

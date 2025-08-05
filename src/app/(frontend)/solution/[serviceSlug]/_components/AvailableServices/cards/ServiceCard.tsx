@@ -14,7 +14,7 @@ export const ServiceCard = ({ name, icon }: ServiceItem) => (
       />
     ) : (
       <Image
-        src="/simply-sticker.svg"
+        src="/turing-sticker.svg"
         alt="service-icon"
         width={56}
         height={56}

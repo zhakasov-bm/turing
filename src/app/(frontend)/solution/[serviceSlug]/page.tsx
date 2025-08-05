@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation'
 import { SolutionPageLayout } from './_components/SolutionPageLayout'
 import { Metadata } from 'next'
 import { getSolutionData } from '@/app/utils/solutionsService'
+import { getHomePageData } from '@/app/utils/homeService'
 
 interface PageProps {
   params: Promise<{ serviceSlug: string }>
@@ -29,16 +30,18 @@ export default async function SolutionPage({ params }: PageProps) {
     const { serviceSlug: slug } = await params
     if (!slug) return notFound()
 
-    const { component, solution, subservices, formBlock } = await getSolutionData(slug)
+    const { component, solution, subservices, formBlock, navigation } = await getSolutionData(slug)
+    const { solutions } = await getHomePageData()
 
     return (
       <SolutionPageLayout
         component={component}
         solution={solution}
+        solutions={solutions}
         subservices={subservices}
         // cases={cases}
         formBlock={formBlock}
-        // navigation={navigation}
+        navigation={navigation}
       />
     )
   } catch (error) {

@@ -1,6 +1,7 @@
 import { getSubserviceData } from '@/app/utils/subservicesService'
 import { SubservicePageLayout } from './_components/SubservicePageLayout'
 import { Metadata } from 'next'
+import { getHomePageData } from '@/app/utils/homeService'
 
 interface PageProps {
   params: Promise<{ serviceSlug: string; subSlug: string }>
@@ -29,21 +30,22 @@ export default async function SubservicePage({ params }: PageProps) {
       subservice,
       // cases,
       formBlock,
-      // requestFormBlock,
       // seoBlocks,
-      // navigation,
+      navigation,
     } = await getSubserviceData(serviceSlug, subSlug)
+
+    const { solutions } = await getHomePageData()
 
     return (
       <SubservicePageLayout
         component={component}
+        solutions={solutions}
         service={service}
         subservice={subservice}
         // cases={cases}
         formBlock={formBlock}
-        // requestFormBlock={requestFormBlock}
         // seoBlocks={seoBlocks}
-        // navigation={navigation}
+        navigation={navigation}
       />
     )
   } catch (error) {

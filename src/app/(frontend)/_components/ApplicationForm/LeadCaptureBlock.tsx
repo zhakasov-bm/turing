@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react'
 
 import { handleFormSubmit } from '@/app/utils/formHandlers.ts'
 import { Component, Solution } from '@/payload-types'
-import FormBuilder from './ApplicationForm/FormBuilder'
-import SuccessModal from './Modal/SuccessModal'
+import FormBuilder from './FormBuilder'
+import SuccessModal from '../Modal/SuccessModal'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 
 type LeadCaptureProps = Extract<Component['globals'][0], { blockType: 'form' }>
@@ -17,22 +17,15 @@ type FormState = {
 
 type Props = {
   block: LeadCaptureProps
+  solutions?: Solution[]
 }
 
-export default function LeadCaptureBlock({ block }: Props) {
+export default function LeadCaptureBlock({ block, solutions }: Props) {
   const [formState, setFormState] = useState<FormState>({
     loading: false,
     error: null,
     success: false,
   })
-
-  const [solutions, setSolutions] = useState<Solution[]>([])
-  useEffect(() => {
-    fetch('/api/solutions')
-      .then((res) => (res.ok ? res.json() : Promise.reject('Ошибка при получении решений')))
-      .then((data) => setSolutions(data.docs || []))
-      .catch((err) => console.error(err))
-  }, [])
 
   const [phone, setPhone] = useState('')
 
@@ -71,6 +64,8 @@ export default function LeadCaptureBlock({ block }: Props) {
               solutions={solutions}
               classNames={{
                 wrapper: 'flex flex-col lg:flex-row gap-3 items-stretch font-inter',
+                input:
+                  'peer w-full rounded-2xl px-4 pt-5 pb-2 bg-inputBG text-lg focus:outline-none focus:ring-2',
                 button:
                   'bg-primary text-black px-5 rounded-2xl py-4 lg:h-min-full font-unbounded transition hover:bg-hover cursor-pointer',
               }}

@@ -49,7 +49,8 @@ export default function FormBuilder({
                     name: field.name,
                     required: field.required,
                     placeholder: field.placeholder,
-                    className: classNames.input || 'w-full rounded-2xl bg-white px-4 py-4',
+                    className:
+                      classNames.input || 'w-full rounded-2xl bg-white text-black px-4 py-4',
                   }}
                   value={phone}
                   onChange={setPhone}

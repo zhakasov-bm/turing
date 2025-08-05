@@ -6,6 +6,7 @@ import Image from 'next/image'
 // import { useCurrentCity } from '@/app/utils/useCurrentCity'
 // import Breadcrumbs from '../../../../_components/Breadcrumbs/Breadcrumbs'
 import { useTheme } from 'next-themes'
+import Breadcrumbs from '@/app/(frontend)/_components/Breadcrumbs/Breadcrumbs'
 
 type Props =
   | { component: Component; solution: Solution; subservice?: never }
@@ -55,21 +56,19 @@ export default function Hero(props: Props) {
           draggable={false}
         />
       </div>
-
-      {/* Breadcrumbs
+      {/* Breadcrumbs */}
       <div className="my-4 md:mb-8 px-6 md:px-0 flex justify-center">
         <Breadcrumbs customLabels={customLabels} />
-      </div> */}
-
+      </div>
       <div className="flex flex-col justify-center items-center text-center">
         <div className="flex flex-col gap-4 md:max-w-5xl px-6">
-          <h1 className="text-6xl md:leading-16">{title}</h1>
-          <p className="text-lg md:text-2xl font-light">{subtitle}</p>
+          <h1 className="text-5xl md:leading-16">{title}</h1>
+          <p className="text-lg md:text-2xl font-light font-inter">{subtitle}</p>
         </div>
 
-        <div className="flex flex-col gap-6 md:flex-row md:gap-8 px-6 md:px-12 mt-0 md:mt-20 md:max-w-5xl w-full items-center justify-between">
+        <div className="flex flex-col gap-6 md:flex-row md:gap-8 px-16 md:px-12 mt-0 md:mt-20 md:max-w-5xl w-full items-center justify-between">
           {component.statistics?.map((item, i) => (
-            <div className="flex flex-col gap-1 md:items-start pt-12" key={i}>
+            <div className="flex flex-col gap-2 md:items-start pt-12" key={i}>
               <span className="text-5xl md:text-6xl">{item.text}</span>
               <p className="text-base font-light">{item.value}</p>
             </div>

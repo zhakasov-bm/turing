@@ -10,8 +10,10 @@ import About from './components/About'
 import Mission from './components/Mission'
 import TeamBlock from '../_components/TeamBlock'
 import OurStackBlock from '../_components/OurStackBlock'
-import LeadCaptureBlock from '../_components/LeadCaptureBlock'
+import LeadCaptureBlock from '../_components/ApplicationForm/LeadCaptureBlock'
 import ApplicationFormBlock from '../_components/ApplicationForm/ApplicationFormBlock'
+import { getHomePageData } from '@/app/utils/homeService'
+import FloatingNav from '../_components/FloatingNav'
 
 export default async function CompanyPage() {
   const headers = await getHeaders()
@@ -35,10 +37,13 @@ export default async function CompanyPage() {
   }
 
   const formBlocks = component.globals.filter((block) => block.blockType === 'form')
+  const { navigation } = await getHomePageData()
 
   return (
     <div>
       <BGraphic />
+      <FloatingNav nav={navigation} />
+
       <Hero page={page} />
       <About page={page} />
       <Mission page={page} />

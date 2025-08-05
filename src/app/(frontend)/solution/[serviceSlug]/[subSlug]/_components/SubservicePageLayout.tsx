@@ -6,38 +6,41 @@ import AvailableServices from '../../_components/AvailableServices/AvailableServ
 import ReviewBlock from '@/app/(frontend)/_components/ReviewBlock'
 import ApplicationFormBlock from '@/app/(frontend)/_components/ApplicationForm/ApplicationFormBlock'
 import QABlock from '../../_components/QABlock'
-// import FloatingNav from '@/app/(frontend)/_components/FloatingNav'
+import LeadCaptureBlock from '@/app/(frontend)/_components/ApplicationForm/LeadCaptureBlock'
+import WhyUsBlock from '../../_components/WhyUsBlock'
+import FloatingNav from '@/app/(frontend)/_components/FloatingNav'
 
 interface SubservicePageLayoutProps {
   component: any
+  solutions?: any[]
   service: any
   subservice: any
   // cases: any[]
   formBlock: any
-  // requestFormBlock: any
-  // seoBlocks: any[]
-  // navigation: any
+  navigation: any
 }
 
 export function SubservicePageLayout({
   component,
+  solutions,
   service,
   subservice,
   // cases,
   formBlock,
-  // requestFormBlock,
-  // seoBlocks,
-  // navigation,
+  navigation,
 }: SubservicePageLayoutProps) {
   return (
     <div>
       <BGraphic />
-      {/* <FloatingNav nav={navigation} /> */}
+      <FloatingNav nav={navigation} />
 
       <Hero component={component} subservice={subservice} />
       <BrandsBlockBlock component={component} />
 
-      {/* {formBlock && <LeadCaptureBlock block={formBlock} formId="form-0" />} */}
+      <div className="hidden md:block">
+        {formBlock && <LeadCaptureBlock block={formBlock} solutions={solutions} />}
+      </div>
+
       <InfoBlock subservice={subservice} />
 
       <AvailableServices
@@ -46,10 +49,12 @@ export function SubservicePageLayout({
         subservice={subservice}
         block={formBlock}
       />
-      {/* <WhyUsBlock component={component} /> */}
+      <WhyUsBlock component={component} />
       {/* <CasesBlock heading="Наши кейсы" cases={cases} type="simple" /> */}
 
-      {/* {formBlock && <LeadCaptureBlock block={formBlock} formId="form-1" />} */}
+      <div className="hidden md:block">
+        {formBlock && <LeadCaptureBlock block={formBlock} solutions={solutions} />}
+      </div>
 
       <ReviewBlock component={component} />
       <QABlock subservice={subservice} />

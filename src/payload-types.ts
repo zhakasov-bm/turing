@@ -96,9 +96,11 @@ export interface Config {
   };
   globals: {
     component: Component;
+    navigation: Navigation;
   };
   globalsSelect: {
     component: ComponentSelect<false> | ComponentSelect<true>;
+    navigation: NavigationSelect<false> | NavigationSelect<true>;
   };
   locale: null;
   user: User & {
@@ -1207,6 +1209,46 @@ export interface Component {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigation".
+ */
+export interface Navigation {
+  id: string;
+  logo: string | Media;
+  logoDark?: (string | null) | Media;
+  links: {
+    label: string;
+    url: string;
+    id?: string | null;
+  }[];
+  contactTitle: string;
+  contacts: {
+    item?: string | null;
+    id?: string | null;
+  }[];
+  socialMedia: {
+    platform: 'telegram' | 'instagram' | 'facebook' | 'linkedin' | 'youtube';
+    url: string;
+    id?: string | null;
+  }[];
+  languageSwitcher?: boolean | null;
+  floatNav: {
+    navigation?:
+      | {
+          nav?: string | null;
+          scrollTo?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    button?: string | null;
+    id?: string | null;
+    blockName?: string | null;
+    blockType: 'floating-nav';
+  }[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "component_select".
  */
 export interface ComponentSelect<T extends boolean = true> {
@@ -1410,6 +1452,57 @@ export interface ComponentSelect<T extends boolean = true> {
         text?: T;
         value?: T;
         id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigation_select".
+ */
+export interface NavigationSelect<T extends boolean = true> {
+  logo?: T;
+  logoDark?: T;
+  links?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        id?: T;
+      };
+  contactTitle?: T;
+  contacts?:
+    | T
+    | {
+        item?: T;
+        id?: T;
+      };
+  socialMedia?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        id?: T;
+      };
+  languageSwitcher?: T;
+  floatNav?:
+    | T
+    | {
+        'floating-nav'?:
+          | T
+          | {
+              navigation?:
+                | T
+                | {
+                    nav?: T;
+                    scrollTo?: T;
+                    id?: T;
+                  };
+              button?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;
