@@ -6,6 +6,7 @@ import { getHomePageData } from '@/app/utils/homeService'
 import ApplicationFormBlock from '../_components/ApplicationForm/ApplicationFormBlock'
 import BlogCard from './components/BlogCard'
 import FloatingNav from '../_components/FloatingNav'
+import { getPost } from '@/app/utils/getPostData'
 
 export const metadata = {
   title: { absolute: 'Блог компании Turing IT agency' },
@@ -37,7 +38,7 @@ export default async function page() {
           customLabels={{ blogs: typeof posts.docs[0].title === 'string' ? page.name : 'Блог' }}
         />
       </div>
-      <div className="container mx-auto grid grid-cols-3 gap-3 lg:px-24">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-3 p-6 mb-10 lg:px-24">
         {posts.docs.map((post) => (
           <BlogCard key={post.id} post={post} />
         ))}

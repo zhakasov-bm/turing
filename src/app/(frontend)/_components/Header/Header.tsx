@@ -34,16 +34,12 @@ type GetNavLinkPropsArgs = {
 
 export function getNavLinkProps(args: GetNavLinkPropsArgs) {
   const { link, idx, isCasePage, mainPageHref, setActiveIdx } = args
-  let href = `/${link.url}`
+  let href = link.url.startsWith('/') ? link.url : `/${link.url}`
   const onClick = () => setActiveIdx && setActiveIdx(idx)
 
   if (link.label === 'Главная') {
-    href = isCasePage ? mainPageHref : `/${link.url}`
-  } else if (link.url === '/company') {
-    href = link.url
+    href = isCasePage ? mainPageHref : href
   } else if (link.url.startsWith('http')) {
-    href = link.url
-  } else if (link.url === '/case' || link.url.startsWith('/case/')) {
     href = link.url
   }
 

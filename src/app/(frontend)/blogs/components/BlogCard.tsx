@@ -15,17 +15,15 @@ export default function BlogCard({ post }: Props) {
       <Link
         href={`/blogs/${post.slug}`}
         key={post.id}
-        className="group flex flex-col justify-between gap-3 bg-background p-3 rounded-custom"
+        className="group flex flex-col justify-between gap-3 bg-none md:bg-background p-0 md:p-3 rounded-custom"
       >
         {post.image && typeof post.image === 'object' && post.image.url && (
-          <div className="w-full">
+          <div className="relative w-full h-[180px] sm:h-[200px] rounded-2xl overflow-hidden">
             <Image
               src={post.image.url}
               alt={post.image.alt || ''}
-              width={1920}
-              height={200}
-              layout="responsive"
-              className="object-cover rounded-2xl"
+              fill
+              className="object-cover"
               draggable={false}
             />
           </div>
@@ -36,19 +34,22 @@ export default function BlogCard({ post }: Props) {
             {formatDate(post.createdAt)}
           </time>
           <article className="space-y-4 font-inter">
-            <h4 className="text-lg font-medium leading-6 text-link group-hover:text-hoverText transition-colors mb-3">
+            <h4 className="text-xl md:text-lg font-medium leading-6 text-link group-hover:text-hoverText transition-colors mb-3">
               {post.title}
             </h4>
             {post.content && (
               <SerializedRichText
-                className="text-sm line-clamp-5 text-link/60"
+                className="hidden md:block text-sm sm:line-clamp-5 text-link/60"
                 data={post.content}
               />
             )}
           </article>
         </div>
-        <p className="font-inter text-center text-sm text-blue-500 underline">Читать полностью</p>
+        <p className="hidden md:block font-inter text-center text-sm text-blue-500 underline mb-2">
+          Читать полностью
+        </p>
       </Link>
+      <div className="md:hidden border-t border-link/10 pb-2"></div>
     </div>
   )
 }
