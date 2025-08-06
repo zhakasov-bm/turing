@@ -6,6 +6,7 @@ import PostBlock from './components/PostBlock'
 import ApplicationFormBlock from '../../_components/ApplicationForm/ApplicationFormBlock'
 import { getHomePageData } from '@/app/utils/homeService'
 import { getPost } from '@/app/utils/getPostData'
+import FloatingNav from '../../_components/FloatingNav'
 
 type Props = {
   params: Promise<{ postSlug: string }>
@@ -39,15 +40,13 @@ export default async function Page({ params }: Props) {
     notFound()
   }
 
-  const { component } = await getHomePageData()
-  const postBlock = component.globals.find((block) => block.blockType === 'posts')
-  const postHeading = postBlock?.heading || 'Последнее из блога'
+  const { component, navigation } = await getHomePageData()
 
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
   const posts = await payload.find({
     collection: 'posts',
-    limit: 2,
+    limit: 8,
     sort: '-createdAt',
     where: {
       includedInBlog: {
@@ -58,6 +57,8 @@ export default async function Page({ params }: Props) {
 
   return (
     <div>
+      <FloatingNav nav={navigation} />
+
       <PostBlock posts={posts.docs} post={post} />
       <ApplicationFormBlock component={component} />
     </div>

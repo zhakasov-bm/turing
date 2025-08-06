@@ -114,6 +114,23 @@ body {
   }
 }
 
+/* list */
+.payload-richtext ul {
+    @apply list-disc font-inter list-inside py-4 pl-3 font-light text-sm;
+  }
+
+  .payload-richtext ol {
+    @apply list-decimal font-inter list-inside py-4 pl-3 font-light text-sm;
+  }
+
+  .payload-richtext strong {
+    @apply font-medium
+  }
+
+  .payload-richtext blockquote {
+    @apply border-l-4 border-gray-300 pl-4 font-inter italic my-4 font-light
+  }
+
  /* Headings */
   .payload-richtext h1 {
     @apply text-2xl md:text-4xl my-2 md:mb-4 md:px-40 md:leading-13;

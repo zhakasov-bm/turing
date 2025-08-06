@@ -154,10 +154,8 @@ export default function Header({ nav, solutions, subservices }: NavProps) {
 
               const isActive =
                 link.url === '/'
-                  ? pathname === `/`
-                  : link.url === '/case' || link.url === '/company'
-                    ? pathname === link.url || pathname.startsWith(link.url + '/')
-                    : cleanedPath === link.url || cleanedPath.startsWith(link.url + '/')
+                  ? pathname === '/'
+                  : pathname === link.url || pathname.startsWith(link.url + '/')
 
               if (link.label === 'Услуги') {
                 return (

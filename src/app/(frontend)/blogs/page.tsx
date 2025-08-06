@@ -5,6 +5,7 @@ import Breadcrumbs from '../_components/Breadcrumbs/Breadcrumbs'
 import { getHomePageData } from '@/app/utils/homeService'
 import ApplicationFormBlock from '../_components/ApplicationForm/ApplicationFormBlock'
 import BlogCard from './components/BlogCard'
+import FloatingNav from '../_components/FloatingNav'
 
 export const metadata = {
   title: { absolute: 'Блог компании Turing IT agency' },
@@ -17,7 +18,6 @@ export default async function page() {
   const payload = await getPayload({ config: payloadConfig })
   const posts = await payload.find({
     collection: 'posts',
-    limit: 2,
     sort: '-createdAt',
     where: {
       includedInBlog: {
@@ -26,17 +26,20 @@ export default async function page() {
     },
   })
 
-  const { component } = await getHomePageData()
+  const { component, navigation } = await getHomePageData()
 
   return (
     <div>
       <BGraphic />
+      <FloatingNav nav={navigation} />
       <div className="mb-8 px-6 md:px-0 pt-28 md:pt-20 flex justify-center">
-        <Breadcrumbs />
+        <Breadcrumbs
+          customLabels={{ blogs: typeof posts.docs[0].title === 'string' ? page.name : 'Блог' }}
+        />
       </div>
-      <div className="grid grid-cols-4 gap-3">
+      <div className="container mx-auto grid grid-cols-3 gap-3 lg:px-24">
         {posts.docs.map((post) => (
-          <BlogCard post={post} />
+          <BlogCard key={post.id} post={post} />
         ))}
       </div>
 
