@@ -17,6 +17,7 @@ import ServicesBlock from './_components/ServicesBlock'
 import LeadCaptureBlock from './_components/ApplicationForm/LeadCaptureBlock'
 import FloatingNav from './_components/FloatingNav'
 import { getHomePageData } from '../utils/homeService'
+import PostsSection from './_components/PostsSection'
 
 export default async function HomePage() {
   // const headers = await getHeaders()
@@ -27,6 +28,9 @@ export default async function HomePage() {
 
   const serviceBlock = component.globals.find((block) => block.blockType === 'services')
   const heading = serviceBlock?.heading || ''
+
+  const postBlock = component.globals.find((block) => block.blockType === 'posts')
+  const postHeading = postBlock?.heading || 'Последнее из блога'
 
   // const solutionsRes = await payload.find({ collection: 'solutions', sort: 'createdAt' })
   // const solutions = solutionsRes.docs
@@ -60,6 +64,7 @@ export default async function HomePage() {
 
       <TeamBlock component={component} />
       <ReviewBlock component={component} />
+      <PostsSection heading={postHeading} />
       <ApplicationFormBlock component={component} />
     </div>
   )

@@ -1,5 +1,5 @@
-// import { getPayload } from 'payload'
-// import config from '@/payload.config'
+import { getPayload } from 'payload'
+import config from '@/payload.config'
 
 import { notFound } from 'next/navigation'
 // import { getSolutionData } from '@/app/utils/solutionsService'

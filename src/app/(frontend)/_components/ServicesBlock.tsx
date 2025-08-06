@@ -21,10 +21,6 @@ export default function ServicesBlock({ heading, solutions, block }: Props) {
   //   const [currentCity] = useCurrentCity()
   const [modalOpen, setModalOpen] = useState(false)
 
-  const handleModalSubmit = (data: { name: string; email: string; phone: string }) => {
-    setModalOpen(false)
-  }
-
   return (
     <section className="container-class" id="services">
       <h1 className="text-4xl text-center mb-8 md:mb-12">{heading}</h1>

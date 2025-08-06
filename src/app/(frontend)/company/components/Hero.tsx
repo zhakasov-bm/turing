@@ -18,7 +18,7 @@ export default function Hero({ page }: { page: Page }) {
                     customLabels={{ company: typeof page.name === 'string' ? page.name : 'О нас' }}
                   />
                 </div>
-                <RichText data={page.heading} />
+                <RichText data={page.heading} className="company-richtext" />
                 <div className="relative w-4/6 aspect-video">
                   {typeof page.image === 'object' && page.image?.url && (
                     <Image

@@ -7,6 +7,7 @@ import { CompanyBlock } from '@/blocks/CompanyBlock'
 import { FormBlock } from '@/blocks/FormBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
 import { OurStackBlock } from '@/blocks/OurStack'
+import { PostsBlock } from '@/blocks/PostsBlock'
 import { ReviewsBlock } from '@/blocks/ReviewsBlock'
 import { ServicesBlock } from '@/blocks/ServicesBlock'
 import { TeamBlock } from '@/blocks/TeamBlock'
@@ -36,6 +37,7 @@ export const Component: GlobalConfig = {
         CompanyBlock,
         OurStackBlock,
         FormBlock,
+        PostsBlock,
         ApplicationFormBlock,
       ],
     },

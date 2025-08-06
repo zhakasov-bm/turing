@@ -126,7 +126,7 @@ export default function Footer({ nav, solutions }: Props) {
         </div>
       </div>
 
-      <div className="text-center text-gray-500 font-light py-4">© turing.kz</div>
+      <div className="text-center text-gray-500 font-light py-4">© alanturing.app</div>
     </footer>
   )
 }

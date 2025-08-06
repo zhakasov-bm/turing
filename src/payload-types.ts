@@ -72,6 +72,7 @@ export interface Config {
     pages: Page;
     solutions: Solution;
     subservices: Subservice;
+    posts: Post;
     forms: Form;
     'form-submissions': FormSubmission;
     'payload-locked-documents': PayloadLockedDocument;
@@ -85,6 +86,7 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     solutions: SolutionsSelect<false> | SolutionsSelect<true>;
     subservices: SubservicesSelect<false> | SubservicesSelect<true>;
+    posts: PostsSelect<false> | PostsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -391,6 +393,35 @@ export interface Subservice {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts".
+ */
+export interface Post {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  image?: (string | null) | Media;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  includedInBlog?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "forms".
  */
 export interface Form {
@@ -606,6 +637,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'subservices';
         value: string | Subservice;
+      } | null)
+    | ({
+        relationTo: 'posts';
+        value: string | Post;
       } | null)
     | ({
         relationTo: 'forms';
@@ -836,6 +871,20 @@ export interface SubservicesSelect<T extends boolean = true> {
         answer?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts_select".
+ */
+export interface PostsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  description?: T;
+  image?: T;
+  content?: T;
+  includedInBlog?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1221,6 +1270,26 @@ export interface Component {
         blockType: 'form';
       }
     | {
+        heading: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'posts';
+      }
+    | {
         heading: string;
         title: string;
         contacts: {
@@ -1462,6 +1531,13 @@ export interface ComponentSelect<T extends boolean = true> {
           | {
               heading?: T;
               form?: T;
+              id?: T;
+              blockName?: T;
+            };
+        posts?:
+          | T
+          | {
+              heading?: T;
               id?: T;
               blockName?: T;
             };
