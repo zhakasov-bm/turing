@@ -84,7 +84,7 @@ export default function HeroBlock({ component }: { component: Component }) {
                     draggable={false}
                   />
 
-                  <p className="text-3xl text-white font-extralight leading-tight pr-16">
+                  <p className="text-xl lg:text-3xl text-white font-extralight leading-tight pr-16">
                     {block.subheading}
                   </p>
                 </div>

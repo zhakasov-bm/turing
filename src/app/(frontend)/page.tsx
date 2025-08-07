@@ -18,13 +18,14 @@ import LeadCaptureBlock from './_components/ApplicationForm/LeadCaptureBlock'
 import FloatingNav from './_components/FloatingNav'
 import { getHomePageData } from '../utils/homeService'
 import PostsSection from './_components/PostsSection'
+import CasesBlock from './_components/CasesBlock'
 
 export default async function HomePage() {
   // const headers = await getHeaders()
   // const payloadConfig = await config
   // const payload = await getPayload({ config: payloadConfig })
 
-  const { component, solutions, navigation } = await getHomePageData()
+  const { component, solutions, cases, navigation } = await getHomePageData()
 
   const serviceBlock = component.globals.find((block) => block.blockType === 'services')
   const heading = serviceBlock?.heading || ''
@@ -44,6 +45,7 @@ export default async function HomePage() {
       <HeroBlock component={component} />
       <AboutUsBlock component={component} />
       <ServicesBlock heading={heading} solutions={solutions} block={formBlocks[0]} />
+      <CasesBlock heading="Кейсы – истории, которые мы создали" cases={cases} type="slider" />
       <div
         className="hidden md:block"
         style={{

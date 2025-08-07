@@ -1,11 +1,11 @@
 import { getPayload } from 'payload'
 import config from '@/payload.config'
-import { Component, Navigation, Solution } from '@/payload-types'
+import { Case, Component, Navigation, Solution } from '@/payload-types'
 
 export interface HomePageData {
   component: Component
   solutions: Solution[]
-  // cases: Case[]
+  cases: Case[]
   navigation: Navigation
 }
 
@@ -13,13 +13,13 @@ export async function getHomePageData(): Promise<HomePageData> {
   const payload = await getPayload({ config })
   const component = await payload.findGlobal({ slug: 'component' })
   const solutionsRes = await payload.find({ collection: 'solutions', limit: 20, sort: 'createdAt' })
-  // const casesRes = await payload.find({ collection: 'cases', limit: 10 })
+  const casesRes = await payload.find({ collection: 'cases', limit: 10 })
   const navigation = await payload.findGlobal({ slug: 'navigation' })
 
   return {
     component,
     solutions: solutionsRes.docs,
-    // cases: casesRes.docs,
+    cases: casesRes.docs,
     navigation,
   }
 }

@@ -73,6 +73,7 @@ export interface Config {
     solutions: Solution;
     subservices: Subservice;
     posts: Post;
+    cases: Case;
     forms: Form;
     'form-submissions': FormSubmission;
     'payload-locked-documents': PayloadLockedDocument;
@@ -87,6 +88,7 @@ export interface Config {
     solutions: SolutionsSelect<false> | SolutionsSelect<true>;
     subservices: SubservicesSelect<false> | SubservicesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    cases: CasesSelect<false> | CasesSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -422,6 +424,58 @@ export interface Post {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cases".
+ */
+export interface Case {
+  id: string;
+  heading: string;
+  subtitle: string;
+  slug: string;
+  title?: string | null;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  image: string | Media;
+  tags?:
+    | {
+        tag: string;
+        id?: string | null;
+      }[]
+    | null;
+  actionTitle: string;
+  actions?:
+    | {
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  resultTitle: string;
+  results?:
+    | {
+        value: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  'result-image'?: (string | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "forms".
  */
 export interface Form {
@@ -641,6 +695,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: string | Post;
+      } | null)
+    | ({
+        relationTo: 'cases';
+        value: string | Case;
       } | null)
     | ({
         relationTo: 'forms';
@@ -885,6 +943,43 @@ export interface PostsSelect<T extends boolean = true> {
   image?: T;
   content?: T;
   includedInBlog?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cases_select".
+ */
+export interface CasesSelect<T extends boolean = true> {
+  heading?: T;
+  subtitle?: T;
+  slug?: T;
+  title?: T;
+  description?: T;
+  image?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  actionTitle?: T;
+  actions?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  resultTitle?: T;
+  results?:
+    | T
+    | {
+        value?: T;
+        description?: T;
+        id?: T;
+      };
+  'result-image'?: T;
   updatedAt?: T;
   createdAt?: T;
 }

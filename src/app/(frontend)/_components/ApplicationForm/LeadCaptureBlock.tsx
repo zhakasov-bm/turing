@@ -41,7 +41,7 @@ export default function LeadCaptureBlock({ block, solutions }: Props) {
     handleFormSubmit({ e, form: block.form, phone, setFormState, setPhone })
 
   return (
-    <section className="container mx-auto my-16 lg:my-20 px-6 md:px-56">
+    <section className="container mx-auto my-16 lg:my-20 px-6 lg:px-56">
       <div className="bg-background rounded-custom">
         {typeof block?.form === 'object' && block?.form?.title === 'application-form' && (
           <div className="flex flex-col gap-6 py-10 px-4 md:px-8">
