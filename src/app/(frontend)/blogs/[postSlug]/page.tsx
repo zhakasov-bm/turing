@@ -7,6 +7,7 @@ import ApplicationFormBlock from '../../_components/ApplicationForm/ApplicationF
 import { getHomePageData } from '@/app/utils/homeService'
 import { getPost } from '@/app/utils/getPostData'
 import FloatingNav from '../../_components/FloatingNav'
+import PostsSection from '../../_components/PostsSection'
 
 type Props = {
   params: Promise<{ postSlug: string }>
@@ -26,7 +27,7 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
     title: `${post.title}`,
     description: post.description.substring(0, 160) || '',
     alternates: {
-      canonical: `https://alanturing.app/posts/${slug}`,
+      canonical: `https://alanturing.app/blogs/${slug}`,
     },
   }
 }
@@ -56,7 +57,7 @@ export default async function Page({ params }: Props) {
   })
 
   return (
-    <div>
+    <div className="pt-[72px] md:pt-0">
       <FloatingNav nav={navigation} />
 
       <PostBlock posts={posts.docs} post={post} />

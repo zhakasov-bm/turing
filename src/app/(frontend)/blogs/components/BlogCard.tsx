@@ -11,11 +11,11 @@ type Props = {
 
 export default function BlogCard({ post }: Props) {
   return (
-    <div>
+    <div className="h-full">
       <Link
         href={`/blogs/${post.slug}`}
         key={post.id}
-        className="group flex flex-col justify-between gap-3 bg-none md:bg-background p-0 md:p-3 rounded-custom"
+        className="group flex flex-col justify-between h-full gap-3 bg-none md:bg-background p-0 md:p-3 rounded-custom"
       >
         {post.image && typeof post.image === 'object' && post.image.url && (
           <div className="relative w-full h-[180px] sm:h-[200px] rounded-2xl overflow-hidden">
@@ -29,7 +29,7 @@ export default function BlogCard({ post }: Props) {
           </div>
         )}
 
-        <div className="flex flex-col gap-2 p-2">
+        <div className="flex flex-col gap-2 p-2 flex-grow">
           <time className="text-link/40 font-inter text-xs font-normal">
             {formatDate(post.createdAt)}
           </time>
@@ -39,17 +39,19 @@ export default function BlogCard({ post }: Props) {
             </h4>
             {post.content && (
               <SerializedRichText
-                className="hidden md:block text-sm sm:line-clamp-5 text-link/60"
+                className="text-sm line-clamp-2 md:line-clamp-5 text-link/60"
                 data={post.content}
               />
             )}
           </article>
         </div>
+
         <p className="hidden md:block font-inter text-center text-sm text-blue-500 underline mb-2">
           Читать полностью
         </p>
       </Link>
-      <div className="md:hidden border-t border-link/10 pb-2"></div>
+
+      <div className="md:hidden border-t border-link/10 pb-2 mt-2"></div>
     </div>
   )
 }

@@ -14,8 +14,8 @@ export default function PostBlock({ posts, post }: Props) {
   return (
     <section className="container mx-auto my-16 px-6 lg:px-24">
       <Breadcrumbs customLabels={{ blogs: 'Блог', [post.slug]: post.title }} />
-      <div className="flex gap-8 pt-10">
-        <div className="flex flex-col gap-16 w-[75%] md:w-full">
+      <div className="flex flex-col md:flex-row gap-8 pt-10">
+        <div className="flex flex-col gap-8 md:gap-16 md:w-[75%] w-full">
           {post.image && typeof post.image === 'object' && post.image.url && (
             <div className="w-full">
               <Image
@@ -31,14 +31,14 @@ export default function PostBlock({ posts, post }: Props) {
           )}
 
           <div>
-            <h4 className="text-lg font-inter md:text-xl mb-4">{post.title}</h4>
+            <h4 className="font-inter font-semibold text-xl mb-4">{post.title}</h4>
             {post.content && (
               <SerializedRichText className="payload-richtext" data={post.content} />
             )}
           </div>
         </div>
 
-        <div className="hidden md:flex h-screen sticky flex-col gap-8 w-[35%]">
+        <div className="flex md:h-screen sticky flex-col gap-8 md:w-[35%]">
           <h3 className="text-xl">Последнее в блоге</h3>
           <div className="flex flex-col gap-4">
             {posts
