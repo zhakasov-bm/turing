@@ -28,7 +28,7 @@ export default async function page() {
   let cases: Case[] = []
 
   try {
-    let casesRes = await payload.find({
+    const casesRes = await payload.find({
       collection: 'cases',
       limit: 10,
     })
