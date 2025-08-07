@@ -1,9 +1,12 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import Head from 'next/head'
+import Image from 'next/image'
 // import { ALLOWED_CITIES } from '../utils/cities'
+
+export const metadata = {
+  title: '404 — Страница не найдена',
+}
 
 export default function NotFound() {
   // const pathname = usePathname()
@@ -12,21 +15,42 @@ export default function NotFound() {
   // const cityUrl = isValidCity ? `/${pathCity}` : '/'
 
   return (
-    <>
-      <Head>
-        <title>404 — Страница не найдена</title>
-      </Head>
-      <main style={{ textAlign: 'center', padding: '8rem 1rem' }}>
-        <h1 className="font-unbounded text-4xl mb-4">404</h1>
-        <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>Страница не найдена</h1>
-        <p>
-          Проверьте правильность адреса или вернитесь на{' '}
-          <Link className="underline decoration-blue-500 decoration-2" href={'/'}>
-            главную
+    <section className="pt-20 md:pt-0 container mx-auto my-16 px-6 lg:px-24">
+      <div className="flex gap-16 justify-between items-center p-8 md:p-16 bg-background rounded-custom ">
+        <div className="flex flex-col gap-6 md:gap-10 flex-1">
+          <h1 className="font-unbounded text-3xl mb-4">Страница не найдена</h1>
+          <p className="font-inter text-lg text-link/80">
+            Запрашиваемая страница не существует или была перемещена на другой адрес. Попробуйте
+            начать с главной страницы.
+          </p>
+          <div className="p-8">
+            <Image
+              src="/404-not-found.png"
+              alt="404-not-found"
+              width={400}
+              height={200}
+              draggable={false}
+              className="object-contain"
+            />
+          </div>
+          <Link
+            className="bg-primary text-black text-center hover:bg-hover text-sm py-4 md:py-3 px-6 rounded-2xl md:w-fit"
+            href={'/'}
+          >
+            Перейти на главную
           </Link>
-          .
-        </p>
-      </main>
-    </>
+        </div>
+        <div className="hidden md:flex-1">
+          <Image
+            src="/404-not-found.png"
+            alt="404-not-found"
+            width={400}
+            height={200}
+            draggable={false}
+            className="object-contain"
+          />
+        </div>
+      </div>
+    </section>
   )
 }
