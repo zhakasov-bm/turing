@@ -23,7 +23,7 @@ export default function NotFound() {
             Запрашиваемая страница не существует или была перемещена на другой адрес. Попробуйте
             начать с главной страницы.
           </p>
-          <div className="p-8">
+          <div className="block md:hidden p-8">
             <Image
               src="/404-not-found.png"
               alt="404-not-found"
@@ -40,7 +40,7 @@ export default function NotFound() {
             Перейти на главную
           </Link>
         </div>
-        <div className="hidden md:flex-1">
+        <div className="hidden md:flex flex-1">
           <Image
             src="/404-not-found.png"
             alt="404-not-found"
