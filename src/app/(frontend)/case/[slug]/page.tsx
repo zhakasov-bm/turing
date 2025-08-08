@@ -13,7 +13,6 @@ import BGraphic from '../../_components/BGraphic'
 import { Metadata } from 'next'
 import FloatingNav from '../../_components/FloatingNav'
 import ApplicationFormBlock from '../../_components/ApplicationForm/ApplicationFormBlock'
-import { C } from 'vitest/dist/chunks/reporters.d.DL9pg5DB.js'
 import { getHomePageData } from '@/app/utils/homeService'
 
 type Props = {
@@ -33,7 +32,9 @@ async function getCase(slug: string) {
       where: { slug: { equals: slug } },
     })
 
-    if (!caseResult.docs?.length) return notFound()
+    if (!caseResult.docs?.length) {
+      notFound()
+    }
 
     const caseData = caseResult.docs[0]
     const navigation = await payload.findGlobal({ slug: 'navigation' })
@@ -51,7 +52,7 @@ async function getCase(slug: string) {
     }
   } catch (error) {
     console.error('Ошибка при получении кейса:', error)
-    return notFound()
+    notFound()
   }
 }
 
@@ -63,12 +64,17 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
   return {
     title: `${caseData.heading}`,
     description: caseData.subtitle.substring(0, 160),
+    alternates: {
+      canonical: `https://alanturing.app/case/${slug}`,
+    },
   }
 }
 
 export default async function CasePage({ params }: Props) {
   const { slug } = await params
-  if (!slug) return notFound()
+  if (!slug) {
+    notFound()
+  }
   const { caseData, component, navigation, casesList } = await getCase(slug)
   const { solutions } = await getHomePageData()
 

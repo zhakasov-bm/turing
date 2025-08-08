@@ -33,7 +33,7 @@ export default async function page() {
   if (!solutions) return notFound()
 
   return (
-    <div className="pt-[72px] md:pt-0">
+    <div>
       <BGraphic />
       <ServicesBlock heading={heading} solutions={solutions} block={formBlocks[0]} />
     </div>

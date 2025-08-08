@@ -19,6 +19,9 @@ export const metadata = {
   title: { absolute: 'О компании Turing' },
   description:
     'О компании Turing: наша миссия, команда и инновационные подходы к разработке программного обеспечения и подбору удалённых разработчиков.',
+  alternates: {
+    canonical: `https://alanturing.app/company`,
+  },
 }
 
 export default async function CompanyPage() {

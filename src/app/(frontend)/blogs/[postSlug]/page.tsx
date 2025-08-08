@@ -57,7 +57,7 @@ export default async function Page({ params }: Props) {
   })
 
   return (
-    <div className="pt-[72px] md:pt-0">
+    <div>
       <FloatingNav nav={navigation} />
 
       <PostBlock posts={posts.docs} post={post} />

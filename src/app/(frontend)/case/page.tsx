@@ -13,6 +13,9 @@ export const metadata = {
   title: { absolute: 'Кейсы Simply Digital — наши успешные проекты' },
   description:
     'Успешные кейсы компании Simply Digital. Реальные результаты и примеры роста бизнеса с помощью digital-решений.',
+  alternates: {
+    canonical: `https://alanturing.app/case`,
+  },
 }
 
 export default async function page() {
