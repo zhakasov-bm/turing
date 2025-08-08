@@ -1,8 +1,9 @@
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 // import { extractFormBlocks } from '@/app/utils/formBlockUtils'
-import { Component, Navigation, Solution, Subservice } from '@/payload-types'
+import { Case, Component, Navigation, Solution, Subservice } from '@/payload-types'
 import { getHomePageData } from './homeService'
+import { notFound } from 'next/navigation'
 
 type FormBlockType = Extract<Component['globals'][0], { blockType: 'form' }>
 
@@ -10,7 +11,7 @@ export interface SolutionData {
   component: Component
   solution: Solution
   subservices: Subservice[]
-  // cases: Case[]
+  cases: Case[]
   formBlock: FormBlockType | null
   navigation: Navigation
 }
@@ -20,22 +21,22 @@ export async function getSolutionData(slug: string): Promise<SolutionData> {
 
   const { navigation } = await getHomePageData()
 
-  const [component, solutionRes] = await Promise.all([
+  const [component, solutionRes, casesResult] = await Promise.all([
     payload.findGlobal({ slug: 'component' }),
     payload.find({
       collection: 'solutions',
       where: { slug: { equals: slug } },
     }),
-    // payload.find({
-    //   collection: 'cases',
-    //   limit: 3,
-    //   sort: '-createdAt',
-    // }),
+    payload.find({
+      collection: 'cases',
+      limit: 3,
+      sort: '-createdAt',
+    }),
   ])
 
   const solution = solutionRes.docs?.[0]
   if (!solution) {
-    throw new Error('Solution not found')
+    notFound()
   }
 
   // Get subservices related to this service
@@ -67,7 +68,7 @@ export async function getSolutionData(slug: string): Promise<SolutionData> {
     component,
     solution,
     subservices,
-    // cases: casesResult.docs,
+    cases: casesResult.docs,
     formBlock: formBlocks[0] || null,
     navigation,
   }

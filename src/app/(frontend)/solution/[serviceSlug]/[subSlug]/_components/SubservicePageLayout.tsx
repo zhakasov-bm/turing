@@ -9,13 +9,14 @@ import QABlock from '../../_components/QABlock'
 import LeadCaptureBlock from '@/app/(frontend)/_components/ApplicationForm/LeadCaptureBlock'
 import WhyUsBlock from '../../_components/WhyUsBlock'
 import FloatingNav from '@/app/(frontend)/_components/FloatingNav'
+import CasesBlock from '@/app/(frontend)/_components/CasesBlock'
 
 interface SubservicePageLayoutProps {
   component: any
   solutions?: any[]
   service: any
   subservice: any
-  // cases: any[]
+  cases: any[]
   formBlock: any
   navigation: any
 }
@@ -25,7 +26,7 @@ export function SubservicePageLayout({
   solutions,
   service,
   subservice,
-  // cases,
+  cases,
   formBlock,
   navigation,
 }: SubservicePageLayoutProps) {
@@ -50,7 +51,7 @@ export function SubservicePageLayout({
         block={formBlock}
       />
       <WhyUsBlock component={component} />
-      {/* <CasesBlock heading="Наши кейсы" cases={cases} type="simple" /> */}
+      {cases.length > 0 && <CasesBlock heading="Наши кейсы" cases={cases} type="simple" />}
 
       <div className="hidden md:block">
         {formBlock && <LeadCaptureBlock block={formBlock} solutions={solutions} />}

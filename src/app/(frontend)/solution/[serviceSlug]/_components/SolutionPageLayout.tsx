@@ -15,13 +15,14 @@ import LeadBlock from '../../components/LeadBlock'
 import FloatingNav from '@/app/(frontend)/_components/FloatingNav'
 import OurStackBlock from '@/app/(frontend)/_components/OurStackBlock'
 import ApproachesBlock from './ApproachesBlock'
+import CasesBlock from '@/app/(frontend)/_components/CasesBlock'
 
 interface SolutionPageLayoutProps {
   component: any
   solution: any
   subservices: any[]
   solutions?: any[]
-  //   cases: any[]
+  cases: any[]
   formBlock: any
   navigation: any
 }
@@ -31,7 +32,7 @@ export function SolutionPageLayout({
   solution,
   solutions,
   subservices,
-  //   cases,
+  cases,
   formBlock,
   navigation,
 }: SolutionPageLayoutProps) {
@@ -64,7 +65,7 @@ export function SolutionPageLayout({
         <AvailableServices subservices={subservices} solution={solution} block={formBlock} />
       )}
 
-      {/* <CasesBlock heading="Наши кейсы" cases={cases} type="simple" /> */}
+      {cases.length > 0 && <CasesBlock heading="Наши кейсы" cases={cases} type="simple" />}
 
       {formBlock && <LeadCaptureBlock block={formBlock} solutions={solutions} />}
       <WhyUsBlock component={component} />

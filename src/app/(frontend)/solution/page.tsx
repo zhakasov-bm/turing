@@ -9,6 +9,9 @@ export const metadata = {
   title: { absolute: 'Услуги компании Simply Digital' },
   description:
     'Услуги компании Simply Digital: комплексный digital-маркетинг, стратегия, реклама, SEO, SMM и аналитика.',
+  alternates: {
+    canonical: `https://alanturing.app/solution`,
+  },
 }
 
 export default async function page() {

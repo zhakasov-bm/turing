@@ -16,7 +16,7 @@ interface PageProps {
 // Метаданные страницы
 export const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
   const { serviceSlug: slug } = await params
-  if (!slug) return notFound()
+
   const { solution } = await getSolutionData(slug)
 
   return {
@@ -31,9 +31,9 @@ export const generateMetadata = async ({ params }: PageProps): Promise<Metadata>
 export default async function SolutionPage({ params }: PageProps) {
   try {
     const { serviceSlug: slug } = await params
-    if (!slug) return notFound()
 
-    const { component, solution, subservices, formBlock, navigation } = await getSolutionData(slug)
+    const { component, solution, subservices, formBlock, cases, navigation } =
+      await getSolutionData(slug)
     const { solutions } = await getHomePageData()
 
     return (
@@ -42,20 +42,13 @@ export default async function SolutionPage({ params }: PageProps) {
         solution={solution}
         solutions={solutions}
         subservices={subservices}
-        // cases={cases}
+        cases={cases}
         formBlock={formBlock}
         navigation={navigation}
       />
     )
   } catch (error) {
     console.error('Error in SolutionPage:', error)
-    return (
-      <div className="container mx-auto py-8">
-        <h1 className="text-2xl font-bold mb-4">Error loading solution</h1>
-        <p className="text-red-600">
-          {error instanceof Error ? error.message : 'Unknown error occurred'}
-        </p>
-      </div>
-    )
+    notFound()
   }
 }

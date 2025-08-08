@@ -1,7 +1,8 @@
 import { getPayload } from 'payload'
 import config from '@/payload.config'
-import { Component, Navigation, Solution, Subservice } from '@/payload-types'
+import { Case, Component, Navigation, Solution, Subservice } from '@/payload-types'
 import { getHomePageData } from './homeService'
+import { notFound } from 'next/navigation'
 
 type FormBlockType = Extract<Component['globals'][0], { blockType: 'form' }>
 
@@ -9,9 +10,8 @@ export interface SubserviceData {
   component: Component
   service: Solution
   subservice: Subservice
-  // cases: Case[]
+  cases: Case[]
   formBlock: FormBlockType | null
-  // seoBlocks: NonNullable<Subservice['additionalBlocks']>
   navigation: Navigation
 }
 
@@ -23,23 +23,23 @@ export async function getSubserviceData(
 
   const { navigation } = await getHomePageData()
 
-  const [component, serviceRes] = await Promise.all([
+  const [component, serviceRes, casesResult] = await Promise.all([
     payload.findGlobal({ slug: 'component' }),
     payload.find({
       collection: 'solutions',
       sort: 'createdAt',
       where: { slug: { equals: serviceSlug } },
     }),
-    // payload.find({
-    //   collection: 'cases',
-    //   limit: 3,
-    //   sort: '-createdAt',
-    // }),
+    payload.find({
+      collection: 'cases',
+      limit: 3,
+      sort: '-createdAt',
+    }),
   ])
 
   const service = serviceRes.docs[0]
   if (!service) {
-    throw new Error('Service not found')
+    notFound()
   }
 
   const subRes = await payload.find({
@@ -49,7 +49,7 @@ export async function getSubserviceData(
 
   const subservice = subRes.docs[0]
   if (!subservice) {
-    throw new Error('Subservice not found')
+    notFound()
   }
 
   // Extract form blocks using shared utility
@@ -59,9 +59,8 @@ export async function getSubserviceData(
     component,
     service,
     subservice,
-    // cases: casesResult.docs,
+    cases: casesResult.docs,
     formBlock: formBlocks[0] || null,
-    // seoBlocks,
     navigation,
   }
 }

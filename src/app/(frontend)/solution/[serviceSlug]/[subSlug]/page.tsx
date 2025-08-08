@@ -2,6 +2,7 @@ import { getSubserviceData } from '@/app/utils/subservicesService'
 import { SubservicePageLayout } from './_components/SubservicePageLayout'
 import { Metadata } from 'next'
 import { getHomePageData } from '@/app/utils/homeService'
+import { notFound } from 'next/navigation'
 
 interface PageProps {
   params: Promise<{ serviceSlug: string; subSlug: string }>
@@ -27,15 +28,8 @@ export default async function SubservicePage({ params }: PageProps) {
   try {
     const { serviceSlug, subSlug } = await params
 
-    const {
-      component,
-      service,
-      subservice,
-      // cases,
-      formBlock,
-      // seoBlocks,
-      navigation,
-    } = await getSubserviceData(serviceSlug, subSlug)
+    const { component, service, subservice, cases, formBlock, navigation } =
+      await getSubserviceData(serviceSlug, subSlug)
 
     const { solutions } = await getHomePageData()
 
@@ -45,21 +39,13 @@ export default async function SubservicePage({ params }: PageProps) {
         solutions={solutions}
         service={service}
         subservice={subservice}
-        // cases={cases}
+        cases={cases}
         formBlock={formBlock}
-        // seoBlocks={seoBlocks}
         navigation={navigation}
       />
     )
   } catch (error) {
     console.error('Error in SubservicePage:', error)
-    return (
-      <div className="container mx-auto py-8">
-        <h1 className="text-2xl font-bold mb-4">Error loading subservice</h1>
-        <p className="text-red-600">
-          {error instanceof Error ? error.message : 'Unknown error occurred'}
-        </p>
-      </div>
-    )
+    notFound()
   }
 }
