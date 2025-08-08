@@ -66,7 +66,7 @@ export default function LeadCaptureBlock({ block, solutions }: Props) {
                 wrapper: 'flex flex-col lg:flex-row gap-3 items-stretch font-inter',
                 input:
                   'peer w-full rounded-2xl px-4 pt-5 pb-2 bg-inputBG text-lg focus:outline-none focus:ring-2',
-                select: 'w-full rounded-2xl min-h-[56px] px-4 py-4 bg-white text-black',
+                select: 'w-full rounded-2xl px-4 py-5 md:py-4 bg-white text-black',
                 button:
                   'bg-primary text-black px-5 rounded-2xl py-4 lg:h-min-full font-unbounded transition hover:bg-hover cursor-pointer',
               }}
