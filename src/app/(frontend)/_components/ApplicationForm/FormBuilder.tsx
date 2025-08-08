@@ -25,6 +25,7 @@ export default function FormBuilder({
     wrapper?: string
     input?: string
     textarea?: string
+    select?: string
     button?: string
   }
 }) {
@@ -71,7 +72,9 @@ export default function FormBuilder({
                   name={field.name}
                   id={inputId}
                   required={field.required}
-                  className={classNames.input || 'w-full rounded-2xl px-4 py-4 bg-white text-black'}
+                  className={
+                    classNames.select || 'w-full rounded-2xl px-4 py-4 bg-white text-black'
+                  }
                   defaultValue=""
                 >
                   <option value="" disabled>

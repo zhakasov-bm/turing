@@ -45,7 +45,9 @@ export default async function HomePage() {
       <HeroBlock component={component} />
       <AboutUsBlock component={component} />
       <ServicesBlock heading={heading} solutions={solutions} block={formBlocks[0]} />
-      <CasesBlock heading="Кейсы – истории, которые мы создали" cases={cases} type="slider" />
+      {cases.length > 0 && (
+        <CasesBlock heading="Кейсы – истории, которые мы создали" cases={cases} type="slider" />
+      )}
       <div
         className="hidden md:block"
         style={{
@@ -61,8 +63,11 @@ export default async function HomePage() {
       <OurStackBlock component={component} />
       <div className="hidden md:block">
         <BrandsBlock component={component} isLabel={true} />
+        <LeadCaptureBlock block={formBlocks[1]} solutions={solutions} />
       </div>
-      <LeadCaptureBlock block={formBlocks[1]} solutions={solutions} />
+      <div className="block md:hidden">
+        <LeadCaptureBlock block={formBlocks[0]} solutions={solutions} />
+      </div>
 
       <TeamBlock component={component} />
       <ReviewBlock component={component} />

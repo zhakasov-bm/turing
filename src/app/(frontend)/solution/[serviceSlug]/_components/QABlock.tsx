@@ -22,7 +22,7 @@ export default function QABlock({ solution, subservice }: Props) {
   return (
     <section id="faq" className="container mx-auto px-8 md:px-56 mb-16">
       <h1 className="text-4xl pb-8 md:pb-12 text-center">{content.titleQA}</h1>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-2">
         {content.questions?.map((item, index) => {
           const isOpen = openIndex === index
 
@@ -35,7 +35,7 @@ export default function QABlock({ solution, subservice }: Props) {
                 className="flex justify-between items-center cursor-pointer"
                 onClick={() => toggle(index)}
               >
-                <span className="text-base">{item.question}</span>
+                <span className="text-sm md:text-base pr-4">{item.question}</span>
                 {isOpen ? <FaMinus /> : <FaPlus />}
               </div>
 

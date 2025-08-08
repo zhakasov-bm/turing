@@ -141,7 +141,7 @@ body {
   }
 
   .payload-richtext h3 {
-    @apply text-xl md:text-2xl mb-4;
+    @apply text-lg md:text-2xl mb-4;
   }
 
   .payload-richtext h4 {
@@ -165,7 +165,7 @@ body {
   }
 
   .approach-richtext p {
-    @apply text-xl font-inter md:px-24
+    @apply text-lg font-inter md:px-24
   }
 
   .mission-richtext p {
