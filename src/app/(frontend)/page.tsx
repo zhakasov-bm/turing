@@ -1,9 +1,4 @@
-import { headers as getHeaders } from 'next/headers.js'
-import { getPayload } from 'payload'
 import React from 'react'
-import { fileURLToPath } from 'url'
-
-import config from '@/payload.config'
 import './styles.css'
 import BGraphic from './_components/BGraphic'
 import HeroBlock from './_components/HeroBlock'
@@ -20,11 +15,30 @@ import { getHomePageData } from '../utils/homeService'
 import PostsSection from './_components/PostsSection'
 import CasesBlock from './_components/CasesBlock'
 
+export const metadata = {
+  openGraph: {
+    title: 'Turing — IT-решения, которые меняют бизнес',
+    description:
+      'Turing — это команда творческих профессионалов, объединённых целью создавать инновационные IT-решения, которые трансформируют бизнес. Мы вдохновляемся идеями, подходим к каждому проекту индивидуально и помогаем компаниям становиться эффективнее, автоматизированнее и технологичнее.',
+    url: 'https://alanturing.app',
+    images: [
+      {
+        url: 'https://alanturing.app/company-og.jpg',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Turing — IT-решения, которые меняют бизнес',
+    description:
+      'Turing — это команда творческих профессионалов, объединённых целью создавать инновационные IT-решения, которые трансформируют бизнес. Мы вдохновляемся идеями, подходим к каждому проекту индивидуально и помогаем компаниям становиться эффективнее, автоматизированнее и технологичнее.',
+    images: ['https://alanturing.app/company-og.jpg'],
+  },
+}
 export default async function HomePage() {
-  // const headers = await getHeaders()
-  // const payloadConfig = await config
-  // const payload = await getPayload({ config: payloadConfig })
-
   const { component, solutions, cases, navigation } = await getHomePageData()
 
   const serviceBlock = component.globals.find((block) => block.blockType === 'services')
@@ -33,8 +47,6 @@ export default async function HomePage() {
   const postBlock = component.globals.find((block) => block.blockType === 'posts')
   const postHeading = postBlock?.heading || 'Последнее из блога'
 
-  // const solutionsRes = await payload.find({ collection: 'solutions', sort: 'createdAt' })
-  // const solutions = solutionsRes.docs
   const formBlocks = component.globals.filter((block) => block.blockType === 'form')
 
   return (

@@ -20,7 +20,29 @@ export const metadata = {
   description:
     'О компании Turing: наша миссия, команда и инновационные подходы к разработке программного обеспечения и подбору удалённых разработчиков.',
   alternates: {
-    canonical: `https://alanturing.app/company`,
+    canonical: 'https://alanturing.app/company',
+  },
+  openGraph: {
+    title: 'О компании Turing',
+    description:
+      'О компании Turing: наша миссия, команда и инновационные подходы к разработке программного обеспечения и подбору удалённых разработчиков.',
+    url: 'https://alanturing.app/company',
+    images: [
+      {
+        url: 'https://alanturing.app/company-og.jpg',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    type: 'website',
+    siteName: 'Alan Turing IT Agency',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'О компании Turing',
+    description:
+      'О компании Turing: наша миссия, команда и инновационные подходы к разработке программного обеспечения и подбору удалённых разработчиков.',
+    images: ['https://alanturing.app/company-og.jpg'],
   },
 }
 

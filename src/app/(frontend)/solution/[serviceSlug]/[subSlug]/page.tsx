@@ -14,12 +14,27 @@ export const generateMetadata = async ({ params }: PageProps): Promise<Metadata>
   const { serviceSlug, subSlug } = await params
 
   const { subservice } = await getSubserviceData(serviceSlug, subSlug)
+  const imageUrl =
+    typeof subservice.icon === 'string' ? subservice.icon : subservice.icon?.url || ''
 
   return {
     title: `${subservice.name}`,
     description: subservice.subtitle.substring(0, 160),
     alternates: {
       canonical: `https://alanturing.app/solution/${serviceSlug}/${subSlug}`,
+    },
+    openGraph: {
+      title: subservice.name,
+      description: subservice.subtitle ?? '',
+      url: `https://alanturing.app/solution/${serviceSlug}/${subSlug}`,
+      images: imageUrl ? [{ url: imageUrl, width: 1200, height: 630 }] : [],
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: subservice.name,
+      description: subservice.subtitle ?? '',
+      images: imageUrl ? [imageUrl] : [],
     },
   }
 }

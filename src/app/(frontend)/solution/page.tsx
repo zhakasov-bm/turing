@@ -12,6 +12,27 @@ export const metadata = {
   alternates: {
     canonical: `https://alanturing.app/solution`,
   },
+  openGraph: {
+    title: 'Услуги компании Alan Turing',
+    description:
+      'Услуги компании Turing: комплексный IT-решения, автоматизация, SEO, разработка и аналитика.',
+    url: `'https://alanturing.app/solution/`,
+    images: [
+      {
+        url: 'https://alanturing.app/company-og.jpg',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    type: 'article',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Услуги компании Alan Turing',
+    description:
+      'Услуги компании Turing: комплексный IT-решения, автоматизация, SEO, разработка и аналитика.',
+    images: ['https://alanturing.app/company-og.jpg'],
+  },
 }
 
 export default async function page() {

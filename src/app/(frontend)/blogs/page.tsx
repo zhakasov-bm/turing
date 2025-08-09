@@ -14,6 +14,27 @@ export const metadata = {
   alternates: {
     canonical: `https://alanturing.app/blogs`,
   },
+  openGraph: {
+    title: 'Блог компании Turing IT agency',
+    description:
+      'Откройте IT-блог Казахстана — полезные статьи, советы, обзоры. Нужна консультация? Звоните: +7 (775) 202 60 10.',
+    url: 'https://alanturing.app/blogs',
+    images: [
+      {
+        url: 'https://alanturing.app/company-og.jpg',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Блог компании Turing IT agency',
+    description:
+      'Откройте IT-блог Казахстана — полезные статьи, советы, обзоры. Нужна консультация? Звоните: +7 (775) 202 60 10.',
+    images: ['https://alanturing.app/company-og.jpg'],
+  },
 }
 
 export default async function page() {

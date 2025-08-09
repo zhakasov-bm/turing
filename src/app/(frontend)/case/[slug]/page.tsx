@@ -61,11 +61,26 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
   const { slug } = await params
   const { caseData } = await getCase(slug)
 
+  const imageUrl = typeof caseData.image === 'string' ? caseData.image : caseData.image?.url || ''
+
   return {
     title: `${caseData.heading}`,
     description: caseData.subtitle.substring(0, 160),
     alternates: {
       canonical: `https://alanturing.app/case/${slug}`,
+    },
+    openGraph: {
+      title: caseData.heading,
+      description: caseData.subtitle ?? '',
+      url: `https://alanturing.app/case/${slug}`,
+      images: imageUrl ? [{ url: imageUrl, width: 1200, height: 630 }] : [],
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: caseData.heading,
+      description: caseData.subtitle ?? '',
+      images: imageUrl ? [imageUrl] : [],
     },
   }
 }

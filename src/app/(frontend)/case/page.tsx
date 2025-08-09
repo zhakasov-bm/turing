@@ -10,11 +10,33 @@ import { getHomePageData } from '@/app/utils/homeService'
 import LeadCaptureBlock from '../_components/ApplicationForm/LeadCaptureBlock'
 
 export const metadata = {
-  title: { absolute: 'Кейсы Simply Digital — наши успешные проекты' },
+  title: { absolute: 'Кейсы Alan Turing IT Agency — наши успешные проекты' },
   description:
-    'Успешные кейсы компании Simply Digital. Реальные результаты и примеры роста бизнеса с помощью digital-решений.',
+    'Успешные кейсы компании Alan Turing IT Agency. Реальные результаты и примеры роста бизнеса с помощью инновационных IT-решений.',
   alternates: {
-    canonical: `https://alanturing.app/case`,
+    canonical: 'https://alanturing.app/case',
+  },
+  openGraph: {
+    title: 'Кейсы Alan Turing IT Agency — наши успешные проекты',
+    description:
+      'Успешные кейсы компании Alan Turing IT Agency. Реальные результаты и примеры роста бизнеса с помощью инновационных IT-решений.',
+    url: 'https://alanturing.app/case',
+    images: [
+      {
+        url: 'https://alanturing.app/company-og.jpg',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    type: 'website',
+    siteName: 'Alan Turing IT Agency',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Кейсы Alan Turing IT Agency — наши успешные проекты',
+    description:
+      'Успешные кейсы компании Alan Turing IT Agency. Реальные результаты и примеры роста бизнеса с помощью инновационных IT-решений.',
+    images: ['https://alanturing.app/company-og.jpg'],
   },
 }
 
