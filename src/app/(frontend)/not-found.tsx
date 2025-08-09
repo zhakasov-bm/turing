@@ -4,10 +4,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 // import { ALLOWED_CITIES } from '../utils/cities'
 
-export const metadata = {
-  title: '404 — Страница не найдена',
-}
-
 export default function NotFound() {
   // const pathname = usePathname()
   // const pathCity = pathname.split('/')[1] || ''

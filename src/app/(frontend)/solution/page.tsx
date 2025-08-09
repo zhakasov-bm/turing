@@ -6,9 +6,9 @@ import ServicesBlock from '../_components/ServicesBlock'
 import { notFound } from 'next/navigation'
 
 export const metadata = {
-  title: { absolute: 'Услуги компании Simply Digital' },
+  title: { absolute: 'Услуги компании Alan Turing' },
   description:
-    'Услуги компании Simply Digital: комплексный digital-маркетинг, стратегия, реклама, SEO, SMM и аналитика.',
+    'Услуги компании Turing: комплексный IT-решения, автоматизация, SEO, разработка и аналитика.',
   alternates: {
     canonical: `https://alanturing.app/solution`,
   },
