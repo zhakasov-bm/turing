@@ -19,6 +19,43 @@ export const metadata: Metadata = {
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        url: 'https://alanturing.app',
+        name: 'Alan Turing IT Agency',
+        description:
+          'Разработка программного обеспечения, подбор удалённых разработчиков, IT-аутсорсинг.',
+        publisher: { '@id': 'https://alanturing.app/#organization' },
+      },
+      {
+        '@type': 'Organization',
+        '@id': 'https://alanturing.app/#organization',
+        name: 'Alan Turing IT Agency',
+        url: 'https://alanturing.app',
+        logo: 'https://alanturing.app/company-og.jpg',
+        sameAs: ['https://www.instagram.com/turing.kz'],
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: 'ул. Маркова, д. 24а',
+          addressLocality: 'Алматы',
+          postalCode: '050000',
+          addressCountry: 'KZ',
+        },
+
+        contactPoint: [
+          {
+            '@type': 'ContactPoint',
+            telephone: '+7 775 202 60 10',
+            contactType: 'customer support',
+          },
+        ],
+      },
+    ],
+  }
+
   const { children } = props
 
   const { solutions, navigation } = await getHomePageData()
@@ -28,6 +65,10 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     <html lang="ru" className={`${unbounded.variable} ${montserrat.variable} ${inter.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
       <body>
         <Providers>
