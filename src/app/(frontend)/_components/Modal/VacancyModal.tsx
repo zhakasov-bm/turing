@@ -98,7 +98,7 @@ export default function VacancyModal({ vacancyName, buttonTitle }: Props) {
                 <div className="flex flex-col gap-6 md:p-4">
                   <p className="text-xl text-black text-left font-inter">
                     <span className="font-medium font-unbounded pb-2">Отклик на вакансию</span>{' '}
-                    <br /> "{vacancyName}"
+                    <br /> &quot;{vacancyName}&quot;
                   </p>
                   <form onSubmit={handleSubmit} className="flex flex-col gap-3">
                     <input name="name" placeholder="Имя" required className="inputBase" />
