@@ -59,7 +59,7 @@ export default function VacancyModal({ vacancyName, buttonTitle }: Props) {
       })
     }
   }
-
+  //
   return (
     <>
       {/* Trigger Button */}
