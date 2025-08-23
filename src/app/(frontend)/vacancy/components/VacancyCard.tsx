@@ -1,6 +1,5 @@
 'use client'
 
-import UniversalButton from '@/app/(frontend)/_components/UniversalButton'
 import { Vacancy } from '@/payload-types'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { useState } from 'react'
