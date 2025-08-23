@@ -1,3 +1,4 @@
+import { headers as getHeaders } from 'next/headers'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 // import { extractFormBlocks } from '@/app/utils/formBlockUtils'
@@ -17,7 +18,9 @@ export interface SolutionData {
 }
 
 export async function getSolutionData(slug: string): Promise<SolutionData> {
+  const headers = await getHeaders()
   const payload = await getPayload({ config })
+  const { user } = await payload.auth({ headers })
 
   const { navigation } = await getHomePageData()
 
@@ -26,11 +29,13 @@ export async function getSolutionData(slug: string): Promise<SolutionData> {
     payload.find({
       collection: 'solutions',
       where: { slug: { equals: slug } },
+      user,
     }),
     payload.find({
       collection: 'cases',
       limit: 3,
       sort: '-createdAt',
+      user,
     }),
   ])
 
@@ -47,6 +52,7 @@ export async function getSolutionData(slug: string): Promise<SolutionData> {
         equals: solution.id,
       },
     },
+    user,
   })
 
   const subservices = subservicesRes.docs.map((sub) => ({

@@ -1,3 +1,4 @@
+import { headers as getHeaders } from 'next/headers'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { RichText } from '@payloadcms/richtext-lexical/react'
@@ -37,12 +38,15 @@ export const metadata = {
 }
 
 export default async function page() {
+  const headers = await getHeaders()
   const payload = await getPayload({ config })
+  const { user } = await payload.auth({ headers })
 
   const res = await payload.find({
     collection: 'pages',
     where: { slug: { equals: 'vacancy' } },
     limit: 1,
+    user,
   })
 
   const page = res.docs[0]
@@ -51,6 +55,7 @@ export default async function page() {
     collection: 'vacancy',
     sort: '-createdAt',
     limit: 100,
+    user,
   })
 
   const vacancies: Vacancy[] = vacancyRes.docs
