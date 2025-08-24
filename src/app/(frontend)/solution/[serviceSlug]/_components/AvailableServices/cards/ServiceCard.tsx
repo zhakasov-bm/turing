@@ -3,19 +3,10 @@ import { ServiceItem } from '../types'
 
 export const ServiceCard = ({ name, icon }: ServiceItem) => (
   <div className="bg-background p-4 md:px-6 flex gap-4 items-center rounded-custom">
-    {icon?.url ? (
+    {icon?.url && (
       <Image
         src={icon.url}
-        alt={icon.alt || ''}
-        width={56}
-        height={56}
-        className="contain"
-        draggable={false}
-      />
-    ) : (
-      <Image
-        src="/turing-sticker.svg"
-        alt="service-icon"
+        alt={icon.alt || 'service-icon'}
         width={56}
         height={56}
         className="contain"

@@ -308,6 +308,7 @@ export interface Solution {
   availableServices?:
     | {
         title?: string | null;
+        icon?: (string | null) | Media;
         id?: string | null;
       }[]
     | null;
@@ -911,6 +912,7 @@ export interface SolutionsSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
+        icon?: T;
         id?: T;
       };
   isOutstaffing?: T;

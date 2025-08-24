@@ -21,10 +21,10 @@ export default function AvailableServices({
   // const [currentCity] = useCurrentCity()
   const [modalOpen, setModalOpen] = useState(false)
 
-  const handleModalSubmit = (data: { name: string; email: string; phone: string }) => {
-    setModalOpen(false)
-    // Optionally show a success message
-  }
+  // const handleModalSubmit = (data: { name: string; email: string; phone: string }) => {
+  //   setModalOpen(false)
+  //   // Optionally show a success message
+  // }
 
   const renderServices = () => {
     if (subservice) {
@@ -52,7 +52,20 @@ export default function AvailableServices({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
         {!solution.hasSubservices &&
           solution.availableServices?.map((service, id) => (
-            <ServiceCard key={id} name={service.title || ''} icon={null} />
+            <ServiceCard
+              key={id}
+              name={service.title || ''}
+              icon={
+                typeof service.icon === 'object' && service.icon?.url
+                  ? {
+                      url: service.icon.url,
+                      alt: service.icon.alt || undefined,
+                    }
+                  : {
+                      url: '/turing-sticker.svg',
+                    }
+              }
+            />
           ))}
         {subservices.map((sub, idx) => (
           <SubserviceCard
