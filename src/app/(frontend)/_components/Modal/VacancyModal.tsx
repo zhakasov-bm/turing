@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { submitToTelegram } from '@/app/utils/submitToTelegram'
 import UniversalButton from '../UniversalButton'
 import { X } from 'lucide-react'
-import { formatTimeToNow } from '@payloadcms/ui'
 
 type FormState = {
   loading: boolean
