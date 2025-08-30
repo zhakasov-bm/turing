@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-// import { useCurrentCity } from '@/app/utils/useCurrentCity'
+import { useCurrentCity } from '@/app/utils/useCurrentCity'
 
 import { Component, Solution } from '@/payload-types'
 import UniversalButton from './UniversalButton'
@@ -18,7 +18,7 @@ type Props = {
 }
 
 export default function ServicesBlock({ heading, solutions, block }: Props) {
-  //   const [currentCity] = useCurrentCity()
+  const [currentCity] = useCurrentCity()
   const [modalOpen, setModalOpen] = useState(false)
 
   return (
@@ -29,7 +29,7 @@ export default function ServicesBlock({ heading, solutions, block }: Props) {
       <div className="flex overflow-x-auto hide-scrollbar md:grid grid-cols-2 gap-3 h-[280px] md:h-auto">
         {solutions.map((solution) => (
           <Link
-            href={`/solution/${solution.slug}`}
+            href={`/${currentCity}/solution/${solution.slug}`}
             key={solution.id}
             className="relative bg-background rounded-custom p-6 flex flex-col md:flex-row justify-between items-start group md:max-h-[240px] min-w-[80%] overflow-hidden"
           >
