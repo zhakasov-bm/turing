@@ -9,7 +9,7 @@ import { Menu } from 'lucide-react'
 import { MobileMenu } from './MobileMenu'
 import { FaPhoneAlt } from 'react-icons/fa'
 import { PiMapPinFill } from 'react-icons/pi'
-import { ALLOWED_CITIES, CITY_RU, getCityRegex } from '@/app/utils/cities'
+import { CITY_RU, getCityRegex } from '@/app/utils/cities'
 import { useCurrentCity } from '@/app/utils/useCurrentCity'
 import { CityModal } from './CityModal'
 import ThemeSwitch from '../ThemeSwitch/ThemeSwitch'
@@ -83,10 +83,6 @@ export default function Header({ nav, solutions, subservices }: NavProps) {
       router.push(replacedPath)
     }
   }
-
-  const pathCity = pathname.split('/')[1] || ''
-  const isValidCity = ALLOWED_CITIES.includes(pathCity)
-  const cityUrl = isValidCity ? `/${pathCity}` : '/'
 
   const [dropdownOpen, setDropdownOpen] = useState(false)
 
