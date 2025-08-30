@@ -75,8 +75,9 @@ export default function Header({ nav, solutions, subservices }: NavProps) {
     if (typeof window !== 'undefined') {
       localStorage.setItem('selectedCity', city)
     }
+    // Если город не выбран в URL, редиректим на /city
     const cityRegex = getCityRegex()
-    if (isCasePage) {
+    if (!cityRegex.test(pathname)) {
       router.push(`/${city}`)
     } else {
       const replacedPath = pathname.replace(cityRegex, `/${city}`)

@@ -8,7 +8,6 @@ import Footer from './_components/Footer/Footer'
 import { Metadata } from 'next'
 import { getHomePageData } from '../utils/homeService'
 import { getAllSubservices } from '../utils/getAllSubservices'
-import path from 'path'
 
 interface RootLayoutProps {
   children: React.ReactNode
