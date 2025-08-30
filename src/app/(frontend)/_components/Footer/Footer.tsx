@@ -6,7 +6,7 @@ import type { Navigation, Solution } from '@/payload-types'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
-// import { useCurrentCity } from '@/app/utils/useCurrentCity'
+import { useCurrentCity } from '@/app/utils/useCurrentCity'
 import { getNavLinkProps } from '../Header/Header'
 
 import { FaFacebook, FaInstagram, FaTelegram, FaLinkedin, FaYoutube } from 'react-icons/fa'
@@ -15,22 +15,23 @@ import { Logo } from '../Logo/Logo'
 type Props = {
   nav: Navigation
   solutions: Solution[]
+  currentCity: string
+  pathname: string
 }
 
 // Helper: returns true if the link should be active for the current path
-function isNavLinkActive(linkUrl: string, pathname: string): boolean {
+function isNavLinkActive(linkUrl: string, pathname: string, currentCity: string): boolean {
   const cityRegex = /^\/[a-zа-я-]+/
   const cleanedPath = pathname.replace(cityRegex, '') || '/'
 
   if (linkUrl === '/') {
-    return pathname === '/'
+    return pathname === `/${currentCity}` || pathname === '/'
   }
   const regex = new RegExp(`^${linkUrl}(\/|$)`)
   return regex.test(cleanedPath)
 }
 
-export default function Footer({ nav, solutions }: Props) {
-  const pathname = usePathname()
+export default function Footer({ nav, solutions, currentCity, pathname }: Props) {
   const [activeIdx, setActiveIdx] = useState<number | null>(null)
   // const [currentCity] = useCurrentCity()
 
@@ -81,16 +82,15 @@ export default function Footer({ nav, solutions }: Props) {
         <nav className="hidden md:flex flex-col gap-2">
           <h3 className="text-2xl py-2">Компания</h3>
           {nav.links?.map((link, idx) => {
-            const isActive = isNavLinkActive(link.url, pathname)
+            const isActive = isNavLinkActive(link.url, pathname, currentCity)
             const props = getNavLinkProps({
               link,
               idx,
               pathname,
               activeIdx,
-              // currentCity,
+              currentCity,
               isCasePage: pathname.startsWith('/case'),
-              // mainPageHref: `/${currentCity}`,
-              mainPageHref: `/`,
+              mainPageHref: `/${currentCity}`,
               setActiveIdx,
             })
             return (
@@ -113,9 +113,11 @@ export default function Footer({ nav, solutions }: Props) {
             {solutions.map((solution, id) => (
               <li key={id}>
                 <Link
-                  href={`/solution/${solution.slug}`}
+                  href={`/${currentCity}/solution/${solution.slug}`}
                   className={`text-sm font-light hover:text-link ${
-                    pathname === `/solution/${solution.slug}` ? 'text-link' : 'text-link/40'
+                    pathname === `/${currentCity}/solution/${solution.slug}`
+                      ? 'text-link'
+                      : 'text-link/40'
                   }`}
                 >
                   {solution.name}

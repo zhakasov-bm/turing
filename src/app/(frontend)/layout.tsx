@@ -8,6 +8,12 @@ import Footer from './_components/Footer/Footer'
 import { Metadata } from 'next'
 import { getHomePageData } from '../utils/homeService'
 import { getAllSubservices } from '../utils/getAllSubservices'
+import path from 'path'
+
+interface RootLayoutProps {
+  children: React.ReactNode
+  params: { city: string }
+}
 
 export const metadata: Metadata = {
   title: {
@@ -18,7 +24,7 @@ export const metadata: Metadata = {
     'Turing — это команда творческих профессионалов, объединённых целью создавать инновационные IT-решения, которые трансформируют бизнес. Мы вдохновляемся идеями, подходим к каждому проекту индивидуально и помогаем компаниям становиться эффективнее, автоматизированнее и технологичнее.',
 }
 
-export default async function RootLayout(props: { children: React.ReactNode }) {
+export default async function RootLayout({ children, params }: RootLayoutProps) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -56,10 +62,11 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     ],
   }
 
-  const { children } = props
-
   const { solutions, navigation } = await getHomePageData()
   const subservices = await getAllSubservices()
+
+  const currentCity = params.city || 'almaty'
+  const pathname = `/${currentCity}`
 
   return (
     <html lang="ru" className={`${unbounded.variable} ${montserrat.variable} ${inter.variable}`}>
@@ -74,7 +81,12 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         <Providers>
           <Header nav={navigation} solutions={solutions} subservices={subservices} />
           <main className="pt-20 md:pt-0">{children}</main>
-          <Footer nav={navigation} solutions={solutions} />
+          <Footer
+            nav={navigation}
+            solutions={solutions}
+            currentCity={currentCity}
+            pathname={pathname}
+          />
         </Providers>
       </body>
     </html>

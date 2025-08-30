@@ -33,11 +33,11 @@ export const generateMetadata = async ({ params }: PageProps): Promise<Metadata>
     openGraph: {
       title: 'Turing — IT-решения, которые меняют бизнес',
       description:
-        'Simply Digital — это маркетинговое агентство, которое помогает бизнесу расти через комплексные digital-решения: стратегия, реклама, контент и аналитика.',
-      url: `https://simplydigital.kz/${city}`,
+        'Turing — это команда творческих профессионалов, объединённых целью создавать инновационные IT-решения, которые трансформируют бизнес. Мы вдохновляемся идеями, подходим к каждому проекту индивидуально и помогаем компаниям становиться эффективнее, автоматизированнее и технологичнее.',
+      url: `https://alanturing.app//${city}`,
       images: [
         {
-          url: 'https://simplydigital.kz/company-og.jpg',
+          url: 'https://alanturing.app/company-og.jpg',
           width: 1200,
           height: 630,
         },
@@ -46,10 +46,10 @@ export const generateMetadata = async ({ params }: PageProps): Promise<Metadata>
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'Simply Digital — Маркетинговое агентство полного цикла',
+      title: 'Turing — IT-решения, которые меняют бизнес',
       description:
-        'Simply Digital — это маркетинговое агентство, которое помогает бизнесу расти через комплексные digital-решения: стратегия, реклама, контент и аналитика.',
-      images: ['https://simplydigital.kz/company-og.jpg'],
+        'Turing — это команда творческих профессионалов, объединённых целью создавать инновационные IT-решения, которые трансформируют бизнес. Мы вдохновляемся идеями, подходим к каждому проекту индивидуально и помогаем компаниям становиться эффективнее, автоматизированнее и технологичнее.',
+      images: ['https://alanturing.app/company-og.jpg'],
     },
   }
 }
