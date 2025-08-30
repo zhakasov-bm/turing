@@ -8,10 +8,10 @@ import { Logo } from '../Logo/Logo'
 import { Menu } from 'lucide-react'
 import { MobileMenu } from './MobileMenu'
 import { FaPhoneAlt } from 'react-icons/fa'
-// import { PiMapPinFill } from 'react-icons/pi'
-// import { CITY_RU, getCityRegex } from '@/app/utils/cities'
-// import { useCurrentCity } from '@/app/utils/useCurrentCity'
-// import { CityModal } from './CityModal'
+import { PiMapPinFill } from 'react-icons/pi'
+import { ALLOWED_CITIES, CITY_RU, getCityRegex } from '@/app/utils/cities'
+import { useCurrentCity } from '@/app/utils/useCurrentCity'
+import { CityModal } from './CityModal'
 import ThemeSwitch from '../ThemeSwitch/ThemeSwitch'
 import UniversalButton from '../UniversalButton'
 
@@ -27,20 +27,28 @@ type GetNavLinkPropsArgs = {
   idx: number
   pathname: string
   activeIdx: number | null
-  // currentCity: string
+  currentCity: string | null
   isCasePage: boolean
   mainPageHref: string
   setActiveIdx?: ((idx: number) => void) | undefined
 }
 
 export function getNavLinkProps(args: GetNavLinkPropsArgs) {
-  const { link, idx, isCasePage, mainPageHref, setActiveIdx } = args
-  let href = link.url.startsWith('/') ? link.url : `/${link.url}`
+  const { link, idx, currentCity, isCasePage, mainPageHref, setActiveIdx } = args
+  let href = `/${currentCity}${link.url}`
   const onClick = () => setActiveIdx && setActiveIdx(idx)
 
   if (link.label === 'Главная') {
-    href = isCasePage ? mainPageHref : href
+    href = isCasePage ? mainPageHref : `/${currentCity}${link.url}`
+  } else if (link.url === '/company') {
+    href = link.url
+  } else if (link.url === '/blogs') {
+    href = link.url
+  } else if (link.url === '/vacancy') {
+    href = link.url
   } else if (link.url.startsWith('http')) {
+    href = link.url
+  } else if (link.url === '/case' || link.url.startsWith('/case/')) {
     href = link.url
   }
 
@@ -51,34 +59,41 @@ export default function Header({ nav, solutions, subservices }: NavProps) {
   const pathname = usePathname()
   console.log(pathname)
   const router = useRouter()
+
   const [activeIdx, setActiveIdx] = useState<number | null>(null)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
-  //
-  // const [isCityModalOpen, setIsCityModalOpen] = useState(false)
 
-  // const [currentCity, setCurrentCity] = useCurrentCity()
+  const [isCityModalOpen, setIsCityModalOpen] = useState(false)
+
+  const [currentCity, setCurrentCity] = useCurrentCity() as readonly [
+    string | null,
+    React.Dispatch<React.SetStateAction<string | null>>,
+  ]
+
+  const changeCity = (city: string) => {
+    setCurrentCity(city)
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('selectedCity', city)
+    }
+    const cityRegex = getCityRegex()
+    if (isCasePage) {
+      router.push(`/${city}`)
+    } else {
+      const replacedPath = pathname.replace(cityRegex, `/${city}`)
+      router.push(replacedPath)
+    }
+  }
+
+  const pathCity = pathname.split('/')[1] || ''
+  const isValidCity = ALLOWED_CITIES.includes(pathCity)
+  const cityUrl = isValidCity ? `/${pathCity}` : '/'
 
   const [dropdownOpen, setDropdownOpen] = useState(false)
-  const dropdownRef = useRef<HTMLUListElement | null>(null)
 
   // Determine if we are on a case page (either /case or /case/[slug])
   const isCasePage = pathname.startsWith('/case')
   // Helper for main page link
-  const mainPageHref = `/`
-
-  // const changeCity = (city: string) => {
-  //   setCurrentCity(city)
-  //   if (typeof window !== 'undefined') {
-  //     localStorage.setItem('selectedCity', city)
-  //   }
-  //   const cityRegex = getCityRegex()
-  //   if (isCasePage) {
-  //     router.push(`/${city}`)
-  //   } else {
-  //     const replacedPath = pathname.replace(cityRegex, `/${city}`)
-  //     router.push(replacedPath)
-  //   }
-  // }
+  const mainPageHref = `/${currentCity}`
 
   const toggleMobileMenu = () => setIsMobileOpen((prev) => !prev)
 
@@ -94,7 +109,7 @@ export default function Header({ nav, solutions, subservices }: NavProps) {
         {relatedSubs.map((sub) => (
           <Link
             key={sub.id}
-            href={`/solution/${solution.slug}/${sub.slug}`}
+            href={`/${currentCity}/solution/${solution.slug}/${sub.slug}`}
             className="py-1 px-2 rounded-custom hover:bg-link/10 whitespace-nowrap"
             onClick={() => setDropdownOpen(false)}
           >
@@ -120,7 +135,7 @@ export default function Header({ nav, solutions, subservices }: NavProps) {
           return (
             <div key={solution.id} className={`relative ${hasSubs ? 'group/item' : ''}`}>
               <Link
-                href={`/solution/${solution.slug}`}
+                href={`/${currentCity}/solution/${solution.slug}`}
                 className="py-1 px-2 rounded-custom hover:bg-link/10 whitespace-nowrap block"
                 onClick={() => setDropdownOpen(false)}
               >
@@ -151,8 +166,13 @@ export default function Header({ nav, solutions, subservices }: NavProps) {
 
               const isActive =
                 link.url === '/'
-                  ? pathname === '/'
-                  : pathname === link.url || pathname.startsWith(link.url + '/')
+                  ? pathname === `/${currentCity}` || pathname === '/'
+                  : link.url === '/case' ||
+                      link.url === '/company' ||
+                      link.url === '/blogs' ||
+                      link.url === '/vacancy'
+                    ? pathname === link.url || pathname.startsWith(link.url + '/')
+                    : cleanedPath === link.url || cleanedPath.startsWith(link.url + '/')
 
               if (link.label === 'Услуги') {
                 return (
@@ -183,7 +203,7 @@ export default function Header({ nav, solutions, subservices }: NavProps) {
                 idx,
                 pathname,
                 activeIdx,
-                // currentCity,
+                currentCity,
                 isCasePage,
                 mainPageHref,
                 setActiveIdx,
@@ -204,13 +224,15 @@ export default function Header({ nav, solutions, subservices }: NavProps) {
       </div>
       {/* Right: City Selector, Phone number */}
       <div className="flex gap-2 md:gap-5">
-        {/* <button
+        <button
           className="hidden md:flex text-base font-inter text-hoverText underline decoration-dashed items-center gap-0 cursor-pointer"
           onClick={() => setIsCityModalOpen(true)}
         >
           <PiMapPinFill />
-          {CITY_RU[currentCity]}
-        </button> */}
+          {typeof currentCity === 'string' && CITY_RU[currentCity]
+            ? CITY_RU[currentCity]
+            : 'Выберите город'}
+        </button>
 
         <Link href="tel:+77752026010" className="hidden text-base md:flex items-center gap-2 group">
           <FaPhoneAlt
@@ -248,7 +270,7 @@ export default function Header({ nav, solutions, subservices }: NavProps) {
           solutions={solutions}
           subservices={subservices}
           toggleMobileMenu={toggleMobileMenu}
-          // onOpenCityModal={() => setIsCityModalOpen(true)}
+          onOpenCityModal={() => setIsCityModalOpen(true)}
           isMobileOpen={isMobileOpen}
         />
       </div>
@@ -258,16 +280,17 @@ export default function Header({ nav, solutions, subservices }: NavProps) {
         className={`fixed inset-0 bg-black/50 z-30 transition-opacity duration-300 ease-in-out ${isMobileOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
       ></div>
 
-      {/* {isCityModalOpen && (
+      {isCityModalOpen && (
         <CityModal
-          currentCity={currentCity}
+          currentCity={currentCity ?? ''}
           onSelect={(city) => {
             changeCity(city)
             setIsCityModalOpen(false)
+            setIsMobileOpen(false)
           }}
           onClose={() => setIsCityModalOpen(false)}
         />
-      )} */}
+      )}
     </header>
   )
 }

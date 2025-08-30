@@ -1,21 +1,18 @@
-import { getPayload } from 'payload'
-import config from '@/payload.config'
-
 import { notFound } from 'next/navigation'
-// import { getSolutionData } from '@/app/utils/solutionsService'
 import { SolutionPageLayout } from './_components/SolutionPageLayout'
 import { Metadata } from 'next'
 import { getSolutionData } from '@/app/utils/solutionsService'
 import { getHomePageData } from '@/app/utils/homeService'
+import { ALLOWED_CITIES } from '@/app/utils/cities'
 
 interface PageProps {
-  params: Promise<{ serviceSlug: string }>
+  params: Promise<{ city: string; serviceSlug: string }>
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
 // Метаданные страницы
 export const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
-  const { serviceSlug: slug } = await params
+  const { city, serviceSlug: slug } = await params
 
   const { solution } = await getSolutionData(slug)
   const imageUrl = typeof solution.icon === 'string' ? solution.icon : solution.icon?.url || ''
@@ -24,12 +21,12 @@ export const generateMetadata = async ({ params }: PageProps): Promise<Metadata>
     title: `${solution.name}`,
     description: solution.subtitle.substring(0, 160),
     alternates: {
-      canonical: `https://alanturing.app/solution/${slug}`,
+      canonical: `https://alanturing.app/${city}/solution/${slug}`,
     },
     openGraph: {
       title: solution.name,
       description: solution.subtitle ?? '',
-      url: `https://alanturing.app/solution/${slug}`,
+      url: `https://alanturing.app/${city}/solution/${slug}`,
       images: imageUrl ? [{ url: imageUrl, width: 1200, height: 630 }] : [],
       type: 'article',
     },
@@ -44,7 +41,11 @@ export const generateMetadata = async ({ params }: PageProps): Promise<Metadata>
 
 export default async function SolutionPage({ params }: PageProps) {
   try {
-    const { serviceSlug: slug } = await params
+    const { city, serviceSlug: slug } = await params
+
+    if (!ALLOWED_CITIES.includes(city)) {
+      notFound()
+    }
 
     const { component, solution, subservices, formBlock, cases, navigation } =
       await getSolutionData(slug)

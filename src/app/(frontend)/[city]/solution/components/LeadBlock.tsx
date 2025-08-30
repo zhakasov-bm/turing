@@ -1,11 +1,11 @@
 'use client'
 
 import { RichText } from '@payloadcms/richtext-lexical/react'
-import UniversalButton from '../../_components/UniversalButton'
+import UniversalButton from '../../../_components/UniversalButton'
 import { Component, Solution } from '@/payload-types'
 // import { ConsultationForm } from '@/app/(frontend)/_components/Modal/ConsultationModal'
 import { useState } from 'react'
-import ConsultationModal from '../../_components/Modal/ConsultationModal'
+import ConsultationModal from '../../../_components/Modal/ConsultationModal'
 
 type LeadCaptureProps = Extract<Component['globals'][0], { blockType: 'form' }>
 

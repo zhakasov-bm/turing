@@ -4,9 +4,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Component } from '@/payload-types'
 import UniversalButton from './UniversalButton'
+import { CITY_PREPOSITIONAL } from '@/app/utils/cities'
+import { useCurrentCity } from '@/app/utils/useCurrentCity'
 import { useTheme } from 'next-themes'
 
 export default function HeroBlock({ component }: { component: Component }) {
+  const [currentCity] = useCurrentCity()
+  const cityText = CITY_PREPOSITIONAL[currentCity] || ''
+
   const { resolvedTheme } = useTheme()
 
   const bgImage = resolvedTheme === 'dark' ? '/bg-hero-dark.svg' : '/bg-hero.svg'
@@ -20,8 +25,7 @@ export default function HeroBlock({ component }: { component: Component }) {
               {/* Mobile */}
               <div className="flex flex-col items-center justify-between gap-6 h-auto rounded-custom relative md:hidden bg-container">
                 <h1 className="special pt-12">
-                  {block.heading}
-                  {/* {cityText && <span>{cityText}</span>} */}
+                  {block.heading} {cityText && <span>{cityText}</span>}
                 </h1>
                 <div className="flex w-full h-100 justify-center  z-10">
                   {typeof block?.image === 'object' && block.image.url && (
@@ -49,8 +53,7 @@ export default function HeroBlock({ component }: { component: Component }) {
               {/* Left */}
               <div className="hidden md:flex flex-col gap-10 flex-8/12">
                 <h1 className="md:text-4xl lg:text-[52px] font-medium leading-tight">
-                  {block.heading}
-                  {/* {cityText && <span>{cityText}</span>} */}
+                  {block.heading} {cityText && <span>{cityText}</span>}
                 </h1>
 
                 <div

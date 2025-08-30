@@ -2,9 +2,8 @@
 
 import { Component, Solution, Subservice } from '@/payload-types'
 import Image from 'next/image'
-// import { CITY_PREPOSITIONAL } from '@/app/utils/cities'
-// import { useCurrentCity } from '@/app/utils/useCurrentCity'
-// import Breadcrumbs from '../../../../_components/Breadcrumbs/Breadcrumbs'
+import { CITY_PREPOSITIONAL } from '@/app/utils/cities'
+import { useCurrentCity } from '@/app/utils/useCurrentCity'
 import { useTheme } from 'next-themes'
 import Breadcrumbs from '@/app/(frontend)/_components/Breadcrumbs/Breadcrumbs'
 
@@ -13,8 +12,8 @@ type Props =
   | { component: Component; subservice: Subservice; solution?: never }
 
 export default function Hero(props: Props) {
-  // const [currentCity] = useCurrentCity()
-  // const cityText = CITY_PREPOSITIONAL[currentCity] || ''
+  const [currentCity] = useCurrentCity()
+  const cityText = CITY_PREPOSITIONAL[currentCity] || ''
 
   const { resolvedTheme } = useTheme()
 
@@ -62,7 +61,9 @@ export default function Hero(props: Props) {
       </div>
       <div className="flex flex-col justify-center items-center text-center">
         <div className="flex flex-col gap-4 md:max-w-5xl px-6 mt-4 md:mt-0">
-          <h1 className="text-5xl md:leading-14">{title}</h1>
+          <h1 className="text-5xl md:leading-14">
+            {title} {cityText && <span>{cityText}</span>}
+          </h1>
           <p className="text-lg md:text-2xl font-light font-inter">{subtitle}</p>
         </div>
 

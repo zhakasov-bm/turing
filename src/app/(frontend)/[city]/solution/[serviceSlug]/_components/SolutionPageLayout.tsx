@@ -1,11 +1,11 @@
 import ReviewBlock from '@/app/(frontend)/_components/ReviewBlock'
-import BrandsBlock from '../../../_components/BrandsBlock'
+import BrandsBlock from '../../../../_components/BrandsBlock'
 import InfoBlock from './InfoBlock'
 import ProblemBlock from '../../components/ProblemBlock'
 
 import Hero from './Hero'
 import WhyUsBlock from './WhyUsBlock'
-import BGraphic from '../../../_components/BGraphic'
+import BGraphic from '../../../../_components/BGraphic'
 import QABlock from './QABlock'
 
 import WhyServiceNeeded from './WhyServiceNeeded'

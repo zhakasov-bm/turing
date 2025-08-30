@@ -1,6 +1,6 @@
 import { usePathname } from 'next/navigation'
-// import { ALLOWED_CITIES } from './cities'
-// import { useCurrentCity } from './useCurrentCity'
+import { ALLOWED_CITIES } from './cities'
+import { useCurrentCity } from './useCurrentCity'
 
 interface BreadcrumbItem {
   label: string
@@ -16,7 +16,7 @@ interface UseBreadcrumbsOptions {
 
 export function useBreadcrumbs(options: UseBreadcrumbsOptions = {}) {
   const pathname = usePathname()
-  // const [currentCity] = useCurrentCity()
+  const [currentCity] = useCurrentCity()
   const { showHome = true, customLabels = {}, items } = options
 
   // Если items переданы, используем их
@@ -25,22 +25,22 @@ export function useBreadcrumbs(options: UseBreadcrumbsOptions = {}) {
   }
 
   // Иначе генерируем из pathname
-  return generateBreadcrumbsFromPath(pathname, showHome, customLabels)
+  return generateBreadcrumbsFromPath(pathname, showHome, customLabels, currentCity)
 }
 
 function generateBreadcrumbsFromPath(
   pathname: string,
   showHome: boolean,
   customLabels: Record<string, string>,
-  // currentCity: string,
+  currentCity: string,
 ): BreadcrumbItem[] {
-  const segments = pathname.split('/').filter(Boolean)
+  let segments = pathname.split('/').filter(Boolean)
   // Определяем город только из URL, не из currentCity
-  // let city = ''
-  // if (segments.length && ALLOWED_CITIES.includes(segments[0])) {
-  //   city = segments[0]
-  //   segments = segments.slice(1)
-  // }
+  let city = ''
+  if (segments.length && ALLOWED_CITIES.includes(segments[0])) {
+    city = segments[0]
+    segments = segments.slice(1)
+  }
 
   const breadcrumbs: BreadcrumbItem[] = []
 
@@ -48,11 +48,11 @@ function generateBreadcrumbsFromPath(
   if (showHome) {
     breadcrumbs.push({
       label: 'Главная',
-      href: '/',
+      href: city ? `/${city}` : '/',
     })
   }
 
-  let currentPath = ''
+  let currentPath = city ? `/${city}` : ''
   for (let i = 0; i < segments.length; i++) {
     const segment = segments[i]
     currentPath += `/${segment}`
@@ -71,9 +71,6 @@ function generateBreadcrumbsFromPath(
           break
         case 'company':
           label = 'О компании'
-          break
-        case 'popolnenie':
-          label = 'Пополнение'
           break
         default:
           break

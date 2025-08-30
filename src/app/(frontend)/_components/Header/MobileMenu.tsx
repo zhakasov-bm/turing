@@ -4,19 +4,17 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { X, ChevronDown, ChevronUp } from 'lucide-react'
 import type { Navigation, Solution, Subservice } from '@/payload-types'
-// import { useCurrentCity } from '@/app/utils/useCurrentCity'
+import { useCurrentCity } from '@/app/utils/useCurrentCity'
 import { getNavLinkProps } from './Header'
-// import { CityModal } from './CityModal'
-// import { CITY_RU } from '@/app/utils/cities'
-// import { PiMapPinFill } from 'react-icons/pi'
-// import { useRouter, usePathname } from 'next/navigation'
+import { CITY_RU } from '@/app/utils/cities'
+import { PiMapPinFill } from 'react-icons/pi'
 
 type Props = {
   nav: Navigation
   solutions: Solution[]
   subservices: Subservice[]
   toggleMobileMenu: () => void
-  // onOpenCityModal: () => void
+  onOpenCityModal: () => void
   isMobileOpen: boolean
 }
 
@@ -25,14 +23,12 @@ export function MobileMenu({
   solutions,
   subservices,
   toggleMobileMenu,
-  // onOpenCityModal,
+  onOpenCityModal,
   isMobileOpen,
 }: Props) {
   const [servicesOpen, setServicesOpen] = useState(false)
   const [openSolutionId, setOpenSolutionId] = useState<string | null>(null)
-  // const [currentCity, setCurrentCity] = useCurrentCity()
-  // const router = useRouter()
-  // const pathname = usePathname()
+  const [currentCity, setCurrentCity] = useCurrentCity()
 
   // Prevent page scroll when menu is open
   useEffect(() => {
@@ -67,7 +63,7 @@ export function MobileMenu({
         </div>
 
         {/* City Selector */}
-        {/* <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
           <button
             className="flex items-center gap-2 text-base font-inter underline decoration-dashed cursor-pointer"
             onClick={onOpenCityModal}
@@ -76,23 +72,8 @@ export function MobileMenu({
             {typeof currentCity === 'string' && CITY_RU[currentCity]
               ? CITY_RU[currentCity]
               : 'Выберите город'}
-            {CITY_RU[currentCity]}
           </button>
-          {isCityModalOpen && (
-            <CityModal
-              currentCity={currentCity}
-              onSelect={(city) => {
-                setCurrentCity(city)
-                setIsCityModalOpen(false)
-                const cityRegex = /^\/[a-zA-Z-]+/
-                const newPath = pathname.replace(cityRegex, `/${city}`)
-                router.push(newPath)
-                toggleMobileMenu()
-              }}
-              onClose={() => setIsCityModalOpen(false)}
-            />
-          )}
-        </div> */}
+        </div>
 
         {/* Scrollable content */}
         <div className="flex flex-col gap-4 overflow-y-auto mt-4">
@@ -117,6 +98,7 @@ export function MobileMenu({
                       idx,
                       pathname: '', // pathname not needed for mobile active state
                       activeIdx: null,
+                      currentCity,
                       isCasePage: false,
                       mainPageHref: `/`,
                       setActiveIdx: undefined,
@@ -147,7 +129,7 @@ export function MobileMenu({
                         <div key={solution.id} className="flex flex-col gap-4">
                           {relatedSubs.length === 0 ? (
                             <Link
-                              href={`/solution/${solution.slug}`}
+                              href={`/${currentCity}/solution/${solution.slug}`}
                               onClick={toggleMobileMenu}
                               className="w-full text-left pr-4 rounded-2xl active:bg-background"
                             >
@@ -157,7 +139,7 @@ export function MobileMenu({
                             <div className="flex flex-col gap-4">
                               <div className="flex justify-between items-center">
                                 <Link
-                                  href={`/solution/${solution.slug}`}
+                                  href={`/${currentCity}/solution/${solution.slug}`}
                                   onClick={toggleMobileMenu}
                                   className="flex-1 text-left rounded-2xl active:bg-background"
                                 >
@@ -179,7 +161,7 @@ export function MobileMenu({
                               {relatedSubs.map((sub) => (
                                 <Link
                                   key={sub.id}
-                                  href={`/solution/${solution.slug}/${sub.slug}`}
+                                  href={`/${currentCity}/solution/${solution.slug}/${sub.slug}`}
                                   onClick={toggleMobileMenu}
                                   className="rounded-2xl active:bg-background"
                                 >
