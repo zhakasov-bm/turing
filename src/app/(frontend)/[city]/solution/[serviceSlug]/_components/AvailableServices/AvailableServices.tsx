@@ -1,13 +1,10 @@
 'use client'
 
 import UniversalButton from '@/app/(frontend)/_components/UniversalButton'
-// import UniversalButton from '@/app/(frontend)/_components/UniversalButton'
 import { ServiceCard } from './cards/ServiceCard'
 import { SubserviceCard } from './cards/SubserviceCard'
 import { AvailableServicesProps } from './types'
-import { usePathname } from 'next/navigation'
-// import { useCurrentCity } from '@/app/utils/useCurrentCity'
-// import { ConsultationForm } from '@/app/(frontend)/_components/Modal/ConsultationModal'
+import { useCurrentCity } from '@/app/utils/useCurrentCity'
 import { useState } from 'react'
 import ConsultationModal from '@/app/(frontend)/_components/Modal/ConsultationModal'
 
@@ -17,14 +14,8 @@ export default function AvailableServices({
   subservice,
   block,
 }: AvailableServicesProps) {
-  const pathname = usePathname()
-  // const [currentCity] = useCurrentCity()
+  const [currentCity] = useCurrentCity()
   const [modalOpen, setModalOpen] = useState(false)
-
-  // const handleModalSubmit = (data: { name: string; email: string; phone: string }) => {
-  //   setModalOpen(false)
-  //   // Optionally show a success message
-  // }
 
   const renderServices = () => {
     if (subservice) {
@@ -72,7 +63,7 @@ export default function AvailableServices({
             key={idx}
             sub={sub}
             solutionSlug={solution.slug || ''}
-            // currentCity={currentCity}
+            currentCity={currentCity}
           />
         ))}
       </div>
