@@ -56,7 +56,7 @@ export default async function page({ params }: Props) {
     notFound()
   }
 
-  const locale = cookies().get('lang')?.value || 'ru'
+  const locale = (await cookies()).get('lang')?.value || 'ru'
   const headers = await getHeaders()
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })

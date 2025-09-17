@@ -62,7 +62,7 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
     ],
   }
 
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const locale = cookieStore.get('lang')?.value || 'ru'
 
   const { solutions, navigation } = await getHomePageData(locale)

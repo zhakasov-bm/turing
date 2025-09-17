@@ -40,7 +40,7 @@ export const metadata = {
   },
 }
 export default async function HomePage() {
-  const locale = cookies().get('lang')?.value || 'ru'
+  const locale = (await cookies()).get('lang')?.value || 'ru'
   const { component, solutions, cases, navigation } = await getHomePageData(locale)
 
   const serviceBlock = component.globals.find((block) => block.blockType === 'services')

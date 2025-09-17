@@ -18,7 +18,7 @@ type Props = {
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { postSlug: slug } = await params
 
-  const locale = cookies().get('lang')?.value || 'ru'
+  const locale = (await cookies()).get('lang')?.value || 'ru'
   const post = await getPost(slug, locale)
   const imageUrl = typeof post.image === 'string' ? post.image : post.image?.url || ''
 
@@ -51,7 +51,7 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
 export default async function Page({ params }: Props) {
   const { postSlug: slug } = await params
 
-  const locale = cookies().get('lang')?.value || 'ru'
+  const locale = (await cookies()).get('lang')?.value || 'ru'
   const post = await getPost(slug, locale)
 
   if (!post) {

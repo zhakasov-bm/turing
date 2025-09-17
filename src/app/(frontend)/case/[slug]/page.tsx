@@ -25,7 +25,7 @@ type Props = {
 async function getCase(slug: string) {
   try {
     const payload = await getPayload({ config: configPromise })
-    const locale = cookies().get('lang')?.value || 'ru'
+    const locale = (await cookies()).get('lang')?.value || 'ru'
     const component = await payload.findGlobal({ slug: 'component', locale })
 
     const caseResult = await payload.find({
@@ -94,7 +94,7 @@ export default async function CasePage({ params }: Props) {
     notFound()
   }
   const { caseData, component, navigation, casesList } = await getCase(slug)
-  const { solutions } = await getHomePageData(cookies().get('lang')?.value || 'ru')
+  const { solutions } = await getHomePageData((await cookies()).get('lang')?.value || 'ru')
 
   const formBlocks = component.globals.filter((block) => block.blockType === 'form')
 

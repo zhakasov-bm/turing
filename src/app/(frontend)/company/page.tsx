@@ -1,4 +1,4 @@
-import { headers as getHeaders, cookies } from 'next/headers.js'
+import { headers as getHeaders, cookies } from 'next/headers'
 import { getPayload } from 'payload'
 import React from 'react'
 
@@ -51,7 +51,7 @@ export default async function CompanyPage() {
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
   const { user } = await payload.auth({ headers })
-  const locale = cookies().get('lang')?.value || 'ru'
+  const locale = (await cookies()).get('lang')?.value || 'ru'
   const component = await payload.findGlobal({
     slug: 'component',
     user,

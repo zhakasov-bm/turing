@@ -41,7 +41,7 @@ export default async function page() {
   const headers = await getHeaders()
   const payload = await getPayload({ config })
   const { user } = await payload.auth({ headers })
-  const locale = cookies().get('lang')?.value || 'ru'
+  const locale = (await cookies()).get('lang')?.value || 'ru'
 
   const res = await payload.find({
     collection: 'pages',

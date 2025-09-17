@@ -14,7 +14,7 @@ interface PageProps {
 // Метаданные страницы
 export const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
   const { city, serviceSlug, subSlug } = await params
-  const locale = cookies().get('lang')?.value || 'ru'
+  const locale = (await cookies()).get('lang')?.value || 'ru'
 
   if (!ALLOWED_CITIES.includes(city)) {
     notFound()
@@ -50,7 +50,7 @@ export const generateMetadata = async ({ params }: PageProps): Promise<Metadata>
 export default async function SubservicePage({ params }: PageProps) {
   try {
     const { serviceSlug, subSlug } = await params
-    const cookieStore = cookies()
+    const cookieStore = await cookies()
     const locale = cookieStore.get('lang')?.value || 'ru'
 
     const { component, service, subservice, cases, formBlock, navigation } =

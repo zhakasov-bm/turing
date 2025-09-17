@@ -14,7 +14,7 @@ interface PageProps {
 // Метаданные страницы
 export const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
   const { city, serviceSlug: slug } = await params
-  const locale = cookies().get('lang')?.value || 'ru'
+  const locale = (await cookies()).get('lang')?.value || 'ru'
 
   const { solution } = await getSolutionData(slug, locale)
   const imageUrl = typeof solution.icon === 'string' ? solution.icon : solution.icon?.url || ''
@@ -49,7 +49,7 @@ export default async function SolutionPage({ params }: PageProps) {
       notFound()
     }
 
-    const cookieStore = cookies()
+    const cookieStore = await cookies()
     const locale = cookieStore.get('lang')?.value || 'ru'
 
     const { component, solution, subservices, formBlock, cases, navigation } =

@@ -12,7 +12,7 @@ type Props = {
 export default async function PostsSection({ heading }: Props) {
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
-  const locale = cookies().get('lang')?.value || 'ru'
+  const locale = (await cookies()).get('lang')?.value || 'ru'
   const posts = await payload.find({
     collection: 'posts',
     limit: 2,
