@@ -1,4 +1,5 @@
 import { headers as getHeaders, cookies } from 'next/headers'
+import { resolveLocale } from '@/app/utils/locale'
 
 import { getPayload } from 'payload'
 import config from '@/payload.config'
@@ -56,7 +57,7 @@ export default async function page({ params }: Props) {
     notFound()
   }
 
-  const locale = (await cookies()).get('lang')?.value || 'ru'
+  const locale = resolveLocale((await cookies()).get('lang')?.value)
   const headers = await getHeaders()
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })

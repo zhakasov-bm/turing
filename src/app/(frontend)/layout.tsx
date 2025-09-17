@@ -9,6 +9,7 @@ import { Metadata } from 'next'
 import { getHomePageData } from '../utils/homeService'
 import { getAllSubservices } from '../utils/getAllSubservices'
 import { cookies } from 'next/headers'
+import { resolveLocale } from '../utils/locale'
 
 interface RootLayoutProps {
   children: React.ReactNode
@@ -63,7 +64,7 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
   }
 
   const cookieStore = await cookies()
-  const locale = cookieStore.get('lang')?.value || 'ru'
+  const locale = resolveLocale(cookieStore.get('lang')?.value)
 
   const { solutions, navigation } = await getHomePageData(locale)
   const subservices = await getAllSubservices(locale)

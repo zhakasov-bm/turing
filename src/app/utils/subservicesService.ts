@@ -1,6 +1,7 @@
 import { headers as getHeaders } from 'next/headers'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
+import type { AppLocale } from './locale'
 import { Case, Component, Navigation, Solution, Subservice } from '@/payload-types'
 import { getHomePageData } from './homeService'
 import { notFound } from 'next/navigation'
@@ -19,7 +20,7 @@ export interface SubserviceData {
 export async function getSubserviceData(
   serviceSlug: string,
   subSlug: string,
-  locale: string = 'ru',
+  locale: AppLocale | 'all' = 'ru',
 ): Promise<SubserviceData> {
   const headers = await getHeaders()
   const payload = await getPayload({ config })

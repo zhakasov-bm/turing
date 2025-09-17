@@ -1,6 +1,7 @@
 import { headers as getHeaders } from 'next/headers'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
+import type { AppLocale } from './locale'
 // import { extractFormBlocks } from '@/app/utils/formBlockUtils'
 import { Case, Component, Navigation, Solution, Subservice } from '@/payload-types'
 import { getHomePageData } from './homeService'
@@ -17,7 +18,10 @@ export interface SolutionData {
   navigation: Navigation
 }
 
-export async function getSolutionData(slug: string, locale: string = 'ru'): Promise<SolutionData> {
+export async function getSolutionData(
+  slug: string,
+  locale: AppLocale | 'all' = 'ru',
+): Promise<SolutionData> {
   const headers = await getHeaders()
   const payload = await getPayload({ config })
   const { user } = await payload.auth({ headers })

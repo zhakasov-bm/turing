@@ -1,4 +1,5 @@
 import { headers as getHeaders, cookies } from 'next/headers'
+import { resolveLocale } from '@/app/utils/locale'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import BGraphic from '../_components/BGraphic'
@@ -43,7 +44,7 @@ export default async function page() {
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
   const { user } = await payload.auth({ headers })
-  const locale = (await cookies()).get('lang')?.value || 'ru'
+  const locale = resolveLocale((await cookies()).get('lang')?.value)
 
   const posts = await payload.find({
     collection: 'posts',

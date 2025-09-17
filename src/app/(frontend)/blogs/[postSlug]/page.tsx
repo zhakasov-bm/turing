@@ -9,6 +9,7 @@ import { getPost } from '@/app/utils/getPostData'
 import FloatingNav from '../../_components/FloatingNav'
 import PostsSection from '../../_components/PostsSection'
 import { cookies } from 'next/headers'
+import { resolveLocale } from '@/app/utils/locale'
 
 type Props = {
   params: Promise<{ postSlug: string }>
@@ -18,7 +19,7 @@ type Props = {
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { postSlug: slug } = await params
 
-  const locale = (await cookies()).get('lang')?.value || 'ru'
+  const locale = resolveLocale((await cookies()).get('lang')?.value)
   const post = await getPost(slug, locale)
   const imageUrl = typeof post.image === 'string' ? post.image : post.image?.url || ''
 
@@ -51,7 +52,7 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
 export default async function Page({ params }: Props) {
   const { postSlug: slug } = await params
 
-  const locale = (await cookies()).get('lang')?.value || 'ru'
+  const locale = resolveLocale((await cookies()).get('lang')?.value)
   const post = await getPost(slug, locale)
 
   if (!post) {

@@ -1,6 +1,7 @@
 import { getPayload } from 'payload'
 import { headers as getHeaders } from 'next/headers'
 import config from '@/payload.config'
+import type { AppLocale } from './locale'
 import { Case, Component, Navigation, Solution } from '@/payload-types'
 
 export interface HomePageData {
@@ -10,7 +11,7 @@ export interface HomePageData {
   navigation: Navigation
 }
 
-export async function getHomePageData(locale: string = 'ru'): Promise<HomePageData> {
+export async function getHomePageData(locale: AppLocale | 'all' = 'ru'): Promise<HomePageData> {
   const headers = await getHeaders()
   const payload = await getPayload({ config })
   const { user } = await payload.auth({ headers })

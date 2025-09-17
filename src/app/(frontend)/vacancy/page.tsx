@@ -1,4 +1,5 @@
 import { headers as getHeaders, cookies } from 'next/headers'
+import { resolveLocale } from '@/app/utils/locale'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { RichText } from '@payloadcms/richtext-lexical/react'
@@ -41,7 +42,7 @@ export default async function page() {
   const headers = await getHeaders()
   const payload = await getPayload({ config })
   const { user } = await payload.auth({ headers })
-  const locale = (await cookies()).get('lang')?.value || 'ru'
+  const locale = resolveLocale((await cookies()).get('lang')?.value)
 
   const res = await payload.find({
     collection: 'pages',

@@ -1,9 +1,10 @@
 import { headers as getHeaders } from 'next/headers'
 import config from '@/payload.config'
+import type { AppLocale } from './locale'
 import { getPayload } from 'payload'
 import { Post } from '@/payload-types'
 
-export async function getPost(slug: string, locale: string = 'ru'): Promise<Post> {
+export async function getPost(slug: string, locale: AppLocale | 'all' = 'ru'): Promise<Post> {
   try {
     const headers = await getHeaders()
     const payload = await getPayload({ config })

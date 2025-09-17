@@ -14,6 +14,7 @@ import { Metadata } from 'next'
 import FloatingNav from '../../_components/FloatingNav'
 import ApplicationFormBlock from '../../_components/ApplicationForm/ApplicationFormBlock'
 import { getHomePageData } from '@/app/utils/homeService'
+import { resolveLocale } from '@/app/utils/locale'
 import { cookies } from 'next/headers'
 
 type Props = {
@@ -25,7 +26,7 @@ type Props = {
 async function getCase(slug: string) {
   try {
     const payload = await getPayload({ config: configPromise })
-    const locale = (await cookies()).get('lang')?.value || 'ru'
+    const locale = resolveLocale((await cookies()).get('lang')?.value)
     const component = await payload.findGlobal({ slug: 'component', locale })
 
     const caseResult = await payload.find({
@@ -94,7 +95,7 @@ export default async function CasePage({ params }: Props) {
     notFound()
   }
   const { caseData, component, navigation, casesList } = await getCase(slug)
-  const { solutions } = await getHomePageData((await cookies()).get('lang')?.value || 'ru')
+  const { solutions } = await getHomePageData(resolveLocale((await cookies()).get('lang')?.value))
 
   const formBlocks = component.globals.filter((block) => block.blockType === 'form')
 
