@@ -8,6 +8,7 @@ export const CompanyBlock: Block = {
       label: 'Заголовок',
       type: 'text',
       defaultValue: 'Ваш надёжный партнёр в мире инноваций',
+      localized: true,
     },
     {
       name: 'statistics',
@@ -15,8 +16,8 @@ export const CompanyBlock: Block = {
       type: 'array',
       required: true,
       fields: [
-        { name: 'value', type: 'text', required: true },
-        { name: 'description', type: 'text', required: true },
+        { name: 'value', type: 'text', required: true, localized: true },
+        { name: 'description', type: 'text', required: true, localized: true },
         { name: 'bgColor', type: 'text', defaultValue: 'background' },
       ],
     },
@@ -24,6 +25,7 @@ export const CompanyBlock: Block = {
       name: 'about',
       label: 'О нас',
       type: 'richText',
+      localized: true,
       required: true,
     },
   ],

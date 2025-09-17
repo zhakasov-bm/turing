@@ -7,17 +7,20 @@ export const HeroBlock: Block = {
       name: 'heading',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'subheading',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'button_title',
       type: 'text',
       defaultValue: 'Перейти к решениям',
       required: true,
+      localized: true,
     },
     {
       name: 'image',
@@ -29,6 +32,7 @@ export const HeroBlock: Block = {
       name: 'turing',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'cta_button',
@@ -38,11 +42,13 @@ export const HeroBlock: Block = {
           name: 'label',
           type: 'text',
           required: true,
+          localized: true,
         },
         {
           name: 'url',
           type: 'text',
           required: true,
+          localized: true,
         },
       ],
     },

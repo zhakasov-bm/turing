@@ -17,25 +17,27 @@ export interface SolutionData {
   navigation: Navigation
 }
 
-export async function getSolutionData(slug: string): Promise<SolutionData> {
+export async function getSolutionData(slug: string, locale: string = 'ru'): Promise<SolutionData> {
   const headers = await getHeaders()
   const payload = await getPayload({ config })
   const { user } = await payload.auth({ headers })
 
-  const { navigation } = await getHomePageData()
+  const { navigation } = await getHomePageData(locale)
 
   const [component, solutionRes, casesResult] = await Promise.all([
-    payload.findGlobal({ slug: 'component' }),
+    payload.findGlobal({ slug: 'component', locale }),
     payload.find({
       collection: 'solutions',
       where: { slug: { equals: slug } },
       user,
+      locale,
     }),
     payload.find({
       collection: 'cases',
       limit: 3,
       sort: '-createdAt',
       user,
+      locale,
     }),
   ])
 
@@ -53,6 +55,7 @@ export async function getSolutionData(slug: string): Promise<SolutionData> {
       },
     },
     user,
+    locale,
   })
 
   const subservices = subservicesRes.docs.map((sub) => ({

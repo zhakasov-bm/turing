@@ -14,6 +14,7 @@ import { Metadata } from 'next'
 import FloatingNav from '../../_components/FloatingNav'
 import ApplicationFormBlock from '../../_components/ApplicationForm/ApplicationFormBlock'
 import { getHomePageData } from '@/app/utils/homeService'
+import { cookies } from 'next/headers'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -24,12 +25,13 @@ type Props = {
 async function getCase(slug: string) {
   try {
     const payload = await getPayload({ config: configPromise })
-
-    const component = await payload.findGlobal({ slug: 'component' })
+    const locale = cookies().get('lang')?.value || 'ru'
+    const component = await payload.findGlobal({ slug: 'component', locale })
 
     const caseResult = await payload.find({
       collection: 'cases',
       where: { slug: { equals: slug } },
+      locale,
     })
 
     if (!caseResult.docs?.length) {
@@ -37,11 +39,12 @@ async function getCase(slug: string) {
     }
 
     const caseData = caseResult.docs[0]
-    const navigation = await payload.findGlobal({ slug: 'navigation' })
+    const navigation = await payload.findGlobal({ slug: 'navigation', locale })
 
     const casesResult = await payload.find({
       collection: 'cases',
       limit: 10,
+      locale,
     })
 
     return {
@@ -91,7 +94,7 @@ export default async function CasePage({ params }: Props) {
     notFound()
   }
   const { caseData, component, navigation, casesList } = await getCase(slug)
-  const { solutions } = await getHomePageData()
+  const { solutions } = await getHomePageData(cookies().get('lang')?.value || 'ru')
 
   const formBlocks = component.globals.filter((block) => block.blockType === 'form')
 

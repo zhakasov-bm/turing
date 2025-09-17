@@ -19,26 +19,29 @@ export interface SubserviceData {
 export async function getSubserviceData(
   serviceSlug: string,
   subSlug: string,
+  locale: string = 'ru',
 ): Promise<SubserviceData> {
   const headers = await getHeaders()
   const payload = await getPayload({ config })
   const { user } = await payload.auth({ headers })
 
-  const { navigation } = await getHomePageData()
+  const { navigation } = await getHomePageData(locale)
 
   const [component, serviceRes, casesResult] = await Promise.all([
-    payload.findGlobal({ slug: 'component' }),
+    payload.findGlobal({ slug: 'component', locale }),
     payload.find({
       collection: 'solutions',
       sort: 'createdAt',
       where: { slug: { equals: serviceSlug } },
       user,
+      locale,
     }),
     payload.find({
       collection: 'cases',
       limit: 3,
       sort: '-createdAt',
       user,
+      locale,
     }),
   ])
 
@@ -51,6 +54,7 @@ export async function getSubserviceData(
     collection: 'subservices',
     where: { slug: { equals: subSlug }, service: { equals: service.id } },
     user,
+    locale,
   })
 
   const subservice = subRes.docs[0]

@@ -12,6 +12,7 @@ import ServicesBlock from './_components/ServicesBlock'
 import LeadCaptureBlock from './_components/ApplicationForm/LeadCaptureBlock'
 import FloatingNav from './_components/FloatingNav'
 import { getHomePageData } from '../utils/homeService'
+import { cookies } from 'next/headers'
 import PostsSection from './_components/PostsSection'
 import CasesBlock from './_components/CasesBlock'
 
@@ -39,7 +40,8 @@ export const metadata = {
   },
 }
 export default async function HomePage() {
-  const { component, solutions, cases, navigation } = await getHomePageData()
+  const locale = cookies().get('lang')?.value || 'ru'
+  const { component, solutions, cases, navigation } = await getHomePageData(locale)
 
   const serviceBlock = component.globals.find((block) => block.blockType === 'services')
   const heading = serviceBlock?.heading || ''

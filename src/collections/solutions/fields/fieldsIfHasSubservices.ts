@@ -5,6 +5,7 @@ export const fieldsIfHasSubservices: Field[] = [
     name: 'whyServiceTitle',
     type: 'richText',
     label: 'Почему ваш сайт нуждается в',
+    localized: true,
   },
   {
     name: 'whyList',
@@ -14,12 +15,14 @@ export const fieldsIfHasSubservices: Field[] = [
         name: 'title',
         type: 'text',
         required: true,
+        localized: true,
       },
       {
         name: 'icon',
         type: 'upload',
         relationTo: 'media',
         required: true,
+        localized: true,
       },
     ],
   },

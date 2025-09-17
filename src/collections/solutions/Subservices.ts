@@ -15,11 +15,13 @@ export const Subservices: CollectionConfig = {
       type: 'text',
       required: true,
       label: 'Название услуги',
+      localized: true,
     },
     {
       name: 'subtitle',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'slug',
@@ -38,14 +40,17 @@ export const Subservices: CollectionConfig = {
       type: 'text',
       required: true,
       label: 'Title of Block',
+      localized: true,
     },
     {
       name: 'title',
       type: 'text',
+      localized: true,
     },
     {
       name: 'description',
       type: 'textarea',
+      localized: true,
     },
     {
       name: 'icon',
@@ -57,6 +62,7 @@ export const Subservices: CollectionConfig = {
       name: 'serviceTitle',
       type: 'text',
       defaultValue: 'Какие услуги мы можем вам оказать?',
+      localized: true,
     },
     {
       name: 'services',
@@ -66,6 +72,7 @@ export const Subservices: CollectionConfig = {
         {
           name: 'name',
           type: 'text',
+          localized: true,
         },
         {
           name: 'icon',
@@ -80,13 +87,14 @@ export const Subservices: CollectionConfig = {
       type: 'text',
       defaultValue: 'Частые вопросы',
       required: true,
+      localized: true,
     },
     {
       name: 'questions',
       type: 'array',
       fields: [
-        { name: 'question', type: 'text' },
-        { name: 'answer', type: 'text' },
+        { name: 'question', type: 'text', localized: true },
+        { name: 'answer', type: 'text', localized: true },
       ],
       required: true,
     },

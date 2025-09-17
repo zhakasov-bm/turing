@@ -6,6 +6,7 @@ export const fieldsIfOutstaffing: Field[] = [
     type: 'richText',
     label: 'Заголовок',
     required: true,
+    localized: true,
   },
   {
     name: 'approaches',
@@ -15,6 +16,7 @@ export const fieldsIfOutstaffing: Field[] = [
         name: 'title',
         type: 'text',
         required: true,
+        localized: true,
       },
       {
         name: 'icon',

@@ -3,6 +3,7 @@ import config from '@/payload.config'
 import { getPayload } from 'payload'
 import { RichText as SerializedRichText } from '@payloadcms/richtext-lexical/react'
 import { formatDate } from '@/app/utils/date'
+import { cookies } from 'next/headers'
 
 type Props = {
   heading: any
@@ -11,6 +12,7 @@ type Props = {
 export default async function PostsSection({ heading }: Props) {
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
+  const locale = cookies().get('lang')?.value || 'ru'
   const posts = await payload.find({
     collection: 'posts',
     limit: 2,
@@ -20,6 +22,7 @@ export default async function PostsSection({ heading }: Props) {
         equals: true,
       },
     },
+    locale,
   })
 
   return (

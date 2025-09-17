@@ -3,7 +3,7 @@ import config from '@/payload.config'
 import { getPayload } from 'payload'
 import { Post } from '@/payload-types'
 
-export async function getPost(slug: string): Promise<Post> {
+export async function getPost(slug: string, locale: string = 'ru'): Promise<Post> {
   try {
     const headers = await getHeaders()
     const payload = await getPayload({ config })
@@ -21,6 +21,7 @@ export async function getPost(slug: string): Promise<Post> {
         },
       },
       user,
+      locale,
     })
 
     return result.docs?.[0]

@@ -1,4 +1,4 @@
-import { headers as getHeaders } from 'next/headers'
+import { headers as getHeaders, cookies } from 'next/headers'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { RichText } from '@payloadcms/richtext-lexical/react'
@@ -41,12 +41,14 @@ export default async function page() {
   const headers = await getHeaders()
   const payload = await getPayload({ config })
   const { user } = await payload.auth({ headers })
+  const locale = cookies().get('lang')?.value || 'ru'
 
   const res = await payload.find({
     collection: 'pages',
     where: { slug: { equals: 'vacancy' } },
     limit: 1,
     user,
+    locale,
   })
 
   const page = res.docs[0]
@@ -56,6 +58,7 @@ export default async function page() {
     sort: '-createdAt',
     limit: 100,
     user,
+    locale,
   })
 
   const vacancies: Vacancy[] = vacancyRes.docs

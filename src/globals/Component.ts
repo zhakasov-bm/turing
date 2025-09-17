@@ -50,11 +50,13 @@ export const Component: GlobalConfig = {
           name: 'text',
           type: 'text',
           required: true,
+          localized: true,
         },
         {
           name: 'value',
           type: 'text',
           required: true,
+          localized: true,
         },
       ],
     },

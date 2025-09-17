@@ -1,4 +1,4 @@
-import { headers as getHeaders } from 'next/headers'
+import { headers as getHeaders, cookies } from 'next/headers'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import BGraphic from '../_components/BGraphic'
@@ -43,6 +43,7 @@ export default async function page() {
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
   const { user } = await payload.auth({ headers })
+  const locale = cookies().get('lang')?.value || 'ru'
 
   const posts = await payload.find({
     collection: 'posts',
@@ -53,9 +54,10 @@ export default async function page() {
       },
     },
     user,
+    locale,
   })
 
-  const { component, navigation } = await getHomePageData()
+  const { component, navigation } = await getHomePageData(locale)
   const blogLabel = navigation?.links?.find((link) => link.url === '/blogs')?.label || 'Блог'
 
   return (

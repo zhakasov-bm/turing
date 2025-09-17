@@ -1,4 +1,4 @@
-import { headers as getHeaders } from 'next/headers'
+import { headers as getHeaders, cookies } from 'next/headers'
 import { getPayload } from 'payload'
 import { Case } from '@/payload-types'
 import config from '@/payload.config'
@@ -46,12 +46,14 @@ export default async function page() {
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
   const { user } = await payload.auth({ headers })
+  const locale = cookies().get('lang')?.value || 'ru'
 
   const res = await payload.find({
     collection: 'pages',
     where: { slug: { equals: 'case' } },
     limit: 1,
     user,
+    locale,
   })
   const page = res.docs[0]
   let cases: Case[] = []
@@ -61,6 +63,7 @@ export default async function page() {
       collection: 'cases',
       limit: 10,
       user,
+      locale,
     })
     cases = casesRes.docs
   } catch (e) {
@@ -70,7 +73,7 @@ export default async function page() {
   const filteredCases = cases.sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
   )
-  const { component, solutions } = await getHomePageData()
+  const { component, solutions } = await getHomePageData(locale)
 
   const formBlocks = component.globals.filter((block) => block.blockType === 'form')
 

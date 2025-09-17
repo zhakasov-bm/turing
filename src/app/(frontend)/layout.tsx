@@ -8,6 +8,7 @@ import Footer from './_components/Footer/Footer'
 import { Metadata } from 'next'
 import { getHomePageData } from '../utils/homeService'
 import { getAllSubservices } from '../utils/getAllSubservices'
+import { cookies } from 'next/headers'
 
 interface RootLayoutProps {
   children: React.ReactNode
@@ -61,14 +62,17 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
     ],
   }
 
-  const { solutions, navigation } = await getHomePageData()
-  const subservices = await getAllSubservices()
+  const cookieStore = cookies()
+  const locale = cookieStore.get('lang')?.value || 'ru'
+
+  const { solutions, navigation } = await getHomePageData(locale)
+  const subservices = await getAllSubservices(locale)
 
   const currentCity = params.city || 'almaty'
   const pathname = `/${currentCity}`
 
   return (
-    <html lang="ru" className={`${unbounded.variable} ${montserrat.variable} ${inter.variable}`}>
+    <html lang={locale} className={`${unbounded.variable} ${montserrat.variable} ${inter.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico" />
         <script

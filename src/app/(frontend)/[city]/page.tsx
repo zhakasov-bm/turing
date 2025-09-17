@@ -14,6 +14,7 @@ import { getHomePageData } from '../../utils/homeService'
 import PostsSection from '../_components/PostsSection'
 import CasesBlock from '../_components/CasesBlock'
 import { ALLOWED_CITIES } from '@/app/utils/cities'
+import { cookies } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 
@@ -60,7 +61,8 @@ export default async function CityPage({ params }: PageProps) {
     notFound()
   }
 
-  const { component, solutions, cases, navigation } = await getHomePageData()
+  const locale = cookies().get('lang')?.value || 'ru'
+  const { component, solutions, cases, navigation } = await getHomePageData(locale)
 
   const serviceBlock = component.globals.find((block) => block.blockType === 'services')
   const heading = serviceBlock?.heading || ''

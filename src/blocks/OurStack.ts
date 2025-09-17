@@ -8,6 +8,7 @@ export const OurStackBlock: Block = {
       label: 'Наши технологии',
       type: 'richText',
       required: true,
+      localized: true,
     },
     {
       name: 'technologies',
@@ -15,7 +16,7 @@ export const OurStackBlock: Block = {
       type: 'array',
       required: true,
       fields: [
-        { name: 'direction', type: 'text', required: true },
+        { name: 'direction', type: 'text', required: true, localized: true },
         {
           name: 'stack',
           type: 'array',

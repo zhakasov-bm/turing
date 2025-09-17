@@ -1,4 +1,4 @@
-import { headers as getHeaders } from 'next/headers'
+import { headers as getHeaders, cookies } from 'next/headers'
 
 import { getPayload } from 'payload'
 import config from '@/payload.config'
@@ -56,6 +56,7 @@ export default async function page({ params }: Props) {
     notFound()
   }
 
+  const locale = cookies().get('lang')?.value || 'ru'
   const headers = await getHeaders()
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
@@ -64,6 +65,7 @@ export default async function page({ params }: Props) {
   const component = await payload.findGlobal({
     slug: 'component',
     user,
+    locale,
   })
 
   const serviceBlock = component.globals.find((block) => block.blockType === 'services')
@@ -71,7 +73,7 @@ export default async function page({ params }: Props) {
 
   const formBlocks = component.globals.filter((block) => block.blockType === 'form')
 
-  const solutionsRes = await payload.find({ collection: 'solutions', sort: 'createdAt' })
+  const solutionsRes = await payload.find({ collection: 'solutions', sort: 'createdAt', locale })
   const solutions = solutionsRes.docs
 
   if (!solutions) return notFound()

@@ -4,6 +4,7 @@ import { Metadata } from 'next'
 import { getHomePageData } from '@/app/utils/homeService'
 import { notFound } from 'next/navigation'
 import { ALLOWED_CITIES } from '@/app/utils/cities'
+import { cookies } from 'next/headers'
 
 interface PageProps {
   params: Promise<{ city: string; serviceSlug: string; subSlug: string }>
@@ -13,12 +14,13 @@ interface PageProps {
 // Метаданные страницы
 export const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
   const { city, serviceSlug, subSlug } = await params
+  const locale = cookies().get('lang')?.value || 'ru'
 
   if (!ALLOWED_CITIES.includes(city)) {
     notFound()
   }
 
-  const { subservice } = await getSubserviceData(serviceSlug, subSlug)
+  const { subservice } = await getSubserviceData(serviceSlug, subSlug, locale)
 
   const imageUrl =
     typeof subservice.icon === 'string' ? subservice.icon : subservice.icon?.url || ''
@@ -48,11 +50,13 @@ export const generateMetadata = async ({ params }: PageProps): Promise<Metadata>
 export default async function SubservicePage({ params }: PageProps) {
   try {
     const { serviceSlug, subSlug } = await params
+    const cookieStore = cookies()
+    const locale = cookieStore.get('lang')?.value || 'ru'
 
     const { component, service, subservice, cases, formBlock, navigation } =
-      await getSubserviceData(serviceSlug, subSlug)
+      await getSubserviceData(serviceSlug, subSlug, locale)
 
-    const { solutions } = await getHomePageData()
+    const { solutions } = await getHomePageData(locale)
 
     return (
       <SubservicePageLayout

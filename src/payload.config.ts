@@ -31,6 +31,15 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
+  localization: {
+    locales: [
+      { code: 'ru', label: 'Русский' },
+      { code: 'kk', label: 'Қазақша' },
+      { code: 'en', label: 'English' },
+    ],
+    defaultLocale: 'ru',
+    fallback: true,
+  },
   globals: [Component, Navigation],
   collections: [Users, Media, Pages, Solutions, Subservices, Posts, Cases, Vacancy],
   editor: lexicalEditor(),

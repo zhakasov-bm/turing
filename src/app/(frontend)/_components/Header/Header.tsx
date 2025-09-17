@@ -14,6 +14,7 @@ import { useCurrentCity } from '@/app/utils/useCurrentCity'
 import { CityModal } from './CityModal'
 import ThemeSwitch from '../ThemeSwitch/ThemeSwitch'
 import UniversalButton from '../UniversalButton'
+import LanguageSwitcher from './LanguageSwitcher'
 
 type NavProps = {
   nav: Navigation
@@ -239,8 +240,15 @@ export default function Header({ nav, solutions, subservices }: NavProps) {
           +7 775 202 60 10
         </Link>
 
-        <div className="flex items-center justify-center w-10 h-10 cursor-pointer">
-          <ThemeSwitch />
+        <div className="flex items-center gap-2">
+          <div className="flex items-center justify-center w-10 h-10 cursor-pointer">
+            <ThemeSwitch />
+          </div>
+          {nav.languageSwitcher && (
+            <div className="hidden md:block">
+              <LanguageSwitcher />
+            </div>
+          )}
         </div>
         <div className="flex gap-3 md:hidden z-50">
           <UniversalButton label="Заказать" to="#contact" className="!m-0 !px-4 !py-1 !text-xs" />

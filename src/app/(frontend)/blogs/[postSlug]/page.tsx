@@ -8,6 +8,7 @@ import { getHomePageData } from '@/app/utils/homeService'
 import { getPost } from '@/app/utils/getPostData'
 import FloatingNav from '../../_components/FloatingNav'
 import PostsSection from '../../_components/PostsSection'
+import { cookies } from 'next/headers'
 
 type Props = {
   params: Promise<{ postSlug: string }>
@@ -17,7 +18,8 @@ type Props = {
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { postSlug: slug } = await params
 
-  const post = await getPost(slug)
+  const locale = cookies().get('lang')?.value || 'ru'
+  const post = await getPost(slug, locale)
   const imageUrl = typeof post.image === 'string' ? post.image : post.image?.url || ''
 
   if (!post) {
@@ -49,13 +51,14 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
 export default async function Page({ params }: Props) {
   const { postSlug: slug } = await params
 
-  const post = await getPost(slug)
+  const locale = cookies().get('lang')?.value || 'ru'
+  const post = await getPost(slug, locale)
 
   if (!post) {
     notFound()
   }
 
-  const { component, navigation } = await getHomePageData()
+  const { component, navigation } = await getHomePageData(locale)
 
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
@@ -68,6 +71,7 @@ export default async function Page({ params }: Props) {
         equals: true,
       },
     },
+    locale,
   })
 
   return (
