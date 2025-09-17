@@ -4,13 +4,23 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Component } from '@/payload-types'
 import UniversalButton from './UniversalButton'
-import { CITY_PREPOSITIONAL } from '@/app/utils/cities'
+import { getCityPrepositionalLabel } from '@/app/utils/cities'
 import { useCurrentCity } from '@/app/utils/useCurrentCity'
 import { useTheme } from 'next-themes'
+import { useEffect, useState } from 'react'
+import { resolveLocale } from '@/app/utils/locale'
 
 export default function HeroBlock({ component }: { component: Component }) {
   const [currentCity] = useCurrentCity()
-  const cityText = CITY_PREPOSITIONAL[currentCity] || ''
+  const [lang, setLang] = useState<'ru' | 'kk' | 'en'>('ru')
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      const m = document.cookie.match(/(?:^|; )lang=([^;]+)/)
+      const val = m?.[1] || null
+      setLang(resolveLocale(val))
+    }
+  }, [])
+  const cityText = currentCity ? getCityPrepositionalLabel(currentCity, lang) : ''
 
   const { resolvedTheme } = useTheme()
 
@@ -52,7 +62,7 @@ export default function HeroBlock({ component }: { component: Component }) {
 
               {/* Left */}
               <div className="hidden md:flex flex-col gap-10 flex-8/12">
-                <h1 className="md:text-4xl lg:text-[52px] font-medium leading-tight">
+                <h1 className="md:text-4xl lg:text-[50px] font-medium leading-tight">
                   {block.heading} {cityText && <span>{cityText}</span>}
                 </h1>
 

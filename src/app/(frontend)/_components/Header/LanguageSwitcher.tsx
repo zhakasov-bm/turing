@@ -27,6 +27,9 @@ export default function LanguageSwitcher() {
     setLang(next)
     if (typeof document !== 'undefined') {
       document.cookie = `lang=${next}; path=/; max-age=31536000`
+      // Force full reload so all client components pick up new cookie
+      window.location.reload()
+      return
     }
     router.refresh()
   }
@@ -44,4 +47,3 @@ export default function LanguageSwitcher() {
     </select>
   )
 }
-

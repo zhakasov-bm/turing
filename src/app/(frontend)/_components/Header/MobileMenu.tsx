@@ -6,7 +6,8 @@ import { X, ChevronDown, ChevronUp } from 'lucide-react'
 import type { Navigation, Solution, Subservice } from '@/payload-types'
 import { useCurrentCity } from '@/app/utils/useCurrentCity'
 import { getNavLinkProps } from './Header'
-import { CITY_RU } from '@/app/utils/cities'
+import { CITY_RU, getCityLabel } from '@/app/utils/cities'
+import LanguageSwitcher from './LanguageSwitcher'
 import { PiMapPinFill } from 'react-icons/pi'
 
 type Props = {
@@ -48,6 +49,15 @@ export function MobileMenu({
     setOpenSolutionId((prev) => (prev === id ? null : id))
   }
 
+  const [lang, setLang] = useState<'ru' | 'kk' | 'en'>('ru')
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      const m = document.cookie.match(/(?:^|; )lang=([^;]+)/)
+      const val = (m?.[1] as 'ru' | 'kk' | 'en' | undefined) || 'ru'
+      setLang(val)
+    }
+  }, [])
+
   return (
     isMobileOpen && (
       <div
@@ -62,17 +72,22 @@ export function MobileMenu({
           </button>
         </div>
 
-        {/* City Selector */}
-        <div className="flex flex-col gap-4">
+        {/* City Selector + Language Switcher (same row) */}
+        <div className="flex items-center justify-between gap-4">
           <button
             className="flex items-center gap-2 text-base font-inter underline decoration-dashed cursor-pointer"
             onClick={onOpenCityModal}
           >
             <PiMapPinFill />
             {typeof currentCity === 'string' && CITY_RU[currentCity]
-              ? CITY_RU[currentCity]
-              : 'Выберите город'}
+              ? getCityLabel(currentCity, lang)
+              : lang === 'kk'
+                ? 'Қаланы таңдаңыз'
+                : lang === 'en'
+                  ? 'Choose a city'
+                  : 'Выберите город'}
           </button>
+          <LanguageSwitcher />
         </div>
 
         {/* Scrollable content */}

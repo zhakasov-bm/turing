@@ -2,10 +2,12 @@
 
 import { Component, Solution, Subservice } from '@/payload-types'
 import Image from 'next/image'
-import { CITY_PREPOSITIONAL } from '@/app/utils/cities'
+import { getCityPrepositionalLabel } from '@/app/utils/cities'
 import { useCurrentCity } from '@/app/utils/useCurrentCity'
 import { useTheme } from 'next-themes'
 import Breadcrumbs from '@/app/(frontend)/_components/Breadcrumbs/Breadcrumbs'
+import { useEffect, useState } from 'react'
+import { resolveLocale } from '@/app/utils/locale'
 
 type Props =
   | { component: Component; solution: Solution; subservice?: never }
@@ -13,7 +15,15 @@ type Props =
 
 export default function Hero(props: Props) {
   const [currentCity] = useCurrentCity()
-  const cityText = CITY_PREPOSITIONAL[currentCity] || ''
+  const [lang, setLang] = useState<'ru' | 'kk' | 'en'>('ru')
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      const m = document.cookie.match(/(?:^|; )lang=([^;]+)/)
+      const val = m?.[1] || null
+      setLang(resolveLocale(val))
+    }
+  }, [])
+  const cityText = currentCity ? getCityPrepositionalLabel(currentCity, lang) : ''
 
   const { resolvedTheme } = useTheme()
 

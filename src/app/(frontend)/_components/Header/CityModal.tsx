@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { ALLOWED_CITIES, CITY_RU } from '@/app/utils/cities'
+import React, { useEffect, useState } from 'react'
+import { ALLOWED_CITIES, CITY_RU, getCityLabel } from '@/app/utils/cities'
 import { X } from 'lucide-react'
 
 type CityModalProps = {
@@ -9,6 +9,14 @@ type CityModalProps = {
 }
 
 export const CityModal = ({ currentCity, onSelect, onClose }: CityModalProps) => {
+  const [lang, setLang] = useState<'ru' | 'kk' | 'en'>('ru')
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      const m = document.cookie.match(/(?:^|; )lang=([^;]+)/)
+      const val = (m?.[1] as 'ru' | 'kk' | 'en' | undefined) || 'ru'
+      setLang(val)
+    }
+  }, [])
   useEffect(() => {
     // Lock scroll
     document.body.style.overflow = 'hidden'
@@ -22,7 +30,9 @@ export const CityModal = ({ currentCity, onSelect, onClose }: CityModalProps) =>
     <div className="fixed inset-0 z-500 flex items-center justify-center bg-black/50 focus:outline">
       <div className="bg-background rounded-custom p-6 min-w-[300px] max-h-[80vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-4">
-          <span className="text-base">Выберите город</span>
+          <span className="text-base">
+            {lang === 'kk' ? 'Қаланы таңдаңыз' : lang === 'en' ? 'Choose a city' : 'Выберите город'}
+          </span>
           <X onClick={onClose} size={28} className="cursor-pointer" />
         </div>
 
@@ -35,7 +45,7 @@ export const CityModal = ({ currentCity, onSelect, onClose }: CityModalProps) =>
                 }`}
                 onClick={() => onSelect(city)}
               >
-                {CITY_RU[city]}
+                {getCityLabel(city, lang)}
               </button>
             </li>
           ))}

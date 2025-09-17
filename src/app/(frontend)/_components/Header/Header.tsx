@@ -3,13 +3,14 @@
 import type { Navigation, Solution, Subservice } from '@/payload-types'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { Logo } from '../Logo/Logo'
 import { Menu } from 'lucide-react'
 import { MobileMenu } from './MobileMenu'
 import { FaPhoneAlt } from 'react-icons/fa'
 import { PiMapPinFill } from 'react-icons/pi'
-import { CITY_RU, getCityRegex } from '@/app/utils/cities'
+import { CITY_RU, getCityRegex, getCityLabel } from '@/app/utils/cities'
+import { resolveLocale } from '@/app/utils/locale'
 import { useCurrentCity } from '@/app/utils/useCurrentCity'
 import { CityModal } from './CityModal'
 import ThemeSwitch from '../ThemeSwitch/ThemeSwitch'
@@ -87,6 +88,16 @@ export default function Header({ nav, solutions, subservices }: NavProps) {
   }
 
   const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [lang, setLang] = useState<'ru' | 'kk' | 'en'>('ru')
+
+  // Read current language from cookie (client side)
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      const m = document.cookie.match(/(?:^|; )lang=([^;]+)/)
+      const val = m?.[1] || null
+      setLang(resolveLocale(val))
+    }
+  }, [])
 
   // Determine if we are on a case page (either /case or /case/[slug])
   const isCasePage = pathname.startsWith('/case')
@@ -228,11 +239,15 @@ export default function Header({ nav, solutions, subservices }: NavProps) {
         >
           <PiMapPinFill />
           {typeof currentCity === 'string' && CITY_RU[currentCity]
-            ? CITY_RU[currentCity]
-            : 'Выберите город'}
+            ? getCityLabel(currentCity, lang)
+            : lang === 'kk'
+              ? 'Қаланы таңдаңыз'
+              : lang === 'en'
+                ? 'Choose a city'
+                : 'Выберите город'}
         </button>
 
-        <Link href="tel:+77752026010" className="hidden text-base md:flex items-center gap-2 group">
+        <Link href="tel:+77752026010" className="hidden text-sm md:flex items-center gap-2 group">
           <FaPhoneAlt
             size={20}
             className="transition-transform duration-300 group-hover:rotate-12"
