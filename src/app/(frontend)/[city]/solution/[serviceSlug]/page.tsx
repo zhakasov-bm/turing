@@ -4,6 +4,7 @@ import { Metadata } from 'next'
 import { getSolutionData } from '@/app/utils/solutionsService'
 import { getHomePageData } from '@/app/utils/homeService'
 import { cookies } from 'next/headers'
+import { resolveLocale } from '@/app/utils/locale'
 import { ALLOWED_CITIES } from '@/app/utils/cities'
 
 interface PageProps {
@@ -14,7 +15,7 @@ interface PageProps {
 // Метаданные страницы
 export const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
   const { city, serviceSlug: slug } = await params
-  const locale = (await cookies()).get('lang')?.value || 'ru'
+  const locale = resolveLocale((await cookies()).get('lang')?.value)
 
   const { solution } = await getSolutionData(slug, locale)
   const imageUrl = typeof solution.icon === 'string' ? solution.icon : solution.icon?.url || ''
@@ -50,7 +51,7 @@ export default async function SolutionPage({ params }: PageProps) {
     }
 
     const cookieStore = await cookies()
-    const locale = cookieStore.get('lang')?.value || 'ru'
+    const locale = resolveLocale(cookieStore.get('lang')?.value)
 
     const { component, solution, subservices, formBlock, cases, navigation } =
       await getSolutionData(slug, locale)

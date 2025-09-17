@@ -15,6 +15,7 @@ import PostsSection from '../_components/PostsSection'
 import CasesBlock from '../_components/CasesBlock'
 import { ALLOWED_CITIES } from '@/app/utils/cities'
 import { cookies } from 'next/headers'
+import { resolveLocale } from '@/app/utils/locale'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 
@@ -61,7 +62,7 @@ export default async function CityPage({ params }: PageProps) {
     notFound()
   }
 
-  const locale = (await cookies()).get('lang')?.value || 'ru'
+  const locale = resolveLocale((await cookies()).get('lang')?.value)
   const { component, solutions, cases, navigation } = await getHomePageData(locale)
 
   const serviceBlock = component.globals.find((block) => block.blockType === 'services')

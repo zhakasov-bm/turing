@@ -5,6 +5,7 @@ import { getHomePageData } from '@/app/utils/homeService'
 import { notFound } from 'next/navigation'
 import { ALLOWED_CITIES } from '@/app/utils/cities'
 import { cookies } from 'next/headers'
+import { resolveLocale } from '@/app/utils/locale'
 
 interface PageProps {
   params: Promise<{ city: string; serviceSlug: string; subSlug: string }>
@@ -14,7 +15,7 @@ interface PageProps {
 // Метаданные страницы
 export const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
   const { city, serviceSlug, subSlug } = await params
-  const locale = (await cookies()).get('lang')?.value || 'ru'
+  const locale = resolveLocale((await cookies()).get('lang')?.value)
 
   if (!ALLOWED_CITIES.includes(city)) {
     notFound()
@@ -51,7 +52,7 @@ export default async function SubservicePage({ params }: PageProps) {
   try {
     const { serviceSlug, subSlug } = await params
     const cookieStore = await cookies()
-    const locale = cookieStore.get('lang')?.value || 'ru'
+    const locale = resolveLocale(cookieStore.get('lang')?.value)
 
     const { component, service, subservice, cases, formBlock, navigation } =
       await getSubserviceData(serviceSlug, subSlug, locale)
