@@ -79,7 +79,7 @@ export default async function CompanyPage() {
       <BGraphic />
       <FloatingNav nav={navigation} />
 
-      <Hero page={page} />
+      <Hero page={page} locale={locale} />
       <About page={page} />
       <Mission page={page} />
       <LeadCaptureBlock block={formBlocks[0]} />

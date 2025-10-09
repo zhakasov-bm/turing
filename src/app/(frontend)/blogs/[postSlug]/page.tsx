@@ -79,7 +79,7 @@ export default async function Page({ params }: Props) {
     <div>
       <FloatingNav nav={navigation} />
 
-      <PostBlock posts={posts.docs} post={post} />
+      <PostBlock posts={posts.docs} post={post} locale={locale} />
       <ApplicationFormBlock component={component} />
     </div>
   )

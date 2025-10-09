@@ -1,19 +1,29 @@
-import { Post } from '@/payload-types'
 import Image from 'next/image'
 import { RichText as SerializedRichText } from '@payloadcms/richtext-lexical/react'
 import Link from 'next/link'
 import { formatDate } from '@/app/utils/date'
 import Breadcrumbs from '@/app/(frontend)/_components/Breadcrumbs/Breadcrumbs'
+import { Post } from '@/payload-types'
+import type { AppLocale } from '@/app/utils/locale'
+import { getBreadcrumbLocaleLabels } from '@/app/utils/breadcrumbLabels'
 
 type Props = {
   posts: Post[]
   post: Post
+  locale: AppLocale
 }
 
-export default function PostBlock({ posts, post }: Props) {
+export default function PostBlock({ posts, post, locale }: Props) {
+  const breadcrumbLabels = getBreadcrumbLocaleLabels(locale)
+
   return (
     <section className="container mx-auto my-10 px-6 lg:px-24">
-      <Breadcrumbs customLabels={{ blogs: 'Блог', [post.slug]: post.title }} />
+      <Breadcrumbs
+        customLabels={{
+          blogs: breadcrumbLabels.blogs,
+          [post.slug]: post.title,
+        }}
+      />
       <div className="flex flex-col md:flex-row gap-8 pt-10">
         <div className="flex flex-col gap-8 md:gap-16 md:w-[75%] w-full">
           {post.image && typeof post.image === 'object' && post.image.url && (

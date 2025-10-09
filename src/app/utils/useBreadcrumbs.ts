@@ -1,6 +1,8 @@
 import { usePathname } from 'next/navigation'
 import { ALLOWED_CITIES } from './cities'
 import { useCurrentCity } from './useCurrentCity'
+import { resolveLocale, type AppLocale } from './locale'
+import { getBreadcrumbDefaultLabel } from './breadcrumbLabels'
 
 interface BreadcrumbItem {
   label: string
@@ -18,6 +20,7 @@ export function useBreadcrumbs(options: UseBreadcrumbsOptions = {}) {
   const pathname = usePathname()
   const [currentCity] = useCurrentCity()
   const { showHome = true, customLabels = {}, items } = options
+  const locale = getClientLocale()
 
   // Если items переданы, используем их
   if (items) {
@@ -25,7 +28,7 @@ export function useBreadcrumbs(options: UseBreadcrumbsOptions = {}) {
   }
 
   // Иначе генерируем из pathname
-  return generateBreadcrumbsFromPath(pathname, showHome, customLabels, currentCity)
+  return generateBreadcrumbsFromPath(pathname, showHome, customLabels, currentCity, locale)
 }
 
 function generateBreadcrumbsFromPath(
@@ -33,6 +36,7 @@ function generateBreadcrumbsFromPath(
   showHome: boolean,
   customLabels: Record<string, string>,
   currentCity: string,
+  locale: AppLocale,
 ): BreadcrumbItem[] {
   let segments = pathname.split('/').filter(Boolean)
   // Определяем город только из URL, не из currentCity
@@ -47,7 +51,7 @@ function generateBreadcrumbsFromPath(
   // Главная страница
   if (showHome) {
     breadcrumbs.push({
-      label: 'Главная',
+      label: getBreadcrumbDefaultLabel('home', locale) ?? 'Главная',
       href: city ? `/${city}` : '/',
     })
   }
@@ -62,19 +66,8 @@ function generateBreadcrumbsFromPath(
     if (customLabels[segment]) {
       label = customLabels[segment]
     } else {
-      switch (segment) {
-        case 'solution':
-          label = 'Услуги'
-          break
-        case 'case':
-          label = 'Кейсы'
-          break
-        case 'company':
-          label = 'О компании'
-          break
-        default:
-          break
-      }
+      const defaultLabel = getBreadcrumbDefaultLabel(segment, locale)
+      label = defaultLabel ?? formatBreadcrumbSegment(segment)
     }
 
     const isLast = i === segments.length - 1
@@ -86,4 +79,24 @@ function generateBreadcrumbsFromPath(
   }
 
   return breadcrumbs
+}
+
+function getClientLocale(): AppLocale {
+  if (typeof document === 'undefined') {
+    return 'ru'
+  }
+  const match = document.cookie.match(/(?:^|; )lang=([^;]+)/)
+  return resolveLocale(match?.[1])
+}
+
+function formatBreadcrumbSegment(segment: string): string {
+  let decoded = segment
+  try {
+    decoded = decodeURIComponent(segment)
+  } catch {
+    decoded = segment
+  }
+
+  const spaced = decoded.replace(/-/g, ' ')
+  return spaced.charAt(0).toUpperCase() + spaced.slice(1)
 }

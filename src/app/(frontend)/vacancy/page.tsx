@@ -7,6 +7,7 @@ import BGraphic from '../_components/BGraphic'
 import Breadcrumbs from '../_components/Breadcrumbs/Breadcrumbs'
 import VacancyCard from './components/VacancyCard'
 import { Vacancy } from '@/payload-types'
+import { getBreadcrumbLocaleLabels } from '@/app/utils/breadcrumbLabels'
 
 export const metadata = {
   title: 'Вакансии',
@@ -53,6 +54,7 @@ export default async function page() {
   })
 
   const page = res.docs[0]
+  const breadcrumbLabels = getBreadcrumbLocaleLabels(locale)
 
   const vacancyRes = await payload.find({
     collection: 'vacancy',
@@ -82,7 +84,9 @@ export default async function page() {
       <BGraphic />
 
       <div className="mb-8 px-6 md:px-0 pt-8 md:pt-20 flex justify-center">
-        <Breadcrumbs customLabels={{ vacancy: page?.name || 'Вакансии' }} />
+        <Breadcrumbs
+          customLabels={{ vacancy: page?.name || breadcrumbLabels.vacancy }}
+        />
       </div>
 
       <div className="px-8 md:px-40">

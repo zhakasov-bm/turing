@@ -94,7 +94,7 @@ export function MobileMenu({
         <div className="flex flex-col gap-4 overflow-y-auto mt-4">
           {/* Main nav links */}
           {nav.links?.map((link, idx) => {
-            const isServices = link.label === 'Услуги'
+            const isServices = link.url === '/solution'
 
             return (
               <div key={idx}>

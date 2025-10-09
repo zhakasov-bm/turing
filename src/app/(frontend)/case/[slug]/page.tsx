@@ -14,7 +14,7 @@ import { Metadata } from 'next'
 import FloatingNav from '../../_components/FloatingNav'
 import ApplicationFormBlock from '../../_components/ApplicationForm/ApplicationFormBlock'
 import { getHomePageData } from '@/app/utils/homeService'
-import { resolveLocale } from '@/app/utils/locale'
+import { resolveLocale, type AppLocale } from '@/app/utils/locale'
 import { cookies } from 'next/headers'
 
 type Props = {
@@ -23,10 +23,10 @@ type Props = {
 }
 
 // Получаем кейс по слагу
-async function getCase(slug: string) {
+async function getCase(slug: string, forcedLocale?: AppLocale) {
   try {
     const payload = await getPayload({ config: configPromise })
-    const locale = resolveLocale((await cookies()).get('lang')?.value)
+    const locale = forcedLocale ?? resolveLocale((await cookies()).get('lang')?.value)
     const component = await payload.findGlobal({ slug: 'component', locale })
 
     const caseResult = await payload.find({
@@ -94,8 +94,9 @@ export default async function CasePage({ params }: Props) {
   if (!slug) {
     notFound()
   }
-  const { caseData, component, navigation, casesList } = await getCase(slug)
-  const { solutions } = await getHomePageData(resolveLocale((await cookies()).get('lang')?.value))
+  const locale = resolveLocale((await cookies()).get('lang')?.value)
+  const { caseData, component, navigation, casesList } = await getCase(slug, locale)
+  const { solutions } = await getHomePageData(locale)
 
   const formBlocks = component.globals.filter((block) => block.blockType === 'form')
 
@@ -104,7 +105,7 @@ export default async function CasePage({ params }: Props) {
       <BGraphic />
       <FloatingNav nav={navigation} />
 
-      <Hero caseData={caseData} />
+      <Hero caseData={caseData} locale={locale} />
       <BrandsBlock component={component} />
       <OrderBLock caseData={caseData} />
       <ActionsBlock caseData={caseData} />
