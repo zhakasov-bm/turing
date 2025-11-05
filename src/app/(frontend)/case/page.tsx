@@ -62,7 +62,7 @@ export default async function page() {
   try {
     const casesRes = await payload.find({
       collection: 'cases',
-      limit: 10,
+      limit: 0,
       user,
       locale,
     })
