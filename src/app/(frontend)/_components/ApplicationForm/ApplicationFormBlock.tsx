@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import SuccessModal from '../Modal/SuccessModal'
 import FormBuilder from './FormBuilder'
-import { handleFormSubmit } from '@/app/utils/formHandlers.ts'
+import { handleFormSubmit } from '@/app/utils/formHandlers'
 
 type FormState = {
   loading: boolean

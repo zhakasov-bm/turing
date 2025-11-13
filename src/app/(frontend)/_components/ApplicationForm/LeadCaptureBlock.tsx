@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
-import { handleFormSubmit } from '@/app/utils/formHandlers.ts'
+import { handleFormSubmit } from '@/app/utils/formHandlers'
 import { Component, Solution } from '@/payload-types'
 import FormBuilder from './FormBuilder'
 import SuccessModal from '../Modal/SuccessModal'
