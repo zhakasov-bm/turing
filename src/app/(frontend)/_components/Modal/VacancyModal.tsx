@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { submitToTelegram } from '@/app/utils/submitToTelegram'
 import UniversalButton from '../UniversalButton'
 import { X } from 'lucide-react'
 
@@ -29,22 +28,28 @@ export default function VacancyModal({ vacancyName, buttonTitle }: Props) {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
 
+    setLoading(true)
     setFormState({ loading: true, error: null, success: false })
 
     try {
-      const formData = new FormData(e.target as HTMLFormElement)
+      const formElement = e.target as HTMLFormElement
+      const formData = new FormData(formElement)
+      formData.set('formName', `Отклик на вакансию: ${vacancyName}`)
+      formData.set('vacancyName', vacancyName)
 
-      const data = {
-        Вакансия: vacancyName as string,
-        Имя: formData.get('name') as string,
-        Почта: formData.get('email') as string,
-        Телефон: formData.get('phone') as string,
+      const response = await fetch('/api/lead', {
+        method: 'POST',
+        body: formData,
+      })
+
+      const payload = await response.json().catch(() => ({}))
+
+      if (!response.ok || !payload?.ok) {
+        throw new Error(payload?.message || 'Не удалось отправить форму. Попробуйте позже.')
       }
 
-      const file = formData.get('resume') as File
-      await submitToTelegram(data, file && file.size ? file : undefined)
-
       setFormState({ loading: false, error: null, success: true })
+      formElement.reset()
 
       setTimeout(() => {
         setFormState({ loading: false, error: null, success: false })
@@ -56,6 +61,8 @@ export default function VacancyModal({ vacancyName, buttonTitle }: Props) {
         error: err instanceof Error ? err.message : 'Ошибка отправки формы',
         success: false,
       })
+    } finally {
+      setLoading(false)
     }
   }
   //
@@ -130,6 +137,9 @@ export default function VacancyModal({ vacancyName, buttonTitle }: Props) {
                     >
                       {loading ? 'Отправка...' : 'Отправить'}
                     </button>
+                    {formState.error && (
+                      <p className="text-sm text-red-500 text-left">{formState.error}</p>
+                    )}
                   </form>
                 </div>
               )}
