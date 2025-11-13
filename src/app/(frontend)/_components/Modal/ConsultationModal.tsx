@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { Component } from '@/payload-types'
 import { X } from 'lucide-react'
-import { handleFormSubmit } from '@/app/utils/formHandlers.ts'
+import { handleFormSubmit } from '@/app/utils/formHandlers'
 import FormBuilder from '../ApplicationForm/FormBuilder'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 
